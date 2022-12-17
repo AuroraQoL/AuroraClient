@@ -1,0 +1,13 @@
+[{
+    "modid": "dailydungeons",
+    "name": "§lDailyDungeons QOL",
+    "description": "§7Simple modification with additional hypixel features",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "",
+    "updateUrl": "",
+    "authorList": ["Gabagool Development", "OctoSplash01"],
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+}]

@@ -1,0 +1,111 @@
+
+buildscript {
+    repositories {
+        jcenter()
+        maven { url = "https://maven.minecraftforge.net/" }
+        maven { url = "https://jitpack.io/" }
+
+    }
+    dependencies {
+        classpath "com.github.hard2make1name:ForgeGradle:86b2392"
+    }
+
+}
+
+
+
+plugins {
+    id "com.github.johnrengelman.shadow" version "6.1.0"
+}
+
+repositories {
+    maven { url = "https://repo.sk1er.club/repository/maven-public/" }
+    maven { url = "https://jitpack.io" }
+    mavenCentral()
+    flatDir {
+        dirs 'gb'
+    }}
+
+apply plugin: 'net.minecraftforge.gradle.forge'
+
+version = "1.6.0"
+group= "me.dailyduneons.client"
+archivesBaseName = "AuroraClient"
+
+sourceSets {
+    main {
+        ext.refMap = "mixins.skytils.refmap.json"
+        output.resourcesDir = java.outputDir
+
+    }
+
+}
+minecraft {
+    version = "1.8.9-11.15.1.2318-1.8.9"
+    runDir = "run"
+    mappings = "stable_22"
+    makeObfSourceJar = false
+    replace "@VERSION@": project.version
+}
+
+dependencies {
+    compile 'com.yworks:yguard:4.0.0'
+    implementation 'io.github.CDAGaming:DiscordIPC:0.6.1'
+    provided files("libs/modcore.jar")
+    implementation("club.sk1er:Vigilance:104-10809-SNAPSHOT")
+    implementation ("com.github.Vatuu:discord-rpc:1.6.2")
+}
+
+
+shadowJar {
+    archiveFileName = jar.archiveFileName
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    relocate("club.sk1er", "hyaddons.sk1er")
+
+    exclude "LICENSE.txt"
+    exclude "pack.mcmeta"
+    exclude "dummyThing"
+    exclude "**/module-info.class"
+    exclude "*.so"
+    exclude "*.dylib"
+    exclude "*.dll"
+    exclude "*.jnilib"
+    exclude "ibxm/**"
+    exclude "com/jcraft/**"
+    exclude "org/lwjgl/**"
+    exclude "net/java/**"
+    exclude "club/sk1er/vigilance/example"
+
+    exclude "META-INF/proguard/**"
+    exclude "META-INF/maven/**"
+    exclude "META-INF/versions/**"
+    exclude "META-INF/com.android.tools/**"
+}
+
+processResources {
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+
+    from(sourceSets.main.resources.srcDirs) {
+        include "mcmod.info"
+        expand "version":project.version, "mcversion":project.minecraft.version
+    }
+
+    from(sourceSets.main.resources.srcDirs) {
+        exclude "mcmod.info"
+    }
+
+}
+
+reobf {
+    shadowJar {
+        classpath = sourceSets.main.compileClasspath
+        mappingType = "SEARGE"
+    }
+}
+
+task copyDependencies(type: Copy) {
+    from configurations
+    into 'dependencies'
+}
