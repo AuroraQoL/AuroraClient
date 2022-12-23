@@ -95,10 +95,10 @@ public class HUD {
   //      FontRenderer neufr = Minecraft.getMinecraft().fontRendererObj;
         if ((Config.watermark)) {
          //   if (Config.watermarkstyle  null) {
-                neufr.drawStringWithShadow("\247lAurora QoL \247r[" + "public 1.5.3" + "]", 5, 5, 0xA9A9A9);
+                neufr.drawStringWithShadow("\247lAurora QoL \247r[" + "public 1.6.0" + "]", 5, 5, 0xA9A9A9);
                 neufr.drawStringWithShadow("\247lAurora QoL \247r", 5, 5, 0xFFFFFF);
                 neufr.drawStringWithShadow("\247lAurora", 5, 5, rbw);
-                neufr.drawStringWithShadow("Build 153", 5, 15, 0x444444);
+                neufr.drawStringWithShadow("Build 18.12.2022", 5, 15, 0x444444);
                 if (Config.watermarkstyle == 33) {
          //       mc.getTextureManager().bindTexture(new ResourceLocation("dailydungeons:font/logo.png"));
                 //    GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);

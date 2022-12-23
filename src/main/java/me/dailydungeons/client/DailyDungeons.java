@@ -140,6 +140,7 @@ public class DailyDungeons {
             MinecraftForge.EVENT_BUS.register(new WitherCloakAura());
             //MinecraftForge.EVENT_BUS.register(new MiningMacro());
             //MinecraftForge.EVENT_BUS.register(new KillAura());
+            MinecraftForge.EVENT_BUS.register(new DungeonMap());
 
 /*        if (Cerberus.isAllowedToRun()) {
             MinecraftForge.EVENT_BUS.register(new StructureScanner());

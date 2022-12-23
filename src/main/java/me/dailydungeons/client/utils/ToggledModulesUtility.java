@@ -120,6 +120,9 @@ public class ToggledModulesUtility {
         if(Config.AutoVoodoo){
             test.add("Auto Voodoo");
         }
+        if(Config.DungeonMap){
+            test.add("Dungeon Map");
+        }
 
 
         test.sort((String str1, String str2) -> (int) (neufr.getStringWidth(str2) - neufr.getStringWidth((String) str1)));

@@ -437,6 +437,34 @@ public class Config extends Vigilant {
             subcategory = "Wither Cloak"
     )
     public static boolean WitherCloakAura = false;
+    @Property(
+            type = PropertyType.SLIDER,
+            name = "Dungeon Map Range",
+            description = "Range for scanning the map",
+            category = "Map",
+            subcategory = "Scanner",
+            min = 16,
+            max = 256
+    )
+    public static int dungeonmapscan = 32;
+    @Property(
+            type = PropertyType.SLIDER,
+            name = "Dungeon Map Range Boost",
+            description = "Scan more map (might not work hehe)",
+            category = "Map",
+            subcategory = "Scanner",
+            min = 16,
+            max = 256
+    )
+    public static int extrascanner = 32;
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Dungeon Map",
+            description = "Scans the Dungeon Map",
+            category = "Map",
+            subcategory = "Scanner"
+    )
+    public static boolean DungeonMap = true;
     public static boolean AutoLimbo = false;
     public static boolean SelfBan = false;
 
