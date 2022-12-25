@@ -223,8 +223,8 @@ public class Config extends Vigilant {
     public static boolean TerminalAura = true;
     @Property(
             type = PropertyType.SWITCH,
-            name = "Inventory Walk",
-            description = "Allows you to walk in GUIs",
+            name = "\247c[NOT DONE] \247rInventory Walk",
+            description = "Allows you to walk in GUIs (could ban since currently wip)",
             category = "Movement",
             subcategory = "GUI"
     )
@@ -232,8 +232,8 @@ public class Config extends Vigilant {
 
     @Property(
             type = PropertyType.SWITCH,
-            name = "\2476[\u2726 SUPPORTER] \247rAuto Secrets",
-            description = "Auto Etherwarps in order to get Secrets (needs secret aura)",
+            name = "\247b[WIP]\247r Auto Secrets",
+            description = "Auto Etherwarps in order to get Secrets (currently only for dev purpose only)",
             category = "Dungeons",
             subcategory = "Secrets"
     )
@@ -242,7 +242,7 @@ public class Config extends Vigilant {
 
     @Property(
             type = PropertyType.SWITCH,
-            name = "Auto Sneak",
+            name = "\247c[PATCHED] \247r Auto Sneak",
             description = "Auto Sneaks (can fuck up the packets)",
             category = "Movement",
             subcategory = "Auto Sneak"
@@ -314,7 +314,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "\247b[WIP]\247r Auto Crystals",
-            description = "Automatically does Floor 7 Crystals",
+            description = "Automatically does Floor 7 Crystals (currently only works for right crystal)",
             category = "Dungeons",
             subcategory = "Crystals"
     )
@@ -459,12 +459,38 @@ public class Config extends Vigilant {
     public static int extrascanner = 32;
     @Property(
             type = PropertyType.SWITCH,
-            name = "Dungeon Map",
-            description = "Scans the Dungeon Map",
+            name = "\247b[WIP]\247r Dungeon Map",
+            description = "Scans the Dungeon Map (currently only scans for entrance and makes a waypoint to it)",
             category = "Map",
             subcategory = "Scanner"
     )
     public static boolean DungeonMap = true;
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "\247b[WIP]\247r Auto Tank",
+            description = "only for m7 currently only tps u to maxor platform",
+            category = "Dungeons",
+            subcategory = "Tank"
+    )
+    public static boolean AutoTank = false;
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "\247b[WIP]\247r Vertical Clip",
+            description = "press K to vclip",
+            category = "Dungeons",
+            subcategory = "Clip"
+    )
+    public static boolean vclip = false;
+    @Property(
+            type = PropertyType.SLIDER,
+            name = "Vertical Clip Slider",
+            description = "i dont think i have to explain it",
+            category = "Dungeons",
+            subcategory = "Clip",
+            min = 1,
+            max = 27
+    )
+    public static int vclipdistance = 9;
     public static boolean AutoLimbo = false;
     public static boolean SelfBan = false;
 

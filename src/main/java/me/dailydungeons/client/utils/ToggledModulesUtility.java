@@ -123,6 +123,12 @@ public class ToggledModulesUtility {
         if(Config.DungeonMap){
             test.add("Dungeon Map");
         }
+        if(Config.vclip){
+            test.add("Vertical Clip");
+        }
+        if(Config.AutoTank){
+            test.add("Auto Tank");
+        }
 
 
         test.sort((String str1, String str2) -> (int) (neufr.getStringWidth(str2) - neufr.getStringWidth((String) str1)));

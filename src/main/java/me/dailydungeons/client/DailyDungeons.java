@@ -44,7 +44,7 @@ public class DailyDungeons {
     public static FontUtil jelloarray2;
 
     public static final String VERSION = "1.2.1";
-    public static final int CURRENTVERSIONBUILD = 153;
+    public static final int CURRENTVERSIONBUILD = 160;
 
     public static Config config;
 
@@ -141,6 +141,8 @@ public class DailyDungeons {
             //MinecraftForge.EVENT_BUS.register(new MiningMacro());
             //MinecraftForge.EVENT_BUS.register(new KillAura());
             MinecraftForge.EVENT_BUS.register(new DungeonMap());
+            MinecraftForge.EVENT_BUS.register(new AutoTank());
+            MinecraftForge.EVENT_BUS.register(new vclip());
 
 /*        if (Cerberus.isAllowedToRun()) {
             MinecraftForge.EVENT_BUS.register(new StructureScanner());
