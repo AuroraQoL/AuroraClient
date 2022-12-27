@@ -28,7 +28,7 @@ repositories {
 
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "1.6.0"
+version = "1.6.1"
 group= "me.dailyduneons.client"
 archivesBaseName = "AuroraClient"
 
@@ -49,11 +49,8 @@ minecraft {
 }
 
 dependencies {
-    compile 'com.yworks:yguard:4.0.0'
-    implementation 'io.github.CDAGaming:DiscordIPC:0.6.1'
     provided files("libs/modcore.jar")
     implementation("club.sk1er:Vigilance:104-10809-SNAPSHOT")
-    implementation ("com.github.Vatuu:discord-rpc:1.6.2")
 }
 
 
@@ -61,7 +58,7 @@ shadowJar {
     archiveFileName = jar.archiveFileName
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
-    relocate("club.sk1er", "hyaddons.sk1er")
+    relocate("club.sk1er", "club.aurora.sk1er")
 
     exclude "LICENSE.txt"
     exclude "pack.mcmeta"

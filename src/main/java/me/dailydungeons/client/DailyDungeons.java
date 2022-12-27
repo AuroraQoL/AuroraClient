@@ -1,11 +1,7 @@
 package me.dailydungeons.client;
 
 import club.sk1er.vigilance.Vigilance;
-import club.sk1er.vigilance.Vigilant;
-import club.sk1er.vigilance.command.PaletteCommand;
 import club.sk1er.vigilance.gui.SettingsGui;
-import club.sk1er.vigilance.gui.VigilancePalette;
-import com.jagrosh.discordipc.entities.DiscordBuild;
 import me.dailydungeons.client.cerberus.Cerberus;
 import me.dailydungeons.client.config.Config;
 import me.dailydungeons.client.config.ConfigCommand;
@@ -16,11 +12,8 @@ import me.dailydungeons.client.utils.FontUtil;
 import me.dailydungeons.client.utils.Utils;
 import me.dailydungeons.client.utils.VersionUtil;
 import me.dailydungeons.client.utils.inDungeon;
-import net.arikia.dev.drpc.DiscordEventHandlers;
-import net.arikia.dev.drpc.DiscordRPC;
-import net.arikia.dev.drpc.DiscordRichPresence;
+
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
@@ -34,7 +27,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Scanner;
 
 @Mod(modid = DailyDungeons.MODID, name = DailyDungeons.MODNAME, version = DailyDungeons.VERSION, clientSideOnly = true)
 public class DailyDungeons {
@@ -43,8 +35,8 @@ public class DailyDungeons {
     private static DailyDungeons INSTANCE = null;
     public static FontUtil jelloarray2;
 
-    public static final String VERSION = "1.2.1";
-    public static final int CURRENTVERSIONBUILD = 160;
+    public static final String VERSION = "1.6.1";
+    public static final int CURRENTVERSIONBUILD = 161;
 
     public static Config config;
 
@@ -61,32 +53,9 @@ public class DailyDungeons {
     public void init(FMLInitializationEvent event) throws IOException, FontFormatException, NoSuchAlgorithmException {
         Vigilance.initialize();
         INSTANCE = this;
-        ///
-
-
-
 
         System.out.println("Welcome ");
 
-/*
-        DiscordEventHandlers handlers = new DiscordEventHandlers.Builder().setReadyEventHandler((user) -> {
-            System.out.println("user " + user.username + "#" + user.discriminator + "");
-            DiscordRichPresence.Builder presence = new DiscordRichPresence.Builder("ni ");
-            presence.setDetails("chuj123");
-            DiscordRPC.discordUpdatePresence(presence.build());
-        }).build();
-        DiscordRPC.discordInitialize("1045815224256712725", handlers, true);
-        DiscordRPC.discordRegister("1045815224256712725", "");
-
-        DiscordRichPresence rich = new DiscordRichPresence.Builder("2.0 - Supporter").setDetails("In Menus" */
-/*+ mc.thePlayer.getDisplayName()*//*
-).setBigImage("wither", "Client logo").setSmallImage("supporter", "Supporter Version").build();
-        DiscordRPC.discordUpdatePresence(rich);
-*/
-
-
-
-        ///
         System.out.println("Initializing Cerberus Protection System...");
         if (Cerberus.isAllowedToRun()) {
             System.out.println("Verified ownership for device with ID : " + Cerberus.getHWID());
@@ -103,7 +72,7 @@ public class DailyDungeons {
 
             }
         }
-        MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(INSTANCE);
         MinecraftForge.EVENT_BUS.register(new Utils());
 
         if (!(me.dailydungeons.client.utils.VersionUtil.isForced(CURRENTVERSIONBUILD))) {
@@ -117,7 +86,7 @@ public class DailyDungeons {
             MinecraftForge.EVENT_BUS.register(new HarpStealer());
             MinecraftForge.EVENT_BUS.register(new NoSlowButWorse());
             MinecraftForge.EVENT_BUS.register(new AutoJump());
-            MinecraftForge.EVENT_BUS.register(new NahuiBlyat());
+            MinecraftForge.EVENT_BUS.register(new GemstoneScanner());
             MinecraftForge.EVENT_BUS.register(new TickEndEvent());
             MinecraftForge.EVENT_BUS.register(new AutoJoinSkyblock());
             MinecraftForge.EVENT_BUS.register(new AutoRogue());
