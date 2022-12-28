@@ -25,15 +25,15 @@ import java.util.stream.IntStream;
  */
 public class StructureScanner {
     private final HashMap<BlockPos, String> structures = new HashMap<>();
-    boolean CurrentlyScanning = true;
+    boolean readyToScan = true;
     Minecraft mc = Minecraft.getMinecraft();
     Block[] blocksSpiralPillarA = {Blocks.tripwire_hook, Blocks.stone, Blocks.stone, Blocks.stone, Blocks.stone, Blocks.stone, Blocks.stone, Blocks.stone, Blocks.stone_brick_stairs};
     BlockStone.EnumType[] stonePropSpiralPillarA = {null, BlockStone.EnumType.DIORITE_SMOOTH, BlockStone.EnumType.DIORITE, BlockStone.EnumType.DIORITE, BlockStone.EnumType.DIORITE, BlockStone.EnumType.DIORITE, BlockStone.EnumType.DIORITE_SMOOTH, BlockStone.EnumType.ANDESITE_SMOOTH, null};
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
-        if ((((mc.theWorld.getTotalWorldTime()) % (4L * Config.scanrange)) == 0) && Config.scanner2 && (CurrentlyScanning && Conditions.inGame())) {
-            CurrentlyScanning = false;
+        if ((((mc.theWorld.getTotalWorldTime()) % (4L * Config.scanrange)) == 0) && Config.scanner2 && (readyToScan && Conditions.inGame())) {
+            readyToScan = false;
             Thread scan = new Thread(() -> scanBlocks(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ), "StructureScanning");
             scan.start();
         }
@@ -49,7 +49,7 @@ public class StructureScanner {
                 });
             });
         });
-        CurrentlyScanning = false;
+        readyToScan = true;
     }
 
     public String checkForStructureOnBlock(int x, int y, int z) {
