@@ -28,8 +28,8 @@ repositories {
 
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "1.6.1"
-group= "me.dailyduneons.client"
+version = "1.999"
+group= "me.aurora.client"
 archivesBaseName = "AuroraClient"
 
 sourceSets {
