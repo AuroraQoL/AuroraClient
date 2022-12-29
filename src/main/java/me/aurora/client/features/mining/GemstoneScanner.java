@@ -107,27 +107,29 @@ public class GemstoneScanner {
 
     @SubscribeEvent
     public void onRenderWorld(RenderWorldLastEvent event) {
-        if (Config.colorsTwo == 0) {
-            if (espModeMap.entrySet().size() != 0) espModeTemportaryMap = espModeMap;
-            espModeTemportaryMap.entrySet().stream().filter(b -> {
-                return (mc.theWorld.getBlockState(b.getKey()).getBlock() != Blocks.air);
-            }).forEach(b -> {
-                ScannerUtils.drawOutlinedBoundingBox(b.getKey(), b.getValue(), Config.thicc, event.partialTicks);
-            });
-        } else if (Config.colorsTwo == 1) {
-            if (espModeMap.entrySet().size() != 0) espModeTemportaryMap = espModeMap;
-            espModeTemportaryMap.entrySet().stream().filter(b -> {
-                return (mc.theWorld.getBlockState(b.getKey()).getBlock() != Blocks.air);
-            }).forEach(b -> {
-                ScannerUtils.highlightBlock(b.getKey(), b.getValue(), event.partialTicks);
-            });
-        } else {
-            if (textModeMap.entrySet().size() != 0) textModeTemportaryMap = textModeMap;
-            textModeTemportaryMap.entrySet().stream().filter(b -> {
-                return (mc.theWorld.getBlockState(b.getKey()).getBlock() != Blocks.air);
-            }).forEach(b -> {
-                ScannerUtils.renderBeaconText(b.getValue(), b.getKey(), event.partialTicks);
-            });
+        if (Config.scanner) {
+            if (Config.colorsTwo == 0) {
+                if (espModeMap.entrySet().size() != 0) espModeTemportaryMap = espModeMap;
+                espModeTemportaryMap.entrySet().stream().filter(b -> {
+                    return (mc.theWorld.getBlockState(b.getKey()).getBlock() != Blocks.air);
+                }).forEach(b -> {
+                    ScannerUtils.drawOutlinedBoundingBox(b.getKey(), b.getValue(), Config.thicc, event.partialTicks);
+                });
+            } else if (Config.colorsTwo == 1) {
+                if (espModeMap.entrySet().size() != 0) espModeTemportaryMap = espModeMap;
+                espModeTemportaryMap.entrySet().stream().filter(b -> {
+                    return (mc.theWorld.getBlockState(b.getKey()).getBlock() != Blocks.air);
+                }).forEach(b -> {
+                    ScannerUtils.highlightBlock(b.getKey(), b.getValue(), event.partialTicks);
+                });
+            } else {
+                if (textModeMap.entrySet().size() != 0) textModeTemportaryMap = textModeMap;
+                textModeTemportaryMap.entrySet().stream().filter(b -> {
+                    return (mc.theWorld.getBlockState(b.getKey()).getBlock() != Blocks.air);
+                }).forEach(b -> {
+                    ScannerUtils.renderBeaconText(b.getValue(), b.getKey(), event.partialTicks);
+                });
+            }
         }
     }
 
