@@ -11,6 +11,11 @@ import java.util.stream.IntStream;
 
 import static me.aurora.client.Aurora.mc;
 
+/**
+ * @author Gabagooooooooooool
+ * @version 1.0
+ * Util for verifying stacked blocks integrity.
+ */
 public class LookupBlockUtils {
 
     public static boolean blocksAbove(BlockPos baseBlock, Block[] blockList, BlockStone.EnumType[] stoneParameters){

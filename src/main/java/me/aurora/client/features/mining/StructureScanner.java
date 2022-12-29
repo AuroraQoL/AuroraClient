@@ -30,6 +30,16 @@ public class StructureScanner {
     Minecraft mc = Minecraft.getMinecraft();
     Block[] blocksSpiralPillarA = {Blocks.tripwire_hook, Blocks.stone, Blocks.stone, Blocks.stone, Blocks.stone, Blocks.stone, Blocks.stone, Blocks.stone, Blocks.stone_brick_stairs};
     BlockStone.EnumType[] stonePropSpiralPillarA = {null, BlockStone.EnumType.DIORITE_SMOOTH, BlockStone.EnumType.DIORITE, BlockStone.EnumType.DIORITE, BlockStone.EnumType.DIORITE, BlockStone.EnumType.DIORITE, BlockStone.EnumType.DIORITE_SMOOTH, BlockStone.EnumType.ANDESITE_SMOOTH, null};
+    Block[] blocksSpiralPillarC = {Blocks.double_stone_slab,Blocks.double_stone_slab, Blocks.tripwire_hook, Blocks.stone, Blocks.stone, Blocks.stone, Blocks.stone, Blocks.stone, Blocks.stone, Blocks.stone, Blocks.stone_brick_stairs};
+    BlockStone.EnumType[] stonePropSpiralPillarC = {null, null, null, BlockStone.EnumType.DIORITE_SMOOTH, BlockStone.EnumType.DIORITE, BlockStone.EnumType.DIORITE, BlockStone.EnumType.DIORITE, BlockStone.EnumType.DIORITE, BlockStone.EnumType.DIORITE_SMOOTH, BlockStone.EnumType.ANDESITE_SMOOTH, null};
+    Block[] blocksThroneA = {Blocks.stonebrick, Blocks.cobblestone, Blocks.cobblestone, Blocks.cobblestone, Blocks.stone_stairs, Blocks.air, Blocks.air, Blocks.air, Blocks.air, Blocks.air, Blocks.air, Blocks.air};
+    BlockStone.EnumType[] stonePropThroneA = {null, null, null, null, null, null, null, null, null, null, null, null};
+    Block[] blocksSpiralPillarB = {Blocks.double_stone_slab, Blocks.tripwire, Blocks.stone, Blocks.stone, Blocks.stone, Blocks.stone, Blocks.stone};
+    BlockStone.EnumType[] stonePropSpiralPillarB = {null, null, BlockStone.EnumType.DIORITE_SMOOTH,BlockStone.EnumType.DIORITE_SMOOTH,BlockStone.EnumType.DIORITE_SMOOTH,BlockStone.EnumType.DIORITE,BlockStone.EnumType.DIORITE};
+    Block[] blocksThronePillarA = {Blocks.double_stone_slab, Blocks.double_stone_slab, Blocks.stone, Blocks.stone, Blocks.stone, Blocks.double_stone_slab, Blocks.stone_slab, Blocks.air, Blocks.double_stone_slab, Blocks.double_stone_slab, Blocks.stone, Blocks.double_stone_slab, Blocks.stone, Blocks.air};
+    BlockStone.EnumType[] stonePropThronePillarA = {null, null, BlockStone.EnumType.DIORITE,BlockStone.EnumType.DIORITE,BlockStone.EnumType.DIORITE, null, null, null, null, null, BlockStone.EnumType.DIORITE, null, BlockStone.EnumType.DIORITE, null};
+
+
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
@@ -54,7 +64,11 @@ public class StructureScanner {
     }
 
     public String checkForStructureOnBlock(int x, int y, int z) {
-        if (LookupBlockUtils.blocksAbove(new BlockPos(x,y,z), blocksSpiralPillarA, stonePropSpiralPillarA)) return "Spiral-Pillar-A";
+        if (LookupBlockUtils.blocksAbove(new BlockPos(x,y,z), blocksSpiralPillarA, stonePropSpiralPillarA)) return "SPIRAL-Pillar-A";
+        if (LookupBlockUtils.blocksAbove(new BlockPos(x,y,z), blocksThroneA, stonePropThroneA)) return "THRONE-Struct-A";
+        if (LookupBlockUtils.blocksAbove(new BlockPos(x,y,z), blocksThronePillarA, stonePropThronePillarA)) return "THRONE-Pillar-A";
+        if (LookupBlockUtils.blocksAbove(new BlockPos(x,y,z), blocksSpiralPillarB, stonePropSpiralPillarB)) return "SPIRAL-Pillar-B";
+        if (LookupBlockUtils.blocksAbove(new BlockPos(x,y,z), blocksSpiralPillarC, stonePropSpiralPillarC)) return "SPIRAL-Pillar-C";
         return "null";
     }
 

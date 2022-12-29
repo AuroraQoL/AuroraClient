@@ -28,7 +28,7 @@ repositories {
 
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "1.999"
+version = "2.0.0"
 group= "me.aurora.client"
 archivesBaseName = "AuroraClient"
 

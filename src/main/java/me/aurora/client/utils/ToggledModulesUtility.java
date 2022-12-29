@@ -45,17 +45,11 @@ public class ToggledModulesUtility {
         if (Config.AutoHarp) {
             test.add("AutoHarp");
         }
-        if (Config.AutoJump) {
-            test.add("Auto Jump");
-        }
         if (Config.TpAnywhere) {
             test.add("AOTV Aura");
         }
         if (Config.AutoJoinSkyblock) {
             test.add("Auto Join SkyBlock");
-        }
-        if (Config.AutoTerminals) {
-            test.add("Auto Terminals");
         }
         if (Config.AutoRogue) {
             test.add("Rogue Sword Aura");
@@ -69,14 +63,8 @@ public class ToggledModulesUtility {
         if (Config.DontSlowMyGuy) {
             test.add("No Slow");
         }
-        if (Config.Velocity) {
-            test.add("Velocity");
-        }
         if (Config.AutoSell) {
             test.add("Auto Sell");
-        }
-        if (Config.TerminalAura) {
-            test.add("Terminal Aura");
         }
         if (Config.HarpStealer) {
             test.add("Harp Stealer");
@@ -93,12 +81,6 @@ public class ToggledModulesUtility {
         if (Config.AutoSprint) {
             test.add("Auto Sprint");
         }
-        if (Config.LeapingFly) {
-            test.add("Leaping Flight");
-        }
-        if (Config.InventoryWalk) {
-            test.add("Inventory Walk");
-        }
         if (Config.scanner) {
             test.add("Gemstone ESP");
         }
@@ -114,9 +96,9 @@ public class ToggledModulesUtility {
         if (Config.AutoVoodoo) {
             test.add("Auto Voodoo");
         }
-        if (Config.DungeonMap) {
+/*        if (Config.DungeonMap) {
             test.add("Dungeon Map");
-        }
+        }*/
         if (Config.vclip) {
             test.add("Vertical Clip");
         }

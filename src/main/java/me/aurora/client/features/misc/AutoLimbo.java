@@ -20,14 +20,8 @@ public class AutoLimbo {
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
         if (Config.AutoLimbo && Conditions.inSkyblock()) {
-            ScoreObjective scoreboardObj = mc.theWorld.getScoreboard().getObjectiveInDisplaySlot(1);
-            if (scoreboardObj != null) {
-                String scObjName = removeFormatting(scoreboardObj.getDisplayName());
-                if (scObjName.contains("SKYBLOCK")) {
-                    mc.thePlayer.sendChatMessage("/limbo");
-                    ClientMessages.sendClientMessage("noob xd");
-                }
-            }
+            mc.thePlayer.sendChatMessage("/limbo");
         }
     }
 }
+

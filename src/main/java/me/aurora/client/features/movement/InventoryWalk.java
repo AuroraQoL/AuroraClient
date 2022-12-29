@@ -17,7 +17,7 @@ public class InventoryWalk {
 
     @SubscribeEvent
     public void LivingUpdateEvent(LivingEvent.LivingUpdateEvent event) {
-        if (event.entityLiving instanceof EntityPlayer) {
+/*        if (event.entityLiving instanceof EntityPlayer) {
             if (Config.InventoryWalk) {
                 if (Minecraft.getMinecraft().thePlayer.onGround) {
                     if (GameSettings.isKeyDown(mc.gameSettings.keyBindForward)) {
@@ -25,7 +25,6 @@ public class InventoryWalk {
                     }
                 }
             }
-        }
+        }*/
     }
-
 }

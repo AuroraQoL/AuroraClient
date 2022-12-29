@@ -9,7 +9,6 @@ import me.aurora.client.features.*;
 import me.aurora.client.features.dungeons.*;
 import me.aurora.client.features.incomplete.LeapingFlyVelocity;
 import me.aurora.client.features.incomplete.TerminalAura;
-import me.aurora.client.features.incomplete.Velocity;
 import me.aurora.client.features.mining.GemstoneScanner;
 import me.aurora.client.features.mining.StructureScanner;
 import me.aurora.client.features.misc.*;
@@ -35,7 +34,7 @@ public class Aurora {
     public static final String MODID = "bossbar_customizer";
     public static final String MODNAME = "bossbar_customizer";
     public static final String VERSION = "1.2.1";
-    public static final int CURRENTVERSIONBUILD = 199;
+    public static final int CURRENTVERSIONBUILD = 200;
     public static Config config;
     public static GuiScreen guiToOpen = null;
     public static Aurora INSTANCE = null;
@@ -56,7 +55,6 @@ public class Aurora {
             MinecraftForge.EVENT_BUS.register(new AutoSell());
             MinecraftForge.EVENT_BUS.register(new Ghostblock());
             MinecraftForge.EVENT_BUS.register(new WitherDoorRemover());
-            MinecraftForge.EVENT_BUS.register(new Velocity());
             MinecraftForge.EVENT_BUS.register(new TpAnywhere());
             MinecraftForge.EVENT_BUS.register(new AutoHarp());
             MinecraftForge.EVENT_BUS.register(new HarpStealer());
