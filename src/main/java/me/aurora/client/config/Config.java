@@ -16,17 +16,6 @@ public class Config extends Vigilant {
             subcategory = "Watermark"
     )
     public static boolean watermark = true;
-    @Property(
-            type = PropertyType.SELECTOR,
-            name = "Watermark Style",
-            description = "",
-            options = {"Vanilla"},
-
-
-            category = "HUD",
-            subcategory = "Watermark"
-    )
-    public static int watermarkstyle = 0;
         @Property(
             type = PropertyType.SELECTOR,
             name = "HUD Wave Theme",
@@ -103,7 +92,7 @@ public class Config extends Vigilant {
 
     @Property(
             type = PropertyType.SWITCH,
-            name = "\247c[NOT TESTED] No Slowdown",
+            name = "\247c[NOT TESTED] \247rNo Slowdown",
             description = "Disables slowdown",
             category = "Movement",
             subcategory = "No Slowdown"
@@ -130,14 +119,14 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "AOTV Aura",
-            description = "Aloows you to teleport no matter what you're holding",
+            description = "Allows you to teleport no matter what you're holding",
             category = "QOL"
     )
     public static boolean TpAnywhere = false;
 
     @Property(
             type = PropertyType.SWITCH,
-            name = "\247c[NOT WORKING] \247rAuto-Sell Dungeon Junk",
+            name = "\247c[NOT WORKING/UNDER REWRITE] \247rAuto-Sell Dungeon Junk",
             description = "Automatically sells useless dungeon items",
             category = "Dungeons",
             subcategory = "QOL"
@@ -187,7 +176,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "\247b[WIP]\247r Auto Secrets",
-            description = "Auto Etherwarps in order to get Secrets (currently only for dev purpose only)",
+            description = "Auto Etherwarps in order to get Secrets (Currenty for dev purposes)",
             category = "Dungeons",
             subcategory = "Secrets"
     )
@@ -195,12 +184,12 @@ public class Config extends Vigilant {
 
     @Property(
             type = PropertyType.SWITCH,
-            name = "\247c[PATCHED] \247r Auto Sneak",
+            name = "\247c[PATCHED] \247rAuto Sneak",
             description = "Automaticly sneaks",
             category = "Movement",
             subcategory = "Auto Sneak"
     )
-    public static boolean AutoSneak = false;
+    public final static boolean AutoSneak = false;
     @Property(
             type = PropertyType.SWITCH,
             name = "Auto Sprint",
@@ -311,6 +300,7 @@ public class Config extends Vigilant {
     )
     public static boolean scanner2 = true;
 
+
     @Property(
             type = PropertyType.SLIDER,
             name = "Extended Scan Range",
@@ -391,8 +381,10 @@ public class Config extends Vigilant {
             max = 27
     )
     public static int vclipdistance = 9;
+/*
     public static boolean AutoLimbo = false;
     public static boolean SelfBan = false;
+*/
 
     public static class ConfigSorting extends SortingBehavior {
         @NotNull @Override
@@ -413,8 +405,10 @@ public class Config extends Vigilant {
     }
 
     public Config() {
+
         super(new File("./config/ddconfig.toml"), "Aurora", new JVMAnnotationPropertyCollector(), new ConfigSorting());
         initialize();
+
     }
 
 }

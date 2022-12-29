@@ -34,7 +34,7 @@ public class Aurora {
     public static final String MODID = "bossbar_customizer";
     public static final String MODNAME = "bossbar_customizer";
     public static final String VERSION = "1.2.1";
-    public static final int CURRENTVERSIONBUILD = 200;
+    public static final int CURRENTVERSIONBUILD = 201;
     public static Config config;
     public static GuiScreen guiToOpen = null;
     public static Aurora INSTANCE = null;

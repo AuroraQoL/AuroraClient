@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class SelfBan {
     static Minecraft mc = Minecraft.getMinecraft();
-
+/*
     @SubscribeEvent
     public void LivingUpdateEvent(LivingEvent.LivingUpdateEvent event) {
         if (event.entityLiving instanceof EntityPlayer) {
@@ -16,5 +16,5 @@ public class SelfBan {
                 mc.thePlayer.setVelocity(0, 0, 0);
             }
         }
-    }
+    }*/
 }

@@ -19,9 +19,9 @@ public class AutoLimbo {
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
-        if (Config.AutoLimbo && Conditions.inSkyblock()) {
+/*        if (Config.AutoLimbo && Conditions.inSkyblock()) {
             mc.thePlayer.sendChatMessage("/limbo");
-        }
+        }*/
     }
 }
 

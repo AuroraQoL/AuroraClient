@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.gameevent.InputEvent;
 import org.lwjgl.input.Keyboard;
 
 
-public class Ghostblock {
+public class    Ghostblock {
     Minecraft mc = Minecraft.getMinecraft();
 
     @SubscribeEvent
