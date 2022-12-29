@@ -34,7 +34,6 @@ public class HUD {
     public static double healthBarTarget = 0, healthBar = 0;
     ResourceLocation kanitFontResourceLoc = new ResourceLocation("dailydungeons:font/kanit.ttf");
     MinecraftFontRenderer kanitFontRenderer = new MinecraftFontRenderer(Font.createFont(Font.TRUETYPE_FONT, Minecraft.getMinecraft().getResourceManager().getResource(kanitFontResourceLoc).getInputStream()).deriveFont(Font.PLAIN, 19f), true, false);
-    ScaledResolution scaledResolution = new ScaledResolution(mc);
     final int standby = new Color(0, 0, 0, 100).getRGB();
     final int pressed = new Color(255, 255, 255, 205).getRGB();
 
@@ -43,6 +42,7 @@ public class HUD {
 
     @SubscribeEvent
     public void onRender(RenderGameOverlayEvent event) {
+        ScaledResolution scaledResolution = new ScaledResolution(mc);
         if (event.type != RenderGameOverlayEvent.ElementType.TEXT) {
             return;
         }
