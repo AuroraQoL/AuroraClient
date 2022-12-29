@@ -16,6 +16,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.IntStream;
 
 /**
@@ -24,7 +25,7 @@ import java.util.stream.IntStream;
  * Structure Scanner.
  */
 public class StructureScanner {
-    private final HashMap<BlockPos, String> structures = new HashMap<>();
+    private final ConcurrentHashMap<BlockPos, String> structures = new ConcurrentHashMap<>();
     boolean readyToScan = true;
     Minecraft mc = Minecraft.getMinecraft();
     Block[] blocksSpiralPillarA = {Blocks.tripwire_hook, Blocks.stone, Blocks.stone, Blocks.stone, Blocks.stone, Blocks.stone, Blocks.stone, Blocks.stone, Blocks.stone_brick_stairs};
@@ -32,7 +33,7 @@ public class StructureScanner {
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
-        if ((((mc.theWorld.getTotalWorldTime()) % (4L * Config.scanrange)) == 0) && Config.scanner2 && (readyToScan && Conditions.inGame())) {
+        if ((((mc.theWorld.getTotalWorldTime()) % (4L * Config.scanrange2)) == 0) && Config.scanner2 && readyToScan && Conditions.inGame()) {
             readyToScan = false;
             Thread scan = new Thread(() -> scanBlocks(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ), "StructureScanning");
             scan.start();
