@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import static me.aurora.client.Aurora.config;
 import static me.aurora.client.Aurora.mc;
 
 public class AutoSprint {

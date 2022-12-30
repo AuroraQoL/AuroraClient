@@ -11,6 +11,7 @@ import me.aurora.client.features.mining.GemstoneScanner;
 import me.aurora.client.features.mining.StructureScanner;
 import me.aurora.client.features.misc.*;
 import me.aurora.client.features.movement.*;
+import me.aurora.client.utils.conditions.Conditions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.client.ClientCommandHandler;
@@ -30,7 +31,7 @@ public class Aurora {
     public static final String MODID = "bossbar_customizer";
     public static final String MODNAME = "bossbar_customizer";
     public static final String VERSION = "1.2.1";
-    public static final int CURRENTVERSIONBUILD = 210;
+    public static final int CURRENTVERSIONBUILD = 211;
     public static Config config;
     public static GuiScreen guiToOpen = null;
     public static Aurora INSTANCE = null;
@@ -45,7 +46,7 @@ public class Aurora {
     public void init(FMLInitializationEvent event) throws IOException, FontFormatException, NoSuchAlgorithmException {
         Vigilance.initialize();
         INSTANCE = this;
-        MinecraftForge.EVENT_BUS.register(INSTANCE);
+        MinecraftForge.EVENT_BUS.register(this);
             MinecraftForge.EVENT_BUS.register(new HUD());
             MinecraftForge.EVENT_BUS.register(new AutoSell());
             MinecraftForge.EVENT_BUS.register(new Ghostblock());
@@ -67,9 +68,9 @@ public class Aurora {
             MinecraftForge.EVENT_BUS.register(new DungeonMap());
             MinecraftForge.EVENT_BUS.register(new AutoTank());
             MinecraftForge.EVENT_BUS.register(new VClip());
-        config = new Config();
-        config.preload();
-    }
+            config = new Config();
+            config.preload();
+        }
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {

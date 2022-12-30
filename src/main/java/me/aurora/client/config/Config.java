@@ -92,7 +92,7 @@ public class Config extends Vigilant {
 
     @Property(
             type = PropertyType.SWITCH,
-            name = "\247c[NOT TESTED / COULD BAN] \247rNo Slowdown",
+            name = "No Slowdown",
             description = "Disables slowdown",
             category = "Movement",
             subcategory = "No Slowdown"
@@ -109,7 +109,7 @@ public class Config extends Vigilant {
   public static boolean HarpStealer = false;
     @Property(
             type = PropertyType.SWITCH,
-            name = "AOTV Aura",
+            name = "\247b[WIP]\247rAOTV Aura",
             description = "Allows you to teleport no matter what you're holding",
             category = "QOL"
     )
@@ -126,7 +126,7 @@ public class Config extends Vigilant {
     public static boolean AutoSell = false;
     @Property(
             type = PropertyType.SWITCH,
-            name = "Rogue Sword Aura",
+            name = "\247b[WIP]\247rRogue Sword Aura",
             description = "Allows you to use rogue sword no matter what you're currently holding",
             category = "Movement",
             subcategory = "Speed"
@@ -159,15 +159,15 @@ public class Config extends Vigilant {
             subcategory = "Secrets",
             hidden = true
     )
-    public final static boolean AutoSecrets = false;
+    public static boolean AutoSecrets = false;
     @Property(
             type = PropertyType.SWITCH,
             name = "Auto Sprint",
-            description = "Auto Sprints for You",
+            description = "Sets your sprint to always be true",
             category = "Movement",
             subcategory = "Sprint"
     )
-    public final static boolean AutoSprint = false;
+    public static boolean AutoSprint = false;
     @Property(
             type = PropertyType.SWITCH,
             name = "Melody Throttle Spammer",
@@ -204,7 +204,7 @@ public class Config extends Vigilant {
             subcategory = "Crystals",
             hidden = true
     )
-    public final static boolean AutoCrystals = false;
+    public static boolean AutoCrystals = false;
     @Property(
             type = PropertyType.SELECTOR,
             name = "Auto Crystals Sides",
@@ -216,7 +216,7 @@ public class Config extends Vigilant {
             subcategory = "Crystals",
             hidden = true
     )
-    public final static int crystalSide = 1;
+    public static int crystalSide = 1;
     @Property(
             type = PropertyType.SWITCH,
             name = "\247c\247l[\u03B2] \247r Gemstone ESP",
@@ -296,19 +296,17 @@ public class Config extends Vigilant {
             name = "\247b[WIP]\247r Auto Tank",
             description = "Auto TP to maxor platform",
             category = "Dungeons",
-            subcategory = "Tank",
-            hidden = true
+            subcategory = "Tank"
     )
-    public final static boolean AutoTank = false;
+    public static boolean AutoTank = false;
     @Property(
             type = PropertyType.SWITCH,
             name = "\247b[WIP]\247r Vertical Clip",
             description = "Press K to VClip",
             category = "Dungeons",
-            subcategory = "Clip",
-            hidden = true
+            subcategory = "Clip"
     )
-    public final static boolean vclip = false;
+    public static boolean vclip = false;
     @Property(
             type = PropertyType.SLIDER,
             name = "Vertical Clip Slider",
@@ -316,10 +314,9 @@ public class Config extends Vigilant {
             category = "Dungeons",
             subcategory = "Clip",
             min = 1,
-            max = 27,
-            hidden = true
+            max = 27
     )
-    public final static int vclipdistance = 9;
+    public static int vclipdistance = 9;
 /*
     public static boolean AutoLimbo = false;
     public static boolean SelfBan = false;
