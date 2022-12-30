@@ -1,10 +1,6 @@
-package me.dailydungeons.client.features;
+package me.aurora.client.features.dungeons;
 
-import me.dailydungeons.client.config.Config;
-import me.dailydungeons.client.events.ClickEvent;
-import me.dailydungeons.client.events.DailyDungeonsMessages;
-import me.dailydungeons.client.utils.SkyBlockID;
-import me.dailydungeons.client.utils.Utils;
+import me.aurora.client.config.Config;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
