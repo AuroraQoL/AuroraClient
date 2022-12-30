@@ -36,6 +36,10 @@ public class StructureScanner {
     BlockStone.EnumType[] stonePropSpiralPillarB = {null, null, BlockStone.EnumType.DIORITE_SMOOTH,BlockStone.EnumType.DIORITE_SMOOTH,BlockStone.EnumType.DIORITE_SMOOTH,BlockStone.EnumType.DIORITE,BlockStone.EnumType.DIORITE};
     Block[] blocksThronePillarA = {Blocks.double_stone_slab, Blocks.double_stone_slab, Blocks.stone, Blocks.stone, Blocks.stone, Blocks.double_stone_slab, Blocks.stone_slab, Blocks.air, Blocks.double_stone_slab, Blocks.double_stone_slab, Blocks.stone, Blocks.double_stone_slab, Blocks.stone, Blocks.air};
     BlockStone.EnumType[] stonePropThronePillarA = {null, null, BlockStone.EnumType.DIORITE,BlockStone.EnumType.DIORITE,BlockStone.EnumType.DIORITE, null, null, null, null, null, BlockStone.EnumType.DIORITE, null, BlockStone.EnumType.DIORITE, null};
+    Block[] blocksThronePillarB = {Blocks.double_stone_slab, Blocks.stone, Blocks.double_stone_slab, Blocks.stone_slab, Blocks.double_stone_slab, Blocks.stone, Blocks.double_stone_slab, Blocks.double_stone_slab, Blocks.double_stone_slab};
+    BlockStone.EnumType[] stonePropThronePillarB = {null, BlockStone.EnumType.DIORITE, null, null, null, BlockStone.EnumType.DIORITE, null, null, null};
+    Block[] blocksThronePillarC = {Blocks.stone, Blocks.stone_brick_stairs, Blocks.double_stone_slab, Blocks.stone, Blocks.stone, Blocks.stone_slab, Blocks.stone_slab};
+    BlockStone.EnumType[] stonePropThronePillarC = {BlockStone.EnumType.ANDESITE_SMOOTH, null, null, BlockStone.EnumType.DIORITE, BlockStone.EnumType.DIORITE, null, null};
 
 
 
@@ -64,6 +68,8 @@ public class StructureScanner {
     public String checkForStructureOnBlock(int x, int y, int z) {
         if (LookupBlockUtils.blocksAbove(new BlockPos(x,y,z), blocksSpiralPillarA, stonePropSpiralPillarA)) return "SPIRAL-Pillar-A";
         if (LookupBlockUtils.blocksAbove(new BlockPos(x,y,z), blocksThronePillarA, stonePropThronePillarA)) return "THRONE-Pillar-A";
+        if (LookupBlockUtils.blocksAbove(new BlockPos(x,y,z), blocksThronePillarB, stonePropThronePillarB)) return "THRONE-Pillar-B";
+        if (LookupBlockUtils.blocksAbove(new BlockPos(x,y,z), blocksThronePillarC, stonePropThronePillarC)) return "THRONE-Pillar-C";
         if (LookupBlockUtils.blocksAbove(new BlockPos(x,y,z), blocksSpiralPillarB, stonePropSpiralPillarB)) return "SPIRAL-Pillar-B";
         if (LookupBlockUtils.blocksAbove(new BlockPos(x,y,z), blocksSpiralPillarC, stonePropSpiralPillarC)) return "SPIRAL-Pillar-C";
         return "null";
