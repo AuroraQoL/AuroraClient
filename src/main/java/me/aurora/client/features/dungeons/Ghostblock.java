@@ -10,9 +10,11 @@ import org.lwjgl.input.Keyboard;
 
 public class    Ghostblock {
     Minecraft mc = Minecraft.getMinecraft();
+    
+    //po co ty to zmieniales, tak to trzeba caly czas klikac zamiast normalnie trzymac
 
     @SubscribeEvent
-    public void onKeyPress(InputEvent.KeyInputEvent event) {
+    public void onTick(TickEvent.PlayerTickEvent event) {
         if(Keyboard.isKeyDown(Keyboard.KEY_G) && Config.ghostblock) {
             MovingObjectPosition POSITIONOFBLOCK = mc.thePlayer.rayTrace(mc.playerController.getBlockReachDistance(), 1);
                 mc.theWorld.setBlockToAir(POSITIONOFBLOCK.getBlockPos());
