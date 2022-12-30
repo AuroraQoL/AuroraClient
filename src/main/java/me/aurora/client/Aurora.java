@@ -7,13 +7,10 @@ import me.aurora.client.config.ConfigCommand;
 import me.aurora.client.events.TickEndEvent;
 import me.aurora.client.features.*;
 import me.aurora.client.features.dungeons.*;
-import me.aurora.client.features.incomplete.LeapingFlyVelocity;
-import me.aurora.client.features.incomplete.TerminalAura;
 import me.aurora.client.features.mining.GemstoneScanner;
 import me.aurora.client.features.mining.StructureScanner;
 import me.aurora.client.features.misc.*;
 import me.aurora.client.features.movement.*;
-import me.aurora.client.utils.VersionUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.client.ClientCommandHandler;
@@ -24,7 +21,6 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -34,7 +30,7 @@ public class Aurora {
     public static final String MODID = "bossbar_customizer";
     public static final String MODNAME = "bossbar_customizer";
     public static final String VERSION = "1.2.1";
-    public static final int CURRENTVERSIONBUILD = 201;
+    public static final int CURRENTVERSIONBUILD = 210;
     public static Config config;
     public static GuiScreen guiToOpen = null;
     public static Aurora INSTANCE = null;
@@ -50,13 +46,11 @@ public class Aurora {
         Vigilance.initialize();
         INSTANCE = this;
         MinecraftForge.EVENT_BUS.register(INSTANCE);
-        if (!(VersionUtil.isForced(CURRENTVERSIONBUILD))) {
             MinecraftForge.EVENT_BUS.register(new HUD());
             MinecraftForge.EVENT_BUS.register(new AutoSell());
             MinecraftForge.EVENT_BUS.register(new Ghostblock());
             MinecraftForge.EVENT_BUS.register(new WitherDoorRemover());
             MinecraftForge.EVENT_BUS.register(new TpAnywhere());
-            MinecraftForge.EVENT_BUS.register(new AutoHarp());
             MinecraftForge.EVENT_BUS.register(new HarpStealer());
             MinecraftForge.EVENT_BUS.register(new NoSlowButWorse());
             MinecraftForge.EVENT_BUS.register(new GemstoneScanner());
@@ -64,27 +58,15 @@ public class Aurora {
             MinecraftForge.EVENT_BUS.register(new AutoJoinSkyblock());
             MinecraftForge.EVENT_BUS.register(new AutoRogue());
             MinecraftForge.EVENT_BUS.register(new AutoSecrets());
-            MinecraftForge.EVENT_BUS.register(new AutoSneak());
-            MinecraftForge.EVENT_BUS.register(new TerminalAura());
-            MinecraftForge.EVENT_BUS.register(new InventoryWalk());
             MinecraftForge.EVENT_BUS.register(new MelodyThrottle());
             MinecraftForge.EVENT_BUS.register(new StructureScanner());
-            MinecraftForge.EVENT_BUS.register(new LeapingFlyVelocity());
             MinecraftForge.EVENT_BUS.register(new NoDowntime());
             MinecraftForge.EVENT_BUS.register(new AutoSprint());
             MinecraftForge.EVENT_BUS.register(new AutoCrystals());
-            MinecraftForge.EVENT_BUS.register(new AutoVoodoo());
             MinecraftForge.EVENT_BUS.register(new WitherCloakAura());
             MinecraftForge.EVENT_BUS.register(new DungeonMap());
             MinecraftForge.EVENT_BUS.register(new AutoTank());
             MinecraftForge.EVENT_BUS.register(new VClip());
-            if ((VersionUtil.isOutdated(CURRENTVERSIONBUILD))) {
-                JOptionPane.showMessageDialog(null, "Current Aurora version is out of support. Usage of this version may result in a ban or bugs. Update client to continue using it in the future.");
-            }
-        }
-        if (VersionUtil.isForced(CURRENTVERSIONBUILD)) {
-            JOptionPane.showMessageDialog(null, "Current Aurora version has been discontinued. As usage of this version may result in a ban or several bugs, all features has been disabled. Update client to continue using it.");
-        }
         config = new Config();
         config.preload();
     }

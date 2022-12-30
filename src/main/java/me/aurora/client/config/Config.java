@@ -92,7 +92,7 @@ public class Config extends Vigilant {
 
     @Property(
             type = PropertyType.SWITCH,
-            name = "\247c[NOT TESTED] \247rNo Slowdown",
+            name = "\247c[NOT TESTED / COULD BAN] \247rNo Slowdown",
             description = "Disables slowdown",
             category = "Movement",
             subcategory = "No Slowdown"
@@ -107,15 +107,6 @@ public class Config extends Vigilant {
           subcategory = "Harp"
   )
   public static boolean HarpStealer = false;
-
-    @Property(
-            type = PropertyType.SWITCH,
-            name = "\247c[NOT WORKING] \247rAutoHarp",
-            description = "Automatically does harp",
-            category = "QOL",
-            subcategory = "Harp"
-    )
-    public static boolean AutoHarp = false;
     @Property(
             type = PropertyType.SWITCH,
             name = "AOTV Aura",
@@ -126,10 +117,11 @@ public class Config extends Vigilant {
 
     @Property(
             type = PropertyType.SWITCH,
-            name = "\247c[NOT WORKING/UNDER REWRITE] \247rAuto-Sell Dungeon Junk",
+            name = "\247c[NOT WORKING / UNDER REWRITE] \247rAuto-Sell Dungeon Junk",
             description = "Automatically sells useless dungeon items",
             category = "Dungeons",
-            subcategory = "QOL"
+            subcategory = "QOL",
+            hidden = true
     )
     public static boolean AutoSell = false;
     @Property(
@@ -156,40 +148,18 @@ public class Config extends Vigilant {
             subcategory = "Fast Join"
     )
     public static boolean AutoJoinSkyblock = false;
-/*    @Property(
-            type = PropertyType.SWITCH,
-            name = "\247c[NOT DONE] \247rTerminal Aura",
-            description = "Teleports between Terminals \2478(credits to LittenIsBad for the idea)",
-            category = "Dungeons",
-            subcategory = "Terminals"
-    )
-    public static boolean TerminalAura = true;
-    @Property(
-            type = PropertyType.SWITCH,
-            name = "\247c[NOT DONE] \247rInventory Walk",
-            description = "Allows you to walk in GUIs (Not done)",
-            category = "Movement",
-            subcategory = "GUI"
-    )
-    public static boolean InventoryWalk = false;*/
-
+    /**
+     * HIDDEN. IN DEVELOPMENT
+     */
     @Property(
             type = PropertyType.SWITCH,
             name = "\247b[WIP]\247r Auto Secrets",
             description = "Auto Etherwarps in order to get Secrets (Currenty for dev purposes)",
             category = "Dungeons",
-            subcategory = "Secrets"
+            subcategory = "Secrets",
+            hidden = true
     )
-    public static boolean AutoSecrets = false;
-
-    @Property(
-            type = PropertyType.SWITCH,
-            name = "\247c[PATCHED] \247rAuto Sneak",
-            description = "Automaticly sneaks",
-            category = "Movement",
-            subcategory = "Auto Sneak"
-    )
-    public final static boolean AutoSneak = false;
+    public final static boolean AutoSecrets = false;
     @Property(
             type = PropertyType.SWITCH,
             name = "Auto Sprint",
@@ -197,7 +167,7 @@ public class Config extends Vigilant {
             category = "Movement",
             subcategory = "Sprint"
     )
-    public static boolean AutoSprint = false;
+    public final static boolean AutoSprint = false;
     @Property(
             type = PropertyType.SWITCH,
             name = "Melody Throttle Spammer",
@@ -206,14 +176,6 @@ public class Config extends Vigilant {
             subcategory = "Melody"
     )
     public static boolean MelodyThrottle = false;
-    @Property(
-            type = PropertyType.SWITCH,
-            name = "\247c[PATCHED] \247rAuto Voodoo Doll",
-            description = "Uses Voodoo Doll on Kuudra when you use Valkyrie",
-            category = "Kuudra",
-            subcategory = "Voodoo"
-    )
-    public static boolean AutoVoodoo = false;
     @Property(
             type = PropertyType.SWITCH,
             name = "No Downtime",
@@ -239,9 +201,10 @@ public class Config extends Vigilant {
             name = "\247b[WIP]\247r Auto Crystals",
             description = "Automatically does Floor 7 Crystals (currently only works for right crystal)",
             category = "Dungeons",
-            subcategory = "Crystals"
+            subcategory = "Crystals",
+            hidden = true
     )
-    public static boolean AutoCrystals = false;
+    public final static boolean AutoCrystals = false;
     @Property(
             type = PropertyType.SELECTOR,
             name = "Auto Crystals Sides",
@@ -250,12 +213,13 @@ public class Config extends Vigilant {
 
 
             category = "Dungeons",
-            subcategory = "Crystals"
+            subcategory = "Crystals",
+            hidden = true
     )
-    public static int crystalSide = 1;
+    public final static int crystalSide = 1;
     @Property(
             type = PropertyType.SWITCH,
-            name = "\247c\247l[\u03B2] \247r\247a[WORKING]\247r Gemstone ESP",
+            name = "\247c\247l[\u03B2] \247r Gemstone ESP",
             description = "Scans Crystall Hollows to reveal gemstone veins and overlays them with colored box.",
             category = "Mining",
             subcategory = "Scanner"
@@ -293,7 +257,7 @@ public class Config extends Vigilant {
 
     @Property(
             type = PropertyType.SWITCH,
-            name = "\247c\247l[\u03B2] \247r\247e[EXCLUSIVE]\247r Extended Scanning (Standalone)",
+            name = "\247c\247l[\u03B2] \247r\247e[EXCLUSIVE]\247r Structure Scanning (Standalone)",
             description = "Reveals Structures (Spiral, throne, etc.) and best locations for mining. ",
             category = "Mining",
             subcategory = "Scanner"
@@ -314,7 +278,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "\247c\247l[\u03B2] \247rExperimental Extended Scanning",
-            description = "Faster & More efficent scanning, can cause crash.",
+            description = "Faster & More efficient scanning, can cause crash.",
             category = "Mining",
             subcategory = "Scanner"
     )
@@ -327,50 +291,24 @@ public class Config extends Vigilant {
             subcategory = "Wither Cloak"
     )
     public static boolean WitherCloakAura = false;
-/*    @Property(
-            type = PropertyType.SLIDER,
-            name = "Dungeon Map Range",
-            description = "Range for scanning the map",
-            category = "Map",
-            subcategory = "Scanner",
-            min = 16,
-            max = 256
-    )
-    public static int dungeonmapscan = 32;*/
-  /*  @Property(
-            type = PropertyType.SLIDER,
-            name = "Dungeon Map Range",
-            description = "Scan range",
-            category = "Map",
-            subcategory = "Scanner",
-            min = 16,
-            max = 256
-    )
-    public static int extrascanner = 32;
-    @Property(
-            type = PropertyType.SWITCH,
-            name = "\247b[WIP]\247r Dungeon Map",
-            description = "Scans the Dungeon Map (currently only scans for entrance and makes a waypoint to it)",
-            category = "Map",
-            subcategory = "Scanner"
-    )
-    public static boolean DungeonMap = false;*/
     @Property(
             type = PropertyType.SWITCH,
             name = "\247b[WIP]\247r Auto Tank",
             description = "Auto TP to maxor platform",
             category = "Dungeons",
-            subcategory = "Tank"
+            subcategory = "Tank",
+            hidden = true
     )
-    public static boolean AutoTank = false;
+    public final static boolean AutoTank = false;
     @Property(
             type = PropertyType.SWITCH,
             name = "\247b[WIP]\247r Vertical Clip",
             description = "Press K to VClip",
             category = "Dungeons",
-            subcategory = "Clip"
+            subcategory = "Clip",
+            hidden = true
     )
-    public static boolean vclip = false;
+    public final static boolean vclip = false;
     @Property(
             type = PropertyType.SLIDER,
             name = "Vertical Clip Slider",
@@ -378,9 +316,10 @@ public class Config extends Vigilant {
             category = "Dungeons",
             subcategory = "Clip",
             min = 1,
-            max = 27
+            max = 27,
+            hidden = true
     )
-    public static int vclipdistance = 9;
+    public final static int vclipdistance = 9;
 /*
     public static boolean AutoLimbo = false;
     public static boolean SelfBan = false;
@@ -406,9 +345,8 @@ public class Config extends Vigilant {
 
     public Config() {
 
-        super(new File("./config/ddconfig.toml"), "Aurora", new JVMAnnotationPropertyCollector(), new ConfigSorting());
+        super(new File("./config/auroraconfig.toml"), "Aurora", new JVMAnnotationPropertyCollector(), new ConfigSorting());
         initialize();
-
     }
 
 }

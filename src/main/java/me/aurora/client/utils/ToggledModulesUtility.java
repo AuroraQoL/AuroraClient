@@ -42,9 +42,6 @@ public class ToggledModulesUtility {
         if (Config.ghostblock) {
             test.add("Ghostblocks");
         }
-        if (Config.AutoHarp) {
-            test.add("AutoHarp");
-        }
         if (Config.TpAnywhere) {
             test.add("AOTV Aura");
         }
@@ -72,9 +69,6 @@ public class ToggledModulesUtility {
         if (Config.scanner2) {
             test.add("CH Scanner");
         }
-        if (Config.AutoSneak) {
-            test.add("Auto Sneak");
-        }
         if (Config.AutoSecrets) {
             test.add("Auto Secrets");
         }
@@ -93,12 +87,6 @@ public class ToggledModulesUtility {
         if (Config.AutoCrystals) {
             test.add("Auto Crystals");
         }
-        if (Config.AutoVoodoo) {
-            test.add("Auto Voodoo");
-        }
-/*        if (Config.DungeonMap) {
-            test.add("Dungeon Map");
-        }*/
         if (Config.vclip) {
             test.add("Vertical Clip");
         }
