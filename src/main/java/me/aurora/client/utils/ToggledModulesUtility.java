@@ -30,68 +30,68 @@ public class ToggledModulesUtility {
     public static List<String> toggled() {
         List<String> test = new ArrayList<>();
 
-        if (Config.Healthbar) {
-            test.add("Health Display");
+        if (Config.hudTargetDisplay) {
+            test.add("targetDisplay");
         }
-        if (Config.watermark) {
-            test.add("Watermark");
+        if (Config.hudWatermark) {
+            test.add("watermark");
         }
-        if (Config.keystrokes) {
-            test.add("Keystrokes");
+        if (Config.hudKeystrokes) {
+            test.add("keystrokes");
         }
-        if (Config.ghostblock) {
-            test.add("Ghostblocks");
+        if (Config.ghostblocks) {
+            test.add("ghostblocks");
         }
-        if (Config.TpAnywhere) {
-            test.add("AOTV Aura");
+        if (Config.aotvAura) {
+            test.add("aotvAura");
         }
-        if (Config.AutoJoinSkyblock) {
-            test.add("Auto Join SkyBlock");
+        if (Config.fastJoin) {
+            test.add("fastJoin");
         }
-        if (Config.AutoRogue) {
-            test.add("Rogue Sword Aura");
+        if (Config.rogueSwordAura) {
+            test.add("rogueSwordAura");
         }
-        if (Config.WitherCloakAura) {
-            test.add("Wither Cloak Aura");
+        if (Config.witherCloakAura) {
+            test.add("witherCloakAura");
         }
-        if (Config.witherDoorSmasher) {
-            test.add("Wither Door Smasher");
+        if (Config.witherDoorRemover) {
+            test.add("witherDoorRemover");
         }
-        if (Config.DontSlowMyGuy) {
-            test.add("No Slow");
+        if (Config.noSlowdown) {
+            test.add("noSlowdown");
         }
-        if (Config.AutoSell) {
-            test.add("Auto Sell");
+        if (Config.autoSell) {
+            test.add("autoSell");
         }
-        if (Config.HarpStealer) {
-            test.add("Harp Stealer");
+        if (Config.harpStealer) {
+            test.add("harpStealer");
         }
-        if (Config.scanner2) {
-            test.add("CH Scanner");
+        if (Config.structureScanner) {
+            test.add("structureScanning");
         }
-        if (Config.AutoSecrets) {
-            test.add("Auto Secrets");
+        if (Config.autoSecrets) {
+            test.add("autoSecrets");
         }
-        if (Config.AutoSprint) {
-            test.add("Auto Sprint");
+        if (Config.autoSprint) {
+            test.add("autoSprint");
         }
-        if (Config.scanner) {
-            test.add("Gemstone ESP");
+        if (Config.gemstoneEsp) {
+            test.add("gemstoneEsp");
         }
-        if (Config.NoDowntime) {
-            test.add("No Downtime");
+        if (Config.noDowntime) {
+            test.add("noDowntime");
         }
-        if (Config.MelodyThrottle) {
-            test.add("Melody Throttle");
+        if (Config.melodyThrottle) {
+            test.add("melodyThrottle");
         }
-        if (Config.AutoCrystals) {
-            test.add("Auto Crystals");
+        if (Config.autoCrystals) {
+            test.add("autoCrystals");
         }
-        if (Config.vclip) {
-            test.add("Vertical Clip");
+        if (Config.verticalClip) {
+            test.add("verticalClip");
         }
-        if (Config.AutoTank) {
-            test.add("Auto Tank");
+        if (Config.autoTank) {
+            test.add("autoTank");
         }
         test.sort((String str1, String str2) -> (int) (kanitFontRenderer.getStringWidth(str2) - kanitFontRenderer.getStringWidth((String) str1)));
         return test;

@@ -14,14 +14,13 @@ import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-import java.util.HashMap;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.IntStream;
 
 /**
  * @author Gabagooooooooooool
- * @version 2.0
+ * @version 2.1
  * Structure Scanner.
  */
 public class StructureScanner {
@@ -45,18 +44,17 @@ public class StructureScanner {
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
-        if ((((mc.theWorld.getTotalWorldTime()) % (4L * Config.scanrange2)) == 0) && Config.scanner2 && readyToScan && Conditions.inGame()) {
+        if ((((mc.theWorld.getTotalWorldTime()) % (4L * Config.structureScanner_ParameterRange)) == 0) && Config.structureScanner && readyToScan && Conditions.inGame()) {
             readyToScan = false;
-            Thread scan = new Thread(() -> scanBlocks(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ), "StructureScanning");
-            scan.start();
+            new Thread(() -> scanBlocks((int) mc.thePlayer.posX, (int) mc.thePlayer.posY, (int) mc.thePlayer.posZ), "StructureScanning").start();
         }
 
     }
 
-    public void scanBlocks(Double StartX, Double StartY, Double StartZ) {
-        IntStream.range((int) (StartX - Config.scanrange2), (int) (StartX + Config.scanrange2)).forEach(x -> {
-            IntStream.range((int) (StartY - Config.scanrange2), (int) (StartY + Config.scanrange2)).forEach(y -> {
-                IntStream.range((int) (StartZ - Config.scanrange2), (int) (StartZ + Config.scanrange2)).forEach(z -> {
+    public void scanBlocks(int StartX, int StartY, int StartZ) {
+        IntStream.range(StartX - Config.structureScanner_ParameterRange, StartX + Config.structureScanner_ParameterRange).forEach(x -> {
+            IntStream.range(StartY - Config.structureScanner_ParameterRange, StartY + Config.structureScanner_ParameterRange).forEach(y -> {
+                IntStream.range(StartZ - Config.structureScanner_ParameterRange, StartZ + Config.structureScanner_ParameterRange).forEach(z -> {
                     String structureCheckResult = checkForStructureOnBlock(x, y, z);
                     if(!Objects.equals(structureCheckResult, "null")) structures.put(new BlockPos(x,y,z), structureCheckResult);
                 });
@@ -77,7 +75,7 @@ public class StructureScanner {
 
     @SubscribeEvent
     public void onRenderWorld(RenderWorldLastEvent event) {
-        if (Config.scanner2) structures.forEach((key, value) -> ScannerUtils.renderBeaconText(String.format("%s - %d %d %d", value, key.getX(), key.getY(), key.getZ()), key, event.partialTicks));
+        if (Config.structureScanner) structures.forEach((key, value) -> ScannerUtils.renderBeaconText(String.format("%s - %d %d %d", value, key.getX(), key.getY(), key.getZ()), key, event.partialTicks));
     }
 
     @SubscribeEvent

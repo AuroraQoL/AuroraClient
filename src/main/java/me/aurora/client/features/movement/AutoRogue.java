@@ -17,7 +17,7 @@ public class AutoRogue {
 
     @SubscribeEvent
     public void onInteract(PlayerInteractEvent event) {
-        if(Config.AutoRogue && Conditions.inSkyblock() && mc.thePlayer.inventory.currentItem == 0 && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR) {
+        if(Config.rogueSwordAura && Conditions.inSkyblock() && mc.thePlayer.inventory.currentItem == 0 && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR) {
                 for (int i = 0; i < 8; i++) {
                     ItemStack item = mc.thePlayer.inventory.getStackInSlot(i);
                     String itemID = SkyBlockID.getSkyBlockID(item);

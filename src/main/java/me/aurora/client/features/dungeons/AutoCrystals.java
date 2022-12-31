@@ -23,7 +23,7 @@ public class AutoCrystals {
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
-        if (Config.AutoCrystals && !tped && Conditions.inSkyblock()) {
+        if (Config.autoCrystals && !tped && Conditions.inSkyblock()) {
             if (mc.thePlayer.posX == 73.5 && mc.thePlayer.posZ == 14.5) {
                 RotationUtils.Rotation rotation = RotationUtils.getRotationToBlock(new BlockPos(66.5, 237.5, 49.5));
 

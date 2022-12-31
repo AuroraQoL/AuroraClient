@@ -36,7 +36,7 @@ public class AutoSell {
 
     @SubscribeEvent
     public void onTick(TickEndEvent event) {
-        if (sellable && Config.AutoSell && Conditions.inSkyblock() && mc.currentScreen instanceof GuiChest) {
+        if (sellable && Config.autoSell && Conditions.inSkyblock() && mc.currentScreen instanceof GuiChest) {
             List<Slot> chestInventory = ((GuiChest) mc.currentScreen).inventorySlots.inventorySlots;
             if(chestInventory.get(49).getStack() != null && chestInventory.get(49).getStack().getItem() != Item.getItemFromBlock(Blocks.barrier)) {
                 for(Slot slot : mc.thePlayer.inventoryContainer.inventorySlots) {
@@ -54,7 +54,7 @@ public class AutoSell {
 
     @SubscribeEvent
     public void onRenderGuiBackground(GuiScreenEvent.DrawScreenEvent.Pre event) {
-        if (Conditions.inSkyblock() && Config.AutoSell) {
+        if (Conditions.inSkyblock() && Config.autoSell) {
             if (event.gui instanceof GuiChest) {
                 GuiChest guiChest = (GuiChest) event.gui;
                 Container inventorySlots = guiChest.inventorySlots;

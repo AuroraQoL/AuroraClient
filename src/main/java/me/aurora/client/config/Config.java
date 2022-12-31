@@ -15,7 +15,7 @@ public class Config extends Vigilant {
             category = "HUD",
             subcategory = "Watermark"
     )
-    public static boolean watermark = true;
+    public static boolean hudWatermark = true;
         @Property(
             type = PropertyType.SELECTOR,
             name = "HUD Wave Theme",
@@ -31,7 +31,7 @@ public class Config extends Vigilant {
             category = "HUD",
             subcategory = "Colors"
     )
-    public static int colors = 6;
+    public static int hudThemeColor = 6;
     @Property(
             type = PropertyType.SWITCH,
             name = "Keystrokes",
@@ -39,7 +39,7 @@ public class Config extends Vigilant {
             category = "HUD",
             subcategory = "Keystrokes"
     )
-    public static boolean keystrokes = false;
+    public static boolean hudKeystrokes = false;
 
     @Property(
             type = PropertyType.SLIDER,
@@ -50,7 +50,7 @@ public class Config extends Vigilant {
             min = 0,
             max = 1080
     )
-    public static int keystrokesX = 0;
+    public static int hudKeystrokes_ParameterX = 0;
 
     @Property(
             type = PropertyType.SLIDER,
@@ -61,7 +61,7 @@ public class Config extends Vigilant {
             min = 0,
             max = 1920
     )
-    public static int keystrokesY = 0;
+    public static int hudKeystrokes_ParameterY = 0;
 
     @Property(
             type = PropertyType.SWITCH,
@@ -70,7 +70,7 @@ public class Config extends Vigilant {
             category = "HUD",
             subcategory = "Target Display"
     )
-    public static boolean Healthbar = false;
+    public static boolean hudTargetDisplay = false;
 
     @Property(
             type = PropertyType.SWITCH,
@@ -79,7 +79,7 @@ public class Config extends Vigilant {
             category = "Dungeons",
             subcategory = "Ghostblocks"
     )
-    public static boolean ghostblock = false;
+    public static boolean ghostblocks = false;
 
     @Property(
             type = PropertyType.SWITCH,
@@ -88,7 +88,7 @@ public class Config extends Vigilant {
             category = "Dungeons",
             subcategory = "Ghostblocks"
     )
-    public static boolean witherDoorSmasher = false;
+    public static boolean witherDoorRemover = false;
 
     @Property(
             type = PropertyType.SWITCH,
@@ -97,7 +97,7 @@ public class Config extends Vigilant {
             category = "Movement",
             subcategory = "No Slowdown"
     )
-    public static boolean DontSlowMyGuy = false;
+    public static boolean noSlowdown = false;
 
   @Property(
           type = PropertyType.SWITCH,
@@ -106,14 +106,14 @@ public class Config extends Vigilant {
           category = "QOL",
           subcategory = "Harp"
   )
-  public static boolean HarpStealer = false;
+  public static boolean harpStealer = false;
     @Property(
             type = PropertyType.SWITCH,
             name = "\247b[WIP]\247rAOTV Aura",
             description = "Allows you to teleport no matter what you're holding",
             category = "QOL"
     )
-    public static boolean TpAnywhere = false;
+    public static boolean aotvAura = false;
 
     @Property(
             type = PropertyType.SWITCH,
@@ -123,7 +123,7 @@ public class Config extends Vigilant {
             subcategory = "QOL",
             hidden = true
     )
-    public static boolean AutoSell = false;
+    public static boolean autoSell = false;
     @Property(
             type = PropertyType.SWITCH,
             name = "\247b[WIP]\247rRogue Sword Aura",
@@ -131,7 +131,7 @@ public class Config extends Vigilant {
             category = "Movement",
             subcategory = "Speed"
     )
-    public static boolean AutoRogue = false;
+    public static boolean rogueSwordAura = false;
     @Property(
             type = PropertyType.SWITCH,
             name = "Arraylist",
@@ -139,7 +139,7 @@ public class Config extends Vigilant {
             category = "HUD",
             subcategory = "Arraylist"
     )
-    public static boolean arrayList = true;
+    public static boolean hudArraylist = true;
     @Property(
             type = PropertyType.SWITCH,
             name = "Fast Join",
@@ -147,7 +147,7 @@ public class Config extends Vigilant {
             category = "QOL",
             subcategory = "Fast Join"
     )
-    public static boolean AutoJoinSkyblock = false;
+    public static boolean fastJoin = false;
     /**
      * HIDDEN. IN DEVELOPMENT
      */
@@ -159,7 +159,7 @@ public class Config extends Vigilant {
             subcategory = "Secrets",
             hidden = true
     )
-    public static boolean AutoSecrets = false;
+    public static boolean autoSecrets = false;
     @Property(
             type = PropertyType.SWITCH,
             name = "Auto Sprint",
@@ -167,7 +167,7 @@ public class Config extends Vigilant {
             category = "Movement",
             subcategory = "Sprint"
     )
-    public static boolean AutoSprint = false;
+    public static boolean autoSprint = false;
     @Property(
             type = PropertyType.SWITCH,
             name = "Melody Throttle Spammer",
@@ -175,7 +175,7 @@ public class Config extends Vigilant {
             category = "QOL",
             subcategory = "Melody"
     )
-    public static boolean MelodyThrottle = false;
+    public static boolean melodyThrottle = false;
     @Property(
             type = PropertyType.SWITCH,
             name = "No Downtime",
@@ -183,7 +183,7 @@ public class Config extends Vigilant {
             category = "Dungeons",
             subcategory = "No Downtime"
     )
-    public static boolean NoDowntime = false;
+    public static boolean noDowntime = false;
 
     @Property(
             type = PropertyType.SLIDER,
@@ -194,7 +194,7 @@ public class Config extends Vigilant {
             min = 1,
             max = 128
     )
-    public static int downtime = 128;
+    public static int noDowntime_ParameterDelay = 128;
     
     @Property(
             type = PropertyType.SWITCH,
@@ -204,7 +204,7 @@ public class Config extends Vigilant {
             subcategory = "Crystals",
             hidden = true
     )
-    public static boolean AutoCrystals = false;
+    public static boolean autoCrystals = false;
     @Property(
             type = PropertyType.SELECTOR,
             name = "Auto Crystals Sides",
@@ -224,7 +224,7 @@ public class Config extends Vigilant {
             category = "Mining",
             subcategory = "Scanner"
     )
-    public static boolean scanner = true;
+    public static boolean gemstoneEsp = true;
     @Property(
             type = PropertyType.SELECTOR,
             name = "Block ESP Type",
@@ -233,7 +233,7 @@ public class Config extends Vigilant {
             category = "Mining",
             subcategory = "Scanner"
     )
-    public static int colorsTwo = 0;
+    public static int gemstoneEsp_ParameterVisualType = 0;
     @Property(
             type = PropertyType.SLIDER,
             name = "Outlined ESP thickness",
@@ -243,7 +243,7 @@ public class Config extends Vigilant {
             min = 1,
             max = 8
     )
-    public static int thicc = 2;
+    public static int gemstoneEsp_ParameterOutlineWidth = 2;
     @Property(
             type = PropertyType.SLIDER,
             name = "Scan Range",
@@ -253,7 +253,7 @@ public class Config extends Vigilant {
             min = 16,
             max = 128
     )
-    public static int scanrange = 32;
+    public static int gemstoneEsp_ParameterRange = 32;
 
     @Property(
             type = PropertyType.SWITCH,
@@ -262,7 +262,7 @@ public class Config extends Vigilant {
             category = "Mining",
             subcategory = "Scanner"
     )
-    public static boolean scanner2 = true;
+    public static boolean structureScanner = true;
 
 
     @Property(
@@ -274,7 +274,7 @@ public class Config extends Vigilant {
             min = 16,
             max = 128
     )
-    public static int scanrange2 = 32;
+    public static int structureScanner_ParameterRange = 32;
     @Property(
             type = PropertyType.SWITCH,
             name = "\247c\247l[\u03B2] \247rExperimental Extended Scanning",
@@ -282,7 +282,7 @@ public class Config extends Vigilant {
             category = "Mining",
             subcategory = "Scanner"
     )
-    public static boolean experimentalExtendedScanning = false;
+    public static boolean gemstoneEsp_ParameterDoNotRefresh = false;
     @Property(
             type = PropertyType.SWITCH,
             name = "\247b[WIP] \247rWither Cloak Aura",
@@ -290,7 +290,7 @@ public class Config extends Vigilant {
             category = "Dungeons",
             subcategory = "Wither Cloak"
     )
-    public static boolean WitherCloakAura = false;
+    public static boolean witherCloakAura = false;
     @Property(
             type = PropertyType.SWITCH,
             name = "\247b[WIP]\247r Auto Tank",
@@ -298,7 +298,7 @@ public class Config extends Vigilant {
             category = "Dungeons",
             subcategory = "Tank"
     )
-    public static boolean AutoTank = false;
+    public static boolean autoTank = false;
     @Property(
             type = PropertyType.SWITCH,
             name = "\247b[WIP]\247r Vertical Clip",
@@ -306,7 +306,7 @@ public class Config extends Vigilant {
             category = "Dungeons",
             subcategory = "Clip"
     )
-    public static boolean vclip = false;
+    public static boolean verticalClip = false;
     @Property(
             type = PropertyType.SLIDER,
             name = "Vertical Clip Slider",
@@ -316,7 +316,7 @@ public class Config extends Vigilant {
             min = 1,
             max = 27
     )
-    public static int vclipdistance = 9;
+    public static int verticalClip_ParameterDistance = 9;
 /*
     public static boolean AutoLimbo = false;
     public static boolean SelfBan = false;

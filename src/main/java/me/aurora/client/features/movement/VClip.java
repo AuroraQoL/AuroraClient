@@ -12,8 +12,8 @@ public class VClip {
 
     @SubscribeEvent
     public void onKeyPress(InputEvent.KeyInputEvent event) {
-        if(Keyboard.isKeyDown(Keyboard.KEY_K) && Config.vclip) {
-            mc.thePlayer.setPosition(mc.thePlayer.posX, mc.thePlayer.posY - Config.vclipdistance, mc.thePlayer.posZ);
+        if(Keyboard.isKeyDown(Keyboard.KEY_K) && Config.verticalClip) {
+            mc.thePlayer.setPosition(mc.thePlayer.posX, mc.thePlayer.posY - Config.verticalClip_ParameterDistance, mc.thePlayer.posZ);
         }
     }
 }

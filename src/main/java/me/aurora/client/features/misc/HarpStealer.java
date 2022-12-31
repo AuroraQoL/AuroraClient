@@ -26,7 +26,7 @@ public class HarpStealer {
 
     @SubscribeEvent
     public void onGuiOpen(GuiOpenEvent event) {
-        if(event.gui instanceof GuiChest && Conditions.inSkyblock() && Config.HarpStealer) {
+        if(event.gui instanceof GuiChest && Conditions.inSkyblock() && Config.harpStealer) {
             if(InventoryUtils.getGuiName(event.gui).startsWith("Harp -")) {
                 AbstractCommentedConfig lastInventory = null;
                 lastInventory.clear();
@@ -37,7 +37,7 @@ public class HarpStealer {
     }
     @SubscribeEvent
     public void onTick(TickEndEvent event) {
-        if(!inHarp || !Config.HarpStealer || mc.thePlayer == null) return;
+        if(!inHarp || !Config.harpStealer || mc.thePlayer == null) return;
         String inventoryName = InventoryUtils.getInventoryName();
         if(inventoryName == null || !inventoryName.startsWith("Harp -")) inHarp = false;
 

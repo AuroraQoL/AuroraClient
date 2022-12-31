@@ -10,7 +10,7 @@ import org.lwjgl.input.Keyboard;
 public class AutoJoinSkyblock {
     @SubscribeEvent
     public void onKeyPress(InputEvent.KeyInputEvent event) {
-        if (Keyboard.isKeyDown(Keyboard.KEY_L) && Config.AutoJoinSkyblock) {
+        if (Keyboard.isKeyDown(Keyboard.KEY_L) && Config.fastJoin) {
             Aurora.mc.thePlayer.sendChatMessage("/play sb");
             ClientMessages.sendClientMessage("Auto Joining SkyBlock...");
         }

@@ -34,7 +34,7 @@ public class NoSlowButWorse {
 
     @SubscribeEvent
     public void onInteract(PlayerInteractEvent event) {
-        if(Config.DontSlowMyGuy && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR) {
+        if(Config.noSlowdown && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR) {
             if(mc.thePlayer.getHeldItem() != null) {
                 String itemID = SkyBlockID.getSkyBlockID(mc.thePlayer.getHeldItem());
                 if(swords.contains(itemID)) {

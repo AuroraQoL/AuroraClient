@@ -17,7 +17,7 @@ public class AutoSecrets {
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
-        if (Config.AutoSecrets) {
+        if (Config.autoSecrets) {
             if (mc.thePlayer.posX == 5 && mc.thePlayer.posZ == 0) {
                 RotationUtils.Rotation rotation = RotationUtils.getRotationToBlock(new BlockPos(0, 5, 0));
 

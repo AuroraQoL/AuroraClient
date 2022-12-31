@@ -12,7 +12,7 @@ public class MelodyThrottle {
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
-        if(Config.MelodyThrottle && event.type == 0) {
+        if(Config.melodyThrottle && event.type == 0) {
             String message = event.message.getFormattedText().replaceAll("\u00a7.", "");
             if(message.contains("This menu has been throttled!")) {
                 mc.thePlayer.sendChatMessage("/pc i am being throttled");

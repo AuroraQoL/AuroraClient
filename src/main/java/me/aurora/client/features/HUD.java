@@ -2,10 +2,8 @@ package me.aurora.client.features;
 
 import me.aurora.client.Aurora;
 import me.aurora.client.config.Config;
-import me.aurora.client.utils.ColorUtils;
 import me.aurora.client.utils.CurrentColor;
 import me.aurora.client.utils.ToggledModulesUtility;
-import me.aurora.client.utils.font.FontUtil;
 import me.aurora.client.utils.font.MinecraftFontRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -21,8 +19,8 @@ import java.awt.*;
 import java.io.IOException;
 
 import static me.aurora.client.Aurora.mc;
-import static me.aurora.client.config.Config.keystrokesX;
-import static me.aurora.client.config.Config.keystrokesY;
+import static me.aurora.client.config.Config.hudKeystrokes_ParameterX;
+import static me.aurora.client.config.Config.hudKeystrokes_ParameterY;
 
 /**
  * @author Gabagooooooooooool
@@ -47,24 +45,24 @@ public class HUD {
             return;
         }
         int rbw = CurrentColor.currentColorGet(0);
-        if ((Config.watermark)) {
+        if ((Config.hudWatermark)) {
             kanitFontRenderer.drawStringWithShadow("\247lAurora QoL \247r[" + "public 2.1.1" + "]", 5, 5, 0xA9A9A9);
             kanitFontRenderer.drawStringWithShadow("\247lAurora QoL \247r", 5, 5, 0xFFFFFF);
             kanitFontRenderer.drawStringWithShadow("\247lAurora", 5, 5, rbw);
             kanitFontRenderer.drawStringWithShadow("Build " + Aurora.CURRENTVERSIONBUILD, 5, 15, 0x444444);
         }
-        if (Config.keystrokes) {
-            Gui.drawRect(100 + keystrokesX, 100 + keystrokesY, 125 + keystrokesX, 125 + keystrokesY, ((GameSettings.isKeyDown(mc.gameSettings.keyBindForward) ? pressed : standby)));
-            kanitFontRenderer.drawStringWithShadow("W", 114 + keystrokesX, 106 + keystrokesY, ((GameSettings.isKeyDown(mc.gameSettings.keyBindForward) ? rbw : pressed)));
-            Gui.drawRect(73 + keystrokesX, 127 + keystrokesY, 98 + keystrokesX, 152 + keystrokesY, ((GameSettings.isKeyDown(mc.gameSettings.keyBindLeft) ? pressed : standby)));
-            kanitFontRenderer.drawStringWithShadow("A", 87 + keystrokesX, 133 + keystrokesY, ((GameSettings.isKeyDown(mc.gameSettings.keyBindLeft) ? rbw : pressed)));
-            Gui.drawRect(100 + keystrokesX, 127 + keystrokesY, 125 + keystrokesX, 152 + keystrokesY, ((GameSettings.isKeyDown(mc.gameSettings.keyBindBack) ? pressed : standby)));
-            kanitFontRenderer.drawStringWithShadow("S", 114 + keystrokesX, 133 + keystrokesY, ((GameSettings.isKeyDown(mc.gameSettings.keyBindBack) ? rbw : pressed)));
-            Gui.drawRect(127 + keystrokesX, 127 + keystrokesY, 152 + keystrokesX, 152 + keystrokesY, ((GameSettings.isKeyDown(mc.gameSettings.keyBindRight) ? pressed : standby)));
-            kanitFontRenderer.drawStringWithShadow("D", 141 + keystrokesX, 133 + keystrokesY, ((GameSettings.isKeyDown(mc.gameSettings.keyBindRight) ? rbw : pressed)));
+        if (Config.hudKeystrokes) {
+            Gui.drawRect(100 + hudKeystrokes_ParameterX, 100 + hudKeystrokes_ParameterY, 125 + hudKeystrokes_ParameterX, 125 + hudKeystrokes_ParameterY, ((GameSettings.isKeyDown(mc.gameSettings.keyBindForward) ? pressed : standby)));
+            kanitFontRenderer.drawStringWithShadow("W", 114 + hudKeystrokes_ParameterX, 106 + hudKeystrokes_ParameterY, ((GameSettings.isKeyDown(mc.gameSettings.keyBindForward) ? rbw : pressed)));
+            Gui.drawRect(73 + hudKeystrokes_ParameterX, 127 + hudKeystrokes_ParameterY, 98 + hudKeystrokes_ParameterX, 152 + hudKeystrokes_ParameterY, ((GameSettings.isKeyDown(mc.gameSettings.keyBindLeft) ? pressed : standby)));
+            kanitFontRenderer.drawStringWithShadow("A", 87 + hudKeystrokes_ParameterX, 133 + hudKeystrokes_ParameterY, ((GameSettings.isKeyDown(mc.gameSettings.keyBindLeft) ? rbw : pressed)));
+            Gui.drawRect(100 + hudKeystrokes_ParameterX, 127 + hudKeystrokes_ParameterY, 125 + hudKeystrokes_ParameterX, 152 + hudKeystrokes_ParameterY, ((GameSettings.isKeyDown(mc.gameSettings.keyBindBack) ? pressed : standby)));
+            kanitFontRenderer.drawStringWithShadow("S", 114 + hudKeystrokes_ParameterX, 133 + hudKeystrokes_ParameterY, ((GameSettings.isKeyDown(mc.gameSettings.keyBindBack) ? rbw : pressed)));
+            Gui.drawRect(127 + hudKeystrokes_ParameterX, 127 + hudKeystrokes_ParameterY, 152 + hudKeystrokes_ParameterX, 152 + hudKeystrokes_ParameterY, ((GameSettings.isKeyDown(mc.gameSettings.keyBindRight) ? pressed : standby)));
+            kanitFontRenderer.drawStringWithShadow("D", 141 + hudKeystrokes_ParameterX, 133 + hudKeystrokes_ParameterY, ((GameSettings.isKeyDown(mc.gameSettings.keyBindRight) ? rbw : pressed)));
         }
         /** MODIFIED FROM PULSE */
-        if (Config.Healthbar && (mc.thePlayer.getLastAttacker() != null)) {
+        if (Config.hudTargetDisplay && (mc.thePlayer.getLastAttacker() != null)) {
             healthBarTarget = scaledResolution.getScaledWidth() / 2 + 15 + (((125) / (mc.thePlayer.getLastAttacker().getMaxHealth())) * (mc.thePlayer.getLastAttacker().getHealth()));
             double HealthBarSpeed = 2;
             if (healthBar > healthBarTarget) {
@@ -83,7 +81,7 @@ public class HUD {
             GL11.glScalef(1, 1, 1);
             GL11.glPopMatrix();
         }
-        if (Config.arrayList) {
+        if (Config.hudArraylist) {
             int yPos = 0;
             float y3 = 0.0f;
             for (String module : ToggledModulesUtility.toggled()) {

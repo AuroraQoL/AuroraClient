@@ -22,7 +22,7 @@ public class WitherDoorRemover {
 
     @SubscribeEvent
     public void onKeyPress(InputEvent.KeyInputEvent event) {
-        if(Keyboard.isKeyDown(Keyboard.KEY_H) && Config.witherDoorSmasher) {
+        if(Keyboard.isKeyDown(Keyboard.KEY_H) && Config.witherDoorRemover) {
             MovingObjectPosition keyBlock = mc.thePlayer.rayTrace(mc.playerController.getBlockReachDistance(), 1);
             IntStream.range(keyBlock.getBlockPos().getX() - 5, keyBlock.getBlockPos().getX() + 5).forEach(x -> {
                 IntStream.range(keyBlock.getBlockPos().getY() - 5, keyBlock.getBlockPos().getY() + 5).forEach(y -> {

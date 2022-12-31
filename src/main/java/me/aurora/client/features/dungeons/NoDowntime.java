@@ -25,7 +25,7 @@ public class NoDowntime {
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) throws InterruptedException {
-        if(Config.NoDowntime && Conditions.inSkyblock()) {
+        if(Config.noDowntime && Conditions.inSkyblock()) {
             String message = event.message.getFormattedText().replaceAll("\u00a7.", "");
             messagesQueue.offer(message);
             if (messagesQueue.size() > 3) {
@@ -100,7 +100,7 @@ public class NoDowntime {
                                 ClientMessages.sendClientMessage("Joining Master Mode Catacombs Floor " + finalFl1);
                             }
                         }
-                    }, Config.downtime, TimeUnit.SECONDS);
+                    }, Config.noDowntime_ParameterDelay, TimeUnit.SECONDS);
                 }
             }
 

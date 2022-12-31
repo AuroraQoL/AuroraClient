@@ -14,7 +14,7 @@ public class WitherCloakAura {
 
     @SubscribeEvent
     public void onInteract(PlayerInteractEvent event) {
-        if (Config.WitherCloakAura && Conditions.inSkyblock() && mc.thePlayer.isInLava()) {
+        if (Config.witherCloakAura && Conditions.inSkyblock() && mc.thePlayer.isInLava()) {
             if (mc.thePlayer.getHeldItem() != null) {
                 String itemID = SkyBlockID.getSkyBlockID(mc.thePlayer.getHeldItem());
                 ItemStack item = mc.thePlayer.inventory.getCurrentItem();

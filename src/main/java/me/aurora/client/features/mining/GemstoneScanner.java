@@ -19,7 +19,7 @@ import java.util.stream.IntStream;
 
 /**
  * @author Gabagooooooooooool
- * @version 2.0
+ * @version 2.1
  * Gemstone Scanner (ESP)
  */
 
@@ -33,24 +33,23 @@ public class GemstoneScanner {
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
-        if (Config.scanner && ((mc.theWorld.getTotalWorldTime() % (2L * Config.scanrange)) == 0) && readyToScan && Conditions.inGame()) {
+        if (Config.gemstoneEsp && ((mc.theWorld.getTotalWorldTime() % (2L * Config.gemstoneEsp_ParameterRange)) == 0) && readyToScan && Conditions.inGame()) {
             readyToScan = false;
-            Thread scan = new Thread(() -> scanBlocks(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ), "ScannerThread");
-            scan.start();
+            new Thread(() -> scanBlocks((int) mc.thePlayer.posX, (int) mc.thePlayer.posY, (int) mc.thePlayer.posZ), "ScannerThread").start();
         }
 
     }
 
-    public void scanBlocks(Double StartX, Double StartY, Double StartZ) {
-        if (!Config.experimentalExtendedScanning) {
+    public void scanBlocks(int StartX, int StartY, int StartZ) {
+        if (!Config.gemstoneEsp_ParameterDoNotRefresh) {
             espModeMap.clear();
             textModeMap.clear();
         }
-        IntStream.range((int) (StartX - Config.scanrange), (int) (StartX + Config.scanrange)).forEach(x -> {
-            IntStream.range((int) (StartY - Config.scanrange), (int) (StartY + Config.scanrange)).forEach(y -> {
-                IntStream.range((int) (StartZ - Config.scanrange), (int) (StartZ + Config.scanrange)).filter(z -> (mc.theWorld.getBlockState(new BlockPos(x, y, z)).getBlock() == Blocks.stained_glass_pane || mc.theWorld.getBlockState(new BlockPos(x, y, z)).getBlock() == Blocks.stained_glass)).forEach(z -> {
+        IntStream.range(StartX - Config.gemstoneEsp_ParameterRange, StartX + Config.gemstoneEsp_ParameterRange).forEach(x -> {
+            IntStream.range(StartY - Config.gemstoneEsp_ParameterRange, StartY + Config.gemstoneEsp_ParameterRange).forEach(y -> {
+                IntStream.range(StartZ - Config.gemstoneEsp_ParameterRange, StartZ + Config.gemstoneEsp_ParameterRange).filter(z -> (mc.theWorld.getBlockState(new BlockPos(x, y, z)).getBlock() == Blocks.stained_glass_pane || mc.theWorld.getBlockState(new BlockPos(x, y, z)).getBlock() == Blocks.stained_glass)).forEach(z -> {
                     EnumDyeColor blockColor = mc.theWorld.getBlockState(new BlockPos(x, y, z)).getValue(BlockStainedGlass.COLOR);
-                    if (Config.colorsTwo == 2) {
+                    if (Config.gemstoneEsp_ParameterVisualType == 2) {
                         switch (blockColor) {
                             case RED:
                                 textModeMap.put(new BlockPos(x, y, z), "\247cR");
@@ -107,15 +106,15 @@ public class GemstoneScanner {
 
     @SubscribeEvent
     public void onRenderWorld(RenderWorldLastEvent event) {
-        if (Config.scanner) {
-            if (Config.colorsTwo == 0) {
+        if (Config.gemstoneEsp) {
+            if (Config.gemstoneEsp_ParameterVisualType == 0) {
                 if (espModeMap.entrySet().size() != 0) espModeTemportaryMap = espModeMap;
                 espModeTemportaryMap.entrySet().stream().filter(b -> {
                     return (mc.theWorld.getBlockState(b.getKey()).getBlock() != Blocks.air);
                 }).forEach(b -> {
-                    ScannerUtils.drawOutlinedBoundingBox(b.getKey(), b.getValue(), Config.thicc, event.partialTicks);
+                    ScannerUtils.drawOutlinedBoundingBox(b.getKey(), b.getValue(), Config.gemstoneEsp_ParameterOutlineWidth, event.partialTicks);
                 });
-            } else if (Config.colorsTwo == 1) {
+            } else if (Config.gemstoneEsp_ParameterVisualType == 1) {
                 if (espModeMap.entrySet().size() != 0) espModeTemportaryMap = espModeMap;
                 espModeTemportaryMap.entrySet().stream().filter(b -> {
                     return (mc.theWorld.getBlockState(b.getKey()).getBlock() != Blocks.air);
