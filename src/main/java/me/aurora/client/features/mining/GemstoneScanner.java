@@ -112,7 +112,7 @@ public class GemstoneScanner {
                 espModeTemportaryMap.entrySet().stream().filter(b -> {
                     return (mc.theWorld.getBlockState(b.getKey()).getBlock() != Blocks.air);
                 }).forEach(b -> {
-                    ScannerUtils.drawOutlinedBoundingBox(b.getKey(), b.getValue(), Config.gemstoneEsp_ParameterOutlineWidth, event.partialTicks);
+                    ScannerUtils.drawOutlinedBoundingBox(b.getKey(), b.getValue(), Config.gemstoneEsp_thicc, event.partialTicks);
                 });
             } else if (Config.gemstoneEsp_ParameterVisualType == 1) {
                 if (espModeMap.entrySet().size() != 0) espModeTemportaryMap = espModeMap;
