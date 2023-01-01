@@ -243,7 +243,7 @@ public class Config extends Vigilant {
             min = 1,
             max = 8
     )
-    public static int gemstoneEsp_ParameterOutlineWidth = 2;
+    public static int gemstoneEsp_thicc = 2;
     @Property(
             type = PropertyType.SLIDER,
             name = "Scan Range",
