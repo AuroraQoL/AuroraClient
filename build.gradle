@@ -1,45 +1,41 @@
-
 buildscript {
     repositories {
-        jcenter()
-        maven { url = "https://maven.minecraftforge.net/" }
-        maven { url = "https://jitpack.io/" }
-
+        mavenCentral()
+        gradlePluginPortal()
+        maven {
+            name = "forge"
+            url = "https://maven.minecraftforge.net/"
+        }
+        maven {
+            name = "jitpack"
+            url = "https://jitpack.io/"
+        }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "https://repo.sk1er.club/repository/maven-public" }
     }
     dependencies {
-        classpath "com.github.hard2make1name:ForgeGradle:86b2392"
+        classpath "com.github.asbyth:ForgeGradle:6f53277"
+        classpath "com.github.jengelman.gradle.plugins:shadow:6.1.0"
     }
-
 }
-
-
-
-plugins {
-    id "com.github.johnrengelman.shadow" version "6.1.0"
-}
-
-repositories {
-    maven { url = "https://repo.sk1er.club/repository/maven-public/" }
-    maven { url = "https://jitpack.io" }
-    mavenCentral()
-    flatDir {
-        dirs 'gb'
-    }}
 
 apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: "com.github.johnrengelman.shadow"
 
 version = "2.0.1"
 group= "me.aurora.client"
 archivesBaseName = "AuroraClient"
 
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+compileJava.options.encoding = 'UTF-8'
+
 sourceSets {
     main {
-        ext.refMap = "mixins.skytils.refmap.json"
         output.resourcesDir = java.outputDir
-
     }
-
 }
+
 minecraft {
     version = "1.8.9-11.15.1.2318-1.8.9"
     runDir = "run"
@@ -48,61 +44,61 @@ minecraft {
     replace "@VERSION@": project.version
 }
 
-dependencies {
-    provided files("libs/modcore.jar")
-    implementation("club.sk1er:Vigilance:104-10809-SNAPSHOT")
+configurations {
+    embed
+    implementation.extendsFrom(embed)
 }
 
+repositories {
+    mavenCentral()
+    maven { url = "https://repo.sk1er.club/repository/maven-public/" }
+    maven { url = "https://jitpack.io/" }
+    maven { url = "https://repo.spongepowered.org/repository/maven-public/" }
+}
+
+dependencies {
+    implementation "gg.essential:loader-launchwrapper:1.1.3"
+    implementation "gg.essential:essential-1.8.9-forge:2666"
+}
+
+jar {
+    manifest {
+        attributes("TweakClass": "gg.essential.loader.stage0.EssentialSetupTweaker")
+    }
+}
 
 shadowJar {
-    archiveFileName = jar.archiveFileName
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
-    relocate("club.sk1er", "club.aurora.sk1er")
-
-    exclude "LICENSE.txt"
-    exclude "pack.mcmeta"
-    exclude "dummyThing"
-    exclude "**/module-info.class"
-    exclude "*.so"
-    exclude "*.dylib"
-    exclude "*.dll"
-    exclude "*.jnilib"
-    exclude "ibxm/**"
-    exclude "com/jcraft/**"
-    exclude "org/lwjgl/**"
-    exclude "net/java/**"
-    exclude "club/sk1er/vigilance/example"
-
-    exclude "META-INF/proguard/**"
-    exclude "META-INF/maven/**"
-    exclude "META-INF/versions/**"
-    exclude "META-INF/com.android.tools/**"
+    dependencies {
+        include(dependency("gg.essential:loader-launchwrapper:1.1.3"))
+    }
+    archiveFileName = "Aurora_out.jar"
 }
+
+reobfJar.dependsOn tasks.shadowJar
 
 processResources {
     inputs.property "version", project.version
     inputs.property "mcversion", project.minecraft.version
 
     from(sourceSets.main.resources.srcDirs) {
-        include "mcmod.info"
-        expand "version":project.version, "mcversion":project.minecraft.version
+        include 'mcmod.info'
+
+        expand 'version': project.version, 'mcversion': project.minecraft.version
     }
 
     from(sourceSets.main.resources.srcDirs) {
-        exclude "mcmod.info"
+        exclude 'mcmod.info'
     }
 
+    from(file("LICENSE"))
 }
 
 reobf {
     shadowJar {
         classpath = sourceSets.main.compileClasspath
-        mappingType = "SEARGE"
+        mappingType = 'SEARGE'
     }
 }
 
-task copyDependencies(type: Copy) {
-    from configurations
-    into 'dependencies'
-}
+sourceSets { main { output.resourcesDir = java.classesDirectory } }

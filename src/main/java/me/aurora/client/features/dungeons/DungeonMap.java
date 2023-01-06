@@ -1,5 +1,6 @@
 package me.aurora.client.features.dungeons;
 
+import gg.essential.api.EssentialAPI;
 import me.aurora.client.config.Config;
 import me.aurora.client.utils.ClientMessages;
 import me.aurora.client.utils.ScannerUtils;

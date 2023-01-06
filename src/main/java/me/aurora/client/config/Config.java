@@ -1,13 +1,14 @@
 package me.aurora.client.config;
 
-import club.sk1er.vigilance.Vigilant;
-import club.sk1er.vigilance.data.*;
-import org.jetbrains.annotations.NotNull;
+import gg.essential.universal.UMinecraft;
+import gg.essential.vigilance.Vigilant;
+import gg.essential.vigilance.data.Property;
+import gg.essential.vigilance.data.PropertyType;
 
 import java.io.File;
-import java.util.Comparator;
 
 public class Config extends Vigilant {
+
     @Property(
             type = PropertyType.SWITCH,
             name = "Watermark Visibility",
@@ -16,22 +17,20 @@ public class Config extends Vigilant {
             subcategory = "Watermark"
     )
     public static boolean hudWatermark = true;
-        @Property(
+    @Property(
             type = PropertyType.SELECTOR,
             name = "HUD Wave Theme",
             description = "Change color of RGB wave",
             options = {"\247cR\2476a\247ei\247an\2479b\247bo\2475w", "\247bB\247du\247bb\247db\247bl\247de\247bg\247du\247bm",
-            "\247dS\2476u\247en\2475r\247di\2476s\247de", "\2472S\247ap\247er\2476i\247en\247ag",
-                 "\2474A\2474u\247ct\247cu\2476m\2476n", "\2479A\2473q\247bu\2473a",
+                    "\247dS\2476u\247en\2475r\247di\2476s\247de", "\2472S\247ap\247er\2476i\247en\247ag",
+                    "\2474A\2474u\247ct\247cu\2476m\2476n", "\2479A\2473q\247bu\2473a",
                     "\247fM\2477o\2478n\2477o \2477F\2478a\2477d\247fe",
                     "\2470B\2471o\2479n\2477e", "\2478C\2477o\2476p\247ep\2476e\2477r",
                     "No Wave"},
-
-
             category = "HUD",
             subcategory = "Colors"
     )
-    public static int hudThemeColor = 6;
+    public static int hudThemeColor = 1;
     @Property(
             type = PropertyType.SWITCH,
             name = "Keystrokes",
@@ -80,6 +79,14 @@ public class Config extends Vigilant {
             subcategory = "Ghostblocks"
     )
     public static boolean ghostblocks = false;
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "\2478[GHOST] \247rSecrets Unblock",
+            description = "Automaticly removes bedrock to let you use more efficient secret paths. This module is designed for usage in ghost-type scenarios, for standard use please check Ghostblocks.",
+            category = "Dungeons",
+            subcategory = "Ghost"
+    )
+    public static boolean ghost_secretsUnblock;
 
     @Property(
             type = PropertyType.SWITCH,
@@ -99,17 +106,17 @@ public class Config extends Vigilant {
     )
     public static boolean noSlowdown = false;
 
-  @Property(
-          type = PropertyType.SWITCH,
-          name = "Harp Stealer",
-          description = "Allows you to take harp, preventing other people from using it",
-          category = "QOL",
-          subcategory = "Harp"
-  )
-  public static boolean harpStealer = false;
     @Property(
             type = PropertyType.SWITCH,
-            name = "\247b[WIP]\247rAOTV Aura",
+            name = "Harp Stealer",
+            description = "Allows you to take harp, preventing other people from using it",
+            category = "QOL",
+            subcategory = "Harp"
+    )
+    public static boolean harpStealer = false;
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "\247b[WIP]\247r AOTV Aura",
             description = "Allows you to teleport no matter what you're holding",
             category = "QOL"
     )
@@ -126,7 +133,7 @@ public class Config extends Vigilant {
     public static boolean autoSell = false;
     @Property(
             type = PropertyType.SWITCH,
-            name = "\247b[WIP]\247rRogue Sword Aura",
+            name = "\247b[WIP]\247r Rogue Sword Aura",
             description = "Allows you to use rogue sword no matter what you're currently holding",
             category = "Movement",
             subcategory = "Speed"
@@ -195,7 +202,7 @@ public class Config extends Vigilant {
             max = 128
     )
     public static int noDowntime_ParameterDelay = 128;
-    
+
     @Property(
             type = PropertyType.SWITCH,
             name = "\247b[WIP]\247r Auto Crystals",
@@ -219,7 +226,7 @@ public class Config extends Vigilant {
     public static int crystalSide = 1;
     @Property(
             type = PropertyType.SWITCH,
-            name = "\247c\247l[\u03B2] \247r Gemstone ESP",
+            name = "\247c\247l[\u03B2]\247r Gemstone ESP",
             description = "Scans Crystall Hollows to reveal gemstone veins and overlays them with colored box.",
             category = "Mining",
             subcategory = "Scanner"
@@ -317,32 +324,14 @@ public class Config extends Vigilant {
             max = 27
     )
     public static int verticalClip_ParameterDistance = 9;
-/*
-    public static boolean AutoLimbo = false;
-    public static boolean SelfBan = false;
-*/
 
-    public static class ConfigSorting extends SortingBehavior {
-        @NotNull @Override
-        public Comparator<Category> getCategoryComparator() {
-            return new Comparator<Category>() {
-                @Override
-                public int compare(Category o1, Category o2) {
-                    if(o1.getName().equals("General")) {
-                        return -1;
-                    } else if(o2.getName().equals("General")) {
-                        return 1;
-                    } else {
-                        return o1.getName().compareTo(o2.getName());
-                    }
-                }
-            };
-        }
-    }
+    public static Config INSTANCE = new Config();
 
     public Config() {
-
-        super(new File("./config/auroraconfig.toml"), "Aurora", new JVMAnnotationPropertyCollector(), new ConfigSorting());
+        super(
+                new File(UMinecraft.getMinecraft().mcDataDir, "config/aurora.toml"),
+                "Aurora"
+        );
         initialize();
     }
 
