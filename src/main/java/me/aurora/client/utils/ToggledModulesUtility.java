@@ -48,6 +48,9 @@ public class ToggledModulesUtility {
         if (Config.fastJoin) {
             test.add("fastJoin");
         }
+        if (Config.ghost_secretsUnblock){
+            test.add("secretsUnblock");
+        }
         if (Config.rogueSwordAura) {
             test.add("rogueSwordAura");
         }

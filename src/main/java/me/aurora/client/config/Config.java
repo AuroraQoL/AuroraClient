@@ -86,7 +86,7 @@ public class Config extends Vigilant {
             category = "Dungeons",
             subcategory = "Ghost"
     )
-    public static boolean ghost_secretsUnblock;
+    public static boolean ghost_secretsUnblock = false;
 
     @Property(
             type = PropertyType.SWITCH,
@@ -275,7 +275,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SLIDER,
             name = "Extended Scan Range",
-            description = "Range for extended scanning (blocks)",
+            description = "Range for structure scanning (blocks)",
             category = "Mining",
             subcategory = "Scanner",
             min = 16,
@@ -284,12 +284,28 @@ public class Config extends Vigilant {
     public static int structureScanner_ParameterRange = 32;
     @Property(
             type = PropertyType.SWITCH,
-            name = "\247c\247l[\u03B2] \247rExperimental Extended Scanning",
-            description = "Faster & More efficient scanning, can cause crash.",
+            name = "Aggressive Gemstone Scanner",
+            description = "Does not wait between scans. Can cause performance issues, but allows 100% real time scanning and fix visual bugs when paired with \"Keep Blocks\"",
             category = "Mining",
             subcategory = "Scanner"
     )
-    public static boolean gemstoneEsp_ParameterDoNotRefresh = false;
+    public static boolean gemstoneEsp_ParameterAggressiveScan = false;
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Aggressive Structure Scanner",
+            description = "Does not wait between scans. Can cause performance issues, but allows 100% real time scanning.",
+            category = "Mining",
+            subcategory = "Scanner"
+    )
+    public static boolean structureScanner_ParameterAggressiveScan = false;
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Keep Blocks",
+            description = "Does not remove blocks when moving. Can cause stability issues and stackoverflow.",
+            category = "Mining",
+            subcategory = "Scanner"
+    )
+    public static boolean gemstoneEsp_ParameterKeep = false;
     @Property(
             type = PropertyType.SWITCH,
             name = "\247b[WIP] \247rWither Cloak Aura",

@@ -33,7 +33,7 @@ public class GemstoneScanner {
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
-        if (Config.gemstoneEsp && ((mc.theWorld.getTotalWorldTime() % (2L * Config.gemstoneEsp_ParameterRange)) == 0) && readyToScan && Conditions.inGame()) {
+        if (Config.gemstoneEsp && (Config.gemstoneEsp_ParameterAggressiveScan || ((mc.theWorld.getTotalWorldTime() % (2L * Config.gemstoneEsp_ParameterRange)) == 0)) && readyToScan && Conditions.inGame()) {
             readyToScan = false;
             new Thread(() -> scanBlocks((int) mc.thePlayer.posX, (int) mc.thePlayer.posY, (int) mc.thePlayer.posZ), "ScannerThread").start();
         }
@@ -41,7 +41,7 @@ public class GemstoneScanner {
     }
 
     public void scanBlocks(int StartX, int StartY, int StartZ) {
-        if (!Config.gemstoneEsp_ParameterDoNotRefresh) {
+        if (!Config.gemstoneEsp_ParameterKeep) {
             espModeMap.clear();
             textModeMap.clear();
         }

@@ -44,7 +44,7 @@ public class StructureScanner {
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
-        if ((((mc.theWorld.getTotalWorldTime()) % (4L * Config.structureScanner_ParameterRange)) == 0) && Config.structureScanner && readyToScan && Conditions.inGame()) {
+        if (((((mc.theWorld.getTotalWorldTime()) % (4L * Config.structureScanner_ParameterRange)) == 0) || Config.structureScanner_ParameterAggressiveScan) && Config.structureScanner && readyToScan && Conditions.inGame()) {
             readyToScan = false;
             new Thread(() -> scanBlocks((int) mc.thePlayer.posX, (int) mc.thePlayer.posY, (int) mc.thePlayer.posZ), "StructureScanning").start();
         }
