@@ -82,7 +82,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "\2478[GHOST] \247rSecrets Unblock",
-            description = "Automaticly removes bedrock to let you use more efficient secret paths. This module is designed for usage in ghost-type scenarios, for standard use please check Ghostblocks.",
+            description = "Automatically removes bedrock to let you use more efficient secret paths. This module is designed for usage in ghost-type scenarios, for standard use please check Ghostblocks.",
             category = "Dungeons",
             subcategory = "Ghost"
     )
@@ -279,7 +279,7 @@ public class Config extends Vigilant {
             category = "Mining",
             subcategory = "Scanner",
             min = 16,
-            max = 128
+            max = 256
     )
     public static int structureScanner_ParameterRange = 32;
     @Property(
