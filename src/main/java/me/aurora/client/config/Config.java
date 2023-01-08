@@ -176,6 +176,15 @@ public class Config extends Vigilant {
     )
     public static boolean autoSprint = false;
     @Property(
+            type = PropertyType.SELECTOR,
+            name = "Auto Sprint Mode",
+            description = "",
+            options = {"Legit", "Omni"},
+            category = "Movement",
+            subcategory = "Sprint"
+    )
+    public static int autoSprintSettings = 0;
+    @Property(
             type = PropertyType.SWITCH,
             name = "Melody Throttle Spammer",
             description = "Spams party chat when you are being throttled",
