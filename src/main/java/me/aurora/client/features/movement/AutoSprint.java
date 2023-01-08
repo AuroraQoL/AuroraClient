@@ -1,5 +1,6 @@
 package me.aurora.client.features.movement;
 
+import me.aurora.client.Aurora;
 import me.aurora.client.config.Config;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings;
@@ -13,9 +14,18 @@ public class AutoSprint {
 
     @SubscribeEvent
     public void LivingUpdateEvent(LivingEvent.LivingUpdateEvent event) {
-        if (event.entityLiving instanceof EntityPlayer) {
-            if (Config.autoSprint && Minecraft.getMinecraft().thePlayer.onGround && (GameSettings.isKeyDown(mc.gameSettings.keyBindRight) || GameSettings.isKeyDown(mc.gameSettings.keyBindLeft) || GameSettings.isKeyDown(mc.gameSettings.keyBindForward) || GameSettings.isKeyDown(mc.gameSettings.keyBindBack))) {
-                mc.thePlayer.setSprinting(true);
+        if (Config.autoSprintSettings == 0) {
+            if (event.entityLiving instanceof EntityPlayer) {
+                if (Config.autoSprint && Minecraft.getMinecraft().thePlayer.onGround && !mc.thePlayer.isSneaking() && !mc.thePlayer.isUsingItem() && (GameSettings.isKeyDown(mc.gameSettings.keyBindForward))) {
+                    mc.thePlayer.setSprinting(true);
+                }
+            }
+        }
+        if (Config.autoSprintSettings == 1) {
+            if (event.entityLiving instanceof EntityPlayer) {
+                if (Config.autoSprint && (GameSettings.isKeyDown(mc.gameSettings.keyBindRight) || GameSettings.isKeyDown(mc.gameSettings.keyBindLeft) || GameSettings.isKeyDown(mc.gameSettings.keyBindForward) || GameSettings.isKeyDown(mc.gameSettings.keyBindBack))) {
+                    mc.thePlayer.setSprinting(true);
+                }
             }
         }
     }
