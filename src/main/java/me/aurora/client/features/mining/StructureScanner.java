@@ -20,7 +20,7 @@ import java.util.stream.IntStream;
 
 /**
  * @author Gabagooooooooooool
- * @version 2.1
+ * @version 2.2
  * Structure Scanner.
  */
 public class StructureScanner {
@@ -39,16 +39,20 @@ public class StructureScanner {
     BlockStone.EnumType[] stonePropThronePillarB = {null, BlockStone.EnumType.DIORITE, null, null, null, BlockStone.EnumType.DIORITE, null, null, null};
     Block[] blocksThronePillarC = {Blocks.stone, Blocks.stone_brick_stairs, Blocks.double_stone_slab, Blocks.stone, Blocks.stone, Blocks.stone_slab, Blocks.stone_slab};
     BlockStone.EnumType[] stonePropThronePillarC = {BlockStone.EnumType.ANDESITE_SMOOTH, null, null, BlockStone.EnumType.DIORITE, BlockStone.EnumType.DIORITE, null, null};
-
-
-
+    
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
-        if (((((mc.theWorld.getTotalWorldTime()) % (4L * Config.structureScanner_ParameterRange)) == 0) || Config.structureScanner_ParameterAggressiveScan) && Config.structureScanner && readyToScan && Conditions.inGame()) {
+        if ((( (!Config.structureScanner_ParameterAggressiveScan) ? (((mc.theWorld.getTotalWorldTime()) % (4L * Config.structureScanner_ParameterRange)) == 0) : (((mc.theWorld.getTotalWorldTime()) % ((int) (Config.structureScanner_ParameterRange/8))) == 0) ) && Config.structureScanner && readyToScan && Conditions.inGame())) {
             readyToScan = false;
-            new Thread(() -> scanBlocks((int) mc.thePlayer.posX, (int) mc.thePlayer.posY, (int) mc.thePlayer.posZ), "StructureScanning").start();
+            CompletableFuture.runAsync(() -> {
+                Thread T = new Thread(() -> scanBlocks((int) mc.thePlayer.posX, (int) mc.thePlayer.posY, (int) mc.thePlayer.posZ), "ScannerThread+" + new Random().nextInt(10000 - 5 + 1) + 5);
+                T.start();
+                new ScheduledThreadPoolExecutor(1).schedule(() -> {
+                    if (T.isAlive()) T.interrupt();
+                    readyToScan = true;
+                }, 10, TimeUnit.SECONDS);
+            });
         }
-
     }
 
     public void scanBlocks(int StartX, int StartY, int StartZ) {
