@@ -43,17 +43,16 @@ public class StructureScanner {
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
         int rang =  Config.structureScanner_ParameterRange;
-        if ((( (!Config.structureScanner_ParameterAggressiveScan) ? (((mc.theWorld.getTotalWorldTime()) % (4L * rang)) == 0) : (((mc.theWorld.getTotalWorldTime()) % ((int) (Config.structureScanner_ParameterRange/4))) == 0) ) && Config.structureScanner && readyToScan && Conditions.inGame())) {
+        if ((( (!Config.structureScanner_ParameterAggressiveScan) ? (((mc.theWorld.getTotalWorldTime()) % (4L * rang)) == 0) : (((mc.theWorld.getTotalWorldTime()) % ((int) (Config.structureScanner_ParameterRange/6))) == 0) ) && Config.structureScanner && readyToScan && Conditions.inGame())) {
             readyToScan = false;
             CompletableFuture.runAsync(() -> {
                 Thread T = new Thread(() -> scanBlocks((int) mc.thePlayer.posX, (int) mc.thePlayer.posY, (int) mc.thePlayer.posZ, rang), "ScannerThread+" + new Random().nextInt(10000 - 5 + 1) + 5);
-                System.out.println(T.getName() + " is starting.");
                 new ScheduledThreadPoolExecutor(1).schedule(() -> {
                     if (T.isAlive()) {
                         T.stop();
                         readyToScan = true;
                     }
-                }, 10, TimeUnit.SECONDS);
+                }, 20, TimeUnit.SECONDS);
                 T.start();
             });
         }
