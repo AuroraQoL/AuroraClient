@@ -1,5 +1,6 @@
 package me.aurora.client.utils;
 
+import me.aurora.client.utils.conditions.Conditions;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStone;
 import net.minecraft.block.state.BlockState;
@@ -15,21 +16,25 @@ import static me.aurora.client.Aurora.mc;
 
 /**
  * @author Gabagooooooooooool
- * @version 1.1
+ * @version 1.2
  * Util for verifying stacked blocks integrity.
  */
 public class LookupBlockUtils {
 
     public static boolean blocksAbove(BlockPos baseBlock, Block[] blockList, BlockStone.EnumType[] stoneParameters){
         for (int i = 0; i < blockList.length; i++) {
-            if (mc.theWorld.getBlockState(new BlockPos(baseBlock.getX(), baseBlock.getY() + i, baseBlock.getZ())).getBlock() == blockList[i]) {
-                if (stoneParameters[i] != null && (mc.theWorld.getBlockState(new BlockPos(baseBlock.getX(), baseBlock.getY() + i, baseBlock.getZ())).getBlock() == Blocks.stone)){
-                    IBlockState BS = mc.theWorld.getBlockState(new BlockPos(baseBlock.getX(), baseBlock.getY() + i, baseBlock.getZ()));
-                    if (BS.getBlock() == Blocks.stone && !(BS == Blocks.air)) {
-                        if (BS.getValue(BlockStone.VARIANT) != stoneParameters[i]) {
-                            return false;
+            if (Conditions.inGame()) {
+                if (mc.theWorld.getBlockState(new BlockPos(baseBlock.getX(), baseBlock.getY() + i, baseBlock.getZ())).getBlock() == blockList[i]) {
+                    if (stoneParameters[i] != null && (mc.theWorld.getBlockState(new BlockPos(baseBlock.getX(), baseBlock.getY() + i, baseBlock.getZ())).getBlock() == Blocks.stone)) {
+                        IBlockState BS = mc.theWorld.getBlockState(new BlockPos(baseBlock.getX(), baseBlock.getY() + i, baseBlock.getZ()));
+                        if (BS.getBlock() == Blocks.stone && !(BS == Blocks.air)) {
+                            if (BS.getValue(BlockStone.VARIANT) != stoneParameters[i]) {
+                                return false;
+                            }
                         }
                     }
+                } else {
+                    return false;
                 }
             } else {
                 return false;
