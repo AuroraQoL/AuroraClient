@@ -52,7 +52,7 @@ public class StructureScanner {
                         T.stop();
                         readyToScan = true;
                     }
-                }, 20, TimeUnit.SECONDS);
+                }, 30, TimeUnit.SECONDS);
                 T.start();
             });
         }
