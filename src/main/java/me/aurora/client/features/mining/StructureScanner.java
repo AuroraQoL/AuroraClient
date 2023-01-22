@@ -40,33 +40,25 @@ public class StructureScanner {
     Block[] blocksThronePillarC = {Blocks.stone, Blocks.stone_brick_stairs, Blocks.double_stone_slab, Blocks.stone, Blocks.stone, Blocks.stone_slab, Blocks.stone_slab};
     BlockStone.EnumType[] stonePropThronePillarC = {BlockStone.EnumType.ANDESITE_SMOOTH, null, null, BlockStone.EnumType.DIORITE, BlockStone.EnumType.DIORITE, null, null};
     
-    @SubscribeEvent
+@SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
         int rang =  Config.structureScanner_ParameterRange;
         if ((( (!Config.structureScanner_ParameterAggressiveScan) ? (((mc.theWorld.getTotalWorldTime()) % (4L * rang)) == 0) : (((mc.theWorld.getTotalWorldTime()) % ((int) (Config.structureScanner_ParameterRange/8))) == 0) ) && Config.structureScanner && readyToScan && Conditions.inGame())) {
-            readyToScan = false;
-            CompletableFuture.runAsync(() -> {
-                Thread T = new Thread(() -> scanBlocks((int) mc.thePlayer.posX, (int) mc.thePlayer.posY, (int) mc.thePlayer.posZ, rang), "ScannerThread+" + new Random().nextInt(10000 - 5 + 1) + 5);
-                new ScheduledThreadPoolExecutor(1).schedule(() -> {
-                    if (T.isAlive()) {
-                        T.stop();
-                        readyToScan = true;
-                    }
-                }, 30, TimeUnit.SECONDS);
-                T.start();
-            });
+                readyToScan = false;
+                CompletableFuture.runAsync(() -> scanBlocks((int) mc.thePlayer.posX, (int) mc.thePlayer.posY, (int) mc.thePlayer.posZ));
         }
+        if ( (((mc.theWorld.getTotalWorldTime()) % (16L * rang)) == 0) && !readyToScan) readyToScan=true;
     }
 
-    public void scanBlocks(int StartX, int StartY, int StartZ, int range) {
-        for (int x = StartX -range; x <= StartX +range; x++) {
-            for (int y = StartY -range; y <= StartY +range; y++) {
-                for (int z = StartZ -range; z <= StartZ +range; z++) {
+    public void scanBlocks(int StartX, int StartY, int StartZ) {
+        IntStream.range(StartX - Config.structureScanner_ParameterRange, StartX + Config.structureScanner_ParameterRange).forEach(x -> {
+            IntStream.range(StartY - Config.structureScanner_ParameterRange, StartY + Config.structureScanner_ParameterRange).forEach(y -> {
+                IntStream.range(StartZ - Config.structureScanner_ParameterRange, StartZ + Config.structureScanner_ParameterRange).forEach(z -> {
                     String structureCheckResult = checkForStructureOnBlock(x, y, z);
                     if(!Objects.equals(structureCheckResult, "null")) structures.put(new BlockPos(x,y,z), structureCheckResult);
-                }
-            }
-        }
+                });
+            });
+        });
         readyToScan = true;
     }
 
