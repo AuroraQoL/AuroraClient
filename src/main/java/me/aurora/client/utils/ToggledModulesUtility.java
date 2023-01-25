@@ -96,6 +96,9 @@ public class ToggledModulesUtility {
         if (Config.autoTank) {
             test.add("autoTank");
         }
+        if (Config.crystalPlacer) {
+            test.add("crystalPlacer");
+        }
         test.sort((String str1, String str2) -> (int) (kanitFontRenderer.getStringWidth(str2) - kanitFontRenderer.getStringWidth((String) str1)));
         return test;
     }

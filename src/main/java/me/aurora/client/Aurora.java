@@ -1,13 +1,15 @@
 package me.aurora.client;
 
+import gg.essential.api.EssentialAPI;
+import me.aurora.client.commands.AuroraSpammerCommand;
 import me.aurora.client.config.Config;
 import me.aurora.client.config.ConfigCommand;
 import me.aurora.client.events.TickEndEvent;
 import me.aurora.client.features.HUD;
-import gg.essential.api.EssentialAPI;
 import me.aurora.client.features.dungeons.*;
 import me.aurora.client.features.mining.GemstoneScanner;
 import me.aurora.client.features.mining.StructureScanner;
+import me.aurora.client.features.misc.AntiLimbo;
 import me.aurora.client.features.misc.AutoJoinSkyblock;
 import me.aurora.client.features.misc.HarpStealer;
 import me.aurora.client.features.misc.MelodyThrottle;
@@ -30,7 +32,7 @@ public class Aurora
     public static final String MODID = "bossbar_customizer";
     public static final String MODNAME = "BossbarCustomizer";
     public static final String VERSION = "1.2.1";
-    public static final String CURRENTVERSIONBUILD = "253";
+    public static final String CURRENTVERSIONBUILD = "302";
     public static GuiScreen guiToOpen = null;
     public static Config config;
     public static Minecraft mc = Minecraft.getMinecraft();
@@ -38,6 +40,7 @@ public class Aurora
     @EventHandler
     public void init(FMLInitializationEvent event) throws IOException, FontFormatException {
         EssentialAPI.getCommandRegistry().registerCommand(new ConfigCommand());
+        EssentialAPI.getCommandRegistry().registerCommand(new AuroraSpammerCommand());
         MinecraftForge.EVENT_BUS.register(this);
         config = new Config();
         config.preload();
@@ -63,6 +66,8 @@ public class Aurora
         MinecraftForge.EVENT_BUS.register(new AutoTank());
         MinecraftForge.EVENT_BUS.register(new NoBedrock());
         MinecraftForge.EVENT_BUS.register(new VClip());
+        MinecraftForge.EVENT_BUS.register(new CrystalPlacer());
+        MinecraftForge.EVENT_BUS.register(new AntiLimbo());
     }
 
     @SubscribeEvent

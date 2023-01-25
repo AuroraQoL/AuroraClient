@@ -15,6 +15,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.IntStream;
 
@@ -39,20 +40,36 @@ public class StructureScanner {
     BlockStone.EnumType[] stonePropThronePillarB = {null, BlockStone.EnumType.DIORITE, null, null, null, BlockStone.EnumType.DIORITE, null, null, null};
     Block[] blocksThronePillarC = {Blocks.stone, Blocks.stone_brick_stairs, Blocks.double_stone_slab, Blocks.stone, Blocks.stone, Blocks.stone_slab, Blocks.stone_slab};
     BlockStone.EnumType[] stonePropThronePillarC = {BlockStone.EnumType.ANDESITE_SMOOTH, null, null, BlockStone.EnumType.DIORITE, BlockStone.EnumType.DIORITE, null, null};
-    
-@SubscribeEvent
+
+    @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
         int rang =  Config.structureScanner_ParameterRange;
         if ((( (!Config.structureScanner_ParameterAggressiveScan) ? (((mc.theWorld.getTotalWorldTime()) % (4L * rang)) == 0) : (((mc.theWorld.getTotalWorldTime()) % ((int) (Config.structureScanner_ParameterRange/8))) == 0) ) && Config.structureScanner && readyToScan && Conditions.inGame())) {
-                readyToScan = false;
+            readyToScan = false;
+            if(Config.structureScanner_ParameterThread){
+                CompletableFuture.runAsync(() -> scanBlocksFast((int) mc.thePlayer.posX, (int) mc.thePlayer.posY, (int) mc.thePlayer.posZ));
+            } else {
                 CompletableFuture.runAsync(() -> scanBlocks((int) mc.thePlayer.posX, (int) mc.thePlayer.posY, (int) mc.thePlayer.posZ));
+            }
         }
         if ( (((mc.theWorld.getTotalWorldTime()) % (16L * rang)) == 0) && !readyToScan) readyToScan=true;
     }
 
     public void scanBlocks(int StartX, int StartY, int StartZ) {
-        IntStream.range(StartX - Config.structureScanner_ParameterRange, StartX + Config.structureScanner_ParameterRange).forEach(x -> {
-            IntStream.range(StartY - Config.structureScanner_ParameterRange, StartY + Config.structureScanner_ParameterRange).forEach(y -> {
+        IntStream.range(StartY - Config.structureScanner_ParameterRange, StartY + Config.structureScanner_ParameterRange).filter(y -> (y>31 && y<180)).forEach(y -> {
+            IntStream.range(StartX - Config.structureScanner_ParameterRange, StartX + Config.structureScanner_ParameterRange).forEach(x -> {
+                IntStream.range(StartZ - Config.structureScanner_ParameterRange, StartZ + Config.structureScanner_ParameterRange).forEach(z -> {
+                    String structureCheckResult = checkForStructureOnBlock(x, y, z);
+                    if(!Objects.equals(structureCheckResult, "null")) structures.put(new BlockPos(x,y,z), structureCheckResult);
+                });
+            });
+        });
+        readyToScan = true;
+    }
+
+    public void scanBlocksFast(int StartX, int StartY, int StartZ) {
+        IntStream.range(StartX - Config.structureScanner_ParameterRange, StartX + Config.structureScanner_ParameterRange).parallel().forEach(x -> {
+            IntStream.range(StartY - Config.structureScanner_ParameterRange, StartY + Config.structureScanner_ParameterRange).filter(y -> (y>31 && y<180)).forEach(y -> {
                 IntStream.range(StartZ - Config.structureScanner_ParameterRange, StartZ + Config.structureScanner_ParameterRange).forEach(z -> {
                     String structureCheckResult = checkForStructureOnBlock(x, y, z);
                     if(!Objects.equals(structureCheckResult, "null")) structures.put(new BlockPos(x,y,z), structureCheckResult);
@@ -63,6 +80,8 @@ public class StructureScanner {
     }
 
     public String checkForStructureOnBlock(int x, int y, int z) {
+        BlockPos check = new BlockPos(x,y,z);
+        if (mc.theWorld.getBlockState(check).getBlock().equals(Blocks.air)) return "null";
         if (LookupBlockUtils.blocksAbove(new BlockPos(x,y,z), blocksSpiralPillarA, stonePropSpiralPillarA)) return "SPIRAL-Pillar-A";
         if (LookupBlockUtils.blocksAbove(new BlockPos(x,y,z), blocksThronePillarA, stonePropThronePillarA)) return "THRONE-Pillar-A";
         if (LookupBlockUtils.blocksAbove(new BlockPos(x,y,z), blocksThronePillarB, stonePropThronePillarB)) return "THRONE-Pillar-B";

@@ -46,7 +46,7 @@ public class HUD {
         }
         int rbw = CurrentColor.currentColorGet(0);
         if ((Config.hudWatermark)) {
-            kanitFontRenderer.drawStringWithShadow("\247lAurora QoL \247r[" + "public 2.5.3" + "]", 5, 5, 0xA9A9A9);
+            kanitFontRenderer.drawStringWithShadow("\247lAurora QoL \247r[" + "public 3.0.2" + "]", 5, 5, 0xA9A9A9);
             kanitFontRenderer.drawStringWithShadow("\247lAurora QoL \247r", 5, 5, 0xFFFFFF);
             kanitFontRenderer.drawStringWithShadow("\247lAurora", 5, 5, rbw);
             kanitFontRenderer.drawStringWithShadow("Build " + Aurora.CURRENTVERSIONBUILD, 5, 15, 0x444444);

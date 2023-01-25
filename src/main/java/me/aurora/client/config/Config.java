@@ -155,6 +155,14 @@ public class Config extends Vigilant {
             subcategory = "Fast Join"
     )
     public static boolean fastJoin = false;
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Multi-Threading",
+            description = "\247cREQUIRES DECENT OCTA-CORE CPU FOR SMOOTH USAGE",
+            category = "Mining",
+            subcategory = "Scanner"
+    )
+    public static boolean structureScanner_ParameterThread = false;
     /**
      * HIDDEN. IN DEVELOPMENT
      */
@@ -222,6 +230,15 @@ public class Config extends Vigilant {
     )
     public static boolean autoCrystals = false;
     @Property(
+            type = PropertyType.SWITCH,
+            name = "\247b[WIP]\247r Crystal Placer",
+            description = "Jump into iron blocks while holding a crystal in order to place it",
+            category = "Dungeons",
+            subcategory = "Crystals",
+            hidden = true
+    )
+    public static boolean crystalPlacer = false;
+    @Property(
             type = PropertyType.SELECTOR,
             name = "Auto Crystals Sides",
             description = "Change What Crystal You Want To Do",
@@ -241,6 +258,15 @@ public class Config extends Vigilant {
             subcategory = "Scanner"
     )
     public static boolean gemstoneEsp = true;
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "kaotic is a furry",
+            description = "furry",
+            category = "kaotic",
+            subcategory = "furry",
+            hidden = true
+    )
+    public static boolean antiLimbo = false;
     @Property(
             type = PropertyType.SELECTOR,
             name = "Block ESP Type",
