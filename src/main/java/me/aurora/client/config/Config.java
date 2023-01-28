@@ -8,7 +8,14 @@ import gg.essential.vigilance.data.PropertyType;
 import java.io.File;
 
 public class Config extends Vigilant {
-
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Automatic Updates",
+            description = "Automatically updates client after you close the game.",
+            category = "Other",
+            subcategory = "Updates"
+    )
+    public static boolean autoUpdate = true;
     @Property(
             type = PropertyType.SWITCH,
             name = "Watermark Visibility",

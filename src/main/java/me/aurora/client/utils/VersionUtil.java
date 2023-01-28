@@ -12,9 +12,6 @@ import java.util.Scanner;
 
 public class VersionUtil {
     public static boolean isOutdated(int num) throws IOException {
-        return (new Scanner(new URL("https://raw.githubusercontent.com/OctoSplash01/badxd/main/current.txt").openConnection().getInputStream()).nextInt()) > num;
-    }
-    public static boolean isForced(int num) throws IOException {
-        return (new Scanner(new URL("https://raw.githubusercontent.com/OctoSplash01/badxd/main/forced.txt").openConnection().getInputStream()).nextInt()) > num;
+        return (new Scanner(new URL("https://raw.githubusercontent.com/Gabagooooooooooool/sup/main/ver.txt").openConnection().getInputStream()).nextInt()) > num;
     }
 }
