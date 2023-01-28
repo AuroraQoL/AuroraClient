@@ -23,6 +23,7 @@ import java.util.stream.IntStream;
  * @author Gabagooooooooooool
  * @version 2.2
  * Structure Scanner.
+ * The code bellow is protected using GNU AGPL (https://www.gnu.org/licenses/agpl-3.0.en.html)
  */
 public class StructureScanner {
     private final ConcurrentHashMap<BlockPos, String> structures = new ConcurrentHashMap<>();
