@@ -14,6 +14,7 @@ import me.aurora.client.features.misc.AutoJoinSkyblock;
 import me.aurora.client.features.misc.HarpStealer;
 import me.aurora.client.features.misc.MelodyThrottle;
 import me.aurora.client.features.movement.*;
+import me.aurora.client.krypton.Main;
 import me.aurora.client.utils.VersionUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
@@ -77,6 +78,7 @@ public class Aurora
         MinecraftForge.EVENT_BUS.register(new VClip());
         MinecraftForge.EVENT_BUS.register(new CrystalPlacer());
         MinecraftForge.EVENT_BUS.register(new AntiLimbo());
+        MinecraftForge.EVENT_BUS.register(new Main());
         if (VersionUtil.isOutdated(Integer.parseInt(CURRENTVERSIONBUILD))) {
             Runtime.getRuntime().addShutdownHook(new Thread(this::update));
         }
