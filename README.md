@@ -5,3 +5,6 @@
 
 # Discord
 https://discord.gg/uqv4c2pkgb
+
+# Website
+http://auroraclient.lol/
