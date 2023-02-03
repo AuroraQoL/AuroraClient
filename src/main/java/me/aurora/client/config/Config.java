@@ -9,6 +9,14 @@ import java.io.File;
 
 public class Config extends Vigilant {
     @Property(
+            type = PropertyType.PARAGRAPH,
+            name = "Script (Demo)",
+            description = "Enter your script here :)",
+            category = "Krypton (Demo)",
+            subcategory = "Script"
+    )
+    public static String script = "";
+    @Property(
             type = PropertyType.SWITCH,
             name = "Automatic Updates",
             description = "Automatically updates client after you close the game.",
