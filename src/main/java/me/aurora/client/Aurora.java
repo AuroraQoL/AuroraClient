@@ -79,6 +79,7 @@ public class Aurora
         MinecraftForge.EVENT_BUS.register(new CrystalPlacer());
         MinecraftForge.EVENT_BUS.register(new AntiLimbo());
         MinecraftForge.EVENT_BUS.register(new Main());
+        MinecraftForge.EVENT_BUS.register(new AutoSellBz());
         if (VersionUtil.isOutdated(Integer.parseInt(CURRENTVERSIONBUILD))) {
             Runtime.getRuntime().addShutdownHook(new Thread(this::update));
         }
