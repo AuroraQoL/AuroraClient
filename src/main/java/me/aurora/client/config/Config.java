@@ -33,6 +33,14 @@ public class Config extends Vigilant {
     )
     public static boolean hudWatermark = true;
     @Property(
+            type = PropertyType.SWITCH,
+            name = "Auto Sell Items on Bazaar",
+            description = "Automatically sells your items on bazaar if your inventory is full",
+            category = "QOL",
+            subcategory = "Bazaar"
+    )
+    public static boolean autoSellBz = false;
+    @Property(
             type = PropertyType.SELECTOR,
             name = "HUD Wave Theme",
             description = "Change color of RGB wave",
