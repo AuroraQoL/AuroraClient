@@ -19,6 +19,7 @@ public class AutoSellBz {
     private int delay = 0;
     private boolean inBazaar = false;
     private boolean areYouSure = false;
+    private boolean readyToSell = false;
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
@@ -27,6 +28,7 @@ public class AutoSellBz {
             if(message.equals("Your inventory is full!")) {
                 mc.thePlayer.sendChatMessage("/bz");
                 ClientMessages.sendClientMessage("Selling Items on Bazaar...");
+                readyToSell = true;
             }
         }
     }
@@ -35,18 +37,19 @@ public class AutoSellBz {
     public void onBackgroundRender(GuiScreenEvent.BackgroundDrawnEvent event) {
         String chestName = InventoryUtils.getGuiName(event.gui);
         inBazaar = chestName.contains("Bazaar");
-        areYouSure = chestName.equals("Are you sure?");
+        areYouSure = chestName.contains("Are you sure?");
     }
 
     @SubscribeEvent
     public void onTick(TickEvent event) {
         if (delay % 5 == 0) {
             if (mc.currentScreen instanceof GuiChest) {
-                if (inBazaar && Config.autoSellBz) {
+                if (inBazaar && Config.autoSellBz && readyToSell) {
                     mc.playerController.windowClick(mc.thePlayer.openContainer.windowId, 48, 2, 3, mc.thePlayer);
                 }
                 else if (areYouSure && Config.autoSellBz) {
                     mc.playerController.windowClick(mc.thePlayer.openContainer.windowId, 12, 2, 3, mc.thePlayer);
+                    readyToSell = false;
                 }
             }
         }
