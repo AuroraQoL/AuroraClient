@@ -9,6 +9,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
@@ -25,10 +26,15 @@ public class AutoSellBz {
     public void onChat(ClientChatReceivedEvent event) {
         if(Config.autoSellBz && event.type == 0) {
             String message = event.message.getFormattedText().replaceAll("\u00a7.", "");
-            if(message.equals("Your inventory is full!")) {
+            if (message.equals("Your inventory is full!")) {
+                readyToSell = true;
                 mc.thePlayer.sendChatMessage("/bz");
                 ClientMessages.sendClientMessage("Selling Items on Bazaar...");
-                readyToSell = true;
+            }
+            else if (message.equals("[Bazaar] Executing instant sell...")) {
+                readyToSell = false;
+                mc.thePlayer.closeScreen();
+                ClientMessages.sendClientMessage("Sold Items on Bazaar");
             }
         }
     }
@@ -37,7 +43,7 @@ public class AutoSellBz {
     public void onBackgroundRender(GuiScreenEvent.BackgroundDrawnEvent event) {
         String chestName = InventoryUtils.getGuiName(event.gui);
         inBazaar = chestName.contains("Bazaar");
-        areYouSure = chestName.contains("Are you sure?");
+        areYouSure = chestName.contains("Are you sure");
     }
 
     @SubscribeEvent
@@ -45,14 +51,18 @@ public class AutoSellBz {
         if (delay % 5 == 0) {
             if (mc.currentScreen instanceof GuiChest) {
                 if (inBazaar && Config.autoSellBz && readyToSell) {
-                    mc.playerController.windowClick(mc.thePlayer.openContainer.windowId, 48, 2, 3, mc.thePlayer);
+                    mc.playerController.windowClick(mc.thePlayer.openContainer.windowId, 47, 1, 0, mc.thePlayer);
                 }
-                else if (areYouSure && Config.autoSellBz) {
-                    mc.playerController.windowClick(mc.thePlayer.openContainer.windowId, 12, 2, 3, mc.thePlayer);
-                    readyToSell = false;
+                else if (areYouSure && Config.autoSellBz && readyToSell) {
+                    mc.playerController.windowClick(mc.thePlayer.openContainer.windowId, 11, 1, 0, mc.thePlayer);
                 }
             }
         }
         delay++;
+    }
+
+    @SubscribeEvent
+    public void onWorldChange(WorldEvent.Load event) {
+        readyToSell = false;
     }
 }
