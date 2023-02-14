@@ -11,7 +11,11 @@ import java.util.Scanner;
  */
 
 public class VersionUtil {
-    public static boolean isOutdated(int num) throws IOException {
-        return (new Scanner(new URL("https://raw.githubusercontent.com/Gabagooooooooooool/sup/main/ver.txt").openConnection().getInputStream()).nextInt()) > num;
+    public static boolean isOutdated(int num) {
+        try {
+            return (new Scanner(new URL("https://raw.githubusercontent.com/Gabagooooooooooool/sup/main/ver.txt").openConnection().getInputStream()).nextInt()) > num;
+        } catch (IOException ignored) {
+            return false;
+        }
     }
 }

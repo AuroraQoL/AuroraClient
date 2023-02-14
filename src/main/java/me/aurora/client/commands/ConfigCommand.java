@@ -1,30 +1,17 @@
 package me.aurora.client.commands;
 
-import me.aurora.client.Aurora;
-import net.minecraft.command.CommandBase;
-import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommandSender;
+import gg.essential.api.EssentialAPI;
+import gg.essential.api.commands.Command;
+import gg.essential.api.commands.DefaultHandler;
+import me.aurora.client.config.Config;
 
-public class ConfigCommand extends CommandBase {
-
-    @Override
-    public String getCommandName() {
-        return "aurora";
+public class ConfigCommand extends Command {
+    public ConfigCommand() {
+        super("aurora", true, false);
     }
 
-    @Override
-    public String getCommandUsage(ICommandSender sender) {
-        return "/" + getCommandName();
+    @DefaultHandler
+    public void handle() {
+        EssentialAPI.getGuiUtil().openScreen(Config.INSTANCE.gui());
     }
-
-    @Override
-    public void processCommand(ICommandSender sender, String[] args) throws CommandException {
-          Aurora.guiToOpen = Aurora.config.gui();
-    }
-
-    @Override
-    public int getRequiredPermissionLevel() {
-        return 0;
-    }
-
 }

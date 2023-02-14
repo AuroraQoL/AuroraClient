@@ -30,7 +30,7 @@ public class ToggledModulesUtility {
     public static List<String> toggled() {
         List<String> test = new ArrayList<>();
 
-        if (Config.hudTargetDisplay) {
+        if (Config.hudFPS) {
             test.add("targetDisplay");
         }
         if (Config.hudWatermark) {

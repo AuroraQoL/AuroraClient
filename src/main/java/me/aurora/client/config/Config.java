@@ -4,10 +4,57 @@ import gg.essential.universal.UMinecraft;
 import gg.essential.vigilance.Vigilant;
 import gg.essential.vigilance.data.Property;
 import gg.essential.vigilance.data.PropertyType;
+import me.aurora.client.Aurora;
 
 import java.io.File;
+import java.util.Locale;
 
 public class Config extends Vigilant {
+    @Property(
+            type = PropertyType.BUTTON,
+            name = "Move Elements",
+            category = "HUD",
+            description = "Move elements",
+            placeholder = "Edit HUD"
+    )
+    void button() {
+        Aurora.hudEdit.display();
+    }
+
+    ////////////
+    ////////////
+    ////////////
+
+
+    @Property(
+            type = PropertyType.NUMBER, name = "WATERMARK_X", category = "pos", hidden = true)
+    public static int WATERMARK_X = 5;
+    @Property(
+            type = PropertyType.NUMBER, name = "WATERMARK_Y", category = "pos", hidden = true)
+    public static int WATERMARK_Y = 5;
+    @Property(
+            type = PropertyType.NUMBER, name = "KEY_X", category = "pos", hidden = true)
+    public static int KEYSTROKES_X = 150;
+    @Property(
+            type = PropertyType.NUMBER, name = "KEY_Y", category = "pos", hidden = true)
+    public static int KEYSTROKES_Y = 150;
+    @Property(
+            type = PropertyType.NUMBER, name = "FPS_X", category = "pos", hidden = true)
+    public static int FPS_X = 300;
+    @Property(
+            type = PropertyType.NUMBER, name = "FPS_Y", category = "pos", hidden = true)
+    public static int FPS_Y = 300;
+    @Property(
+            type = PropertyType.NUMBER, name = "P_X", category = "pos", hidden = true)
+    public static int PACKET_X = 200;
+    @Property(
+            type = PropertyType.NUMBER, name = "P_Y", category = "pos", hidden = true)
+    public static int PACKET_Y = 100;
+
+    ////////////
+    ////////////
+    ////////////
+
     @Property(
             type = PropertyType.PARAGRAPH,
             name = "Script (Demo)",
@@ -59,40 +106,26 @@ public class Config extends Vigilant {
             name = "Keystrokes",
             description = "",
             category = "HUD",
-            subcategory = "Keystrokes"
+            subcategory = "Modules"
     )
     public static boolean hudKeystrokes = false;
 
     @Property(
-            type = PropertyType.SLIDER,
-            name = "Keystrokes Position X",
-            description = "",
+            type = PropertyType.SWITCH,
+            name = "FPS",
+            description = "Displays current FPS",
             category = "HUD",
-            subcategory = "Keystrokes",
-            min = 0,
-            max = 1080
+            subcategory = "Modules"
     )
-    public static int hudKeystrokes_ParameterX = 0;
-
-    @Property(
-            type = PropertyType.SLIDER,
-            name = "Keystrokes Position Y",
-            description = "",
-            category = "HUD",
-            subcategory = "Keystrokes",
-            min = 0,
-            max = 1920
-    )
-    public static int hudKeystrokes_ParameterY = 0;
-
+    public static boolean hudFPS = false;
     @Property(
             type = PropertyType.SWITCH,
-            name = "Target Display",
-            description = "Displays health and other info of current target.",
+            name = "Packet Debug",
+            description = "Displays time since last recieved packet (in seconds)",
             category = "HUD",
-            subcategory = "Target Display"
+            subcategory = "Modules"
     )
-    public static boolean hudTargetDisplay = false;
+    public static boolean hudPacket = false;
 
     @Property(
             type = PropertyType.SWITCH,
@@ -328,6 +361,22 @@ public class Config extends Vigilant {
             subcategory = "Scanner"
     )
     public static boolean structureScanner = true;
+    @Property(
+            type = PropertyType.CHECKBOX,
+            name = "Freecam Structure Scanning",
+            description = "Enables freecam module support",
+            category = "Mining",
+            subcategory = "Scanner"
+    )
+    public static boolean structureScanner_freecam = true;
+    @Property(
+            type = PropertyType.CHECKBOX,
+            name = "Only scan for Dillo spots",
+            description = "Only scans for Dillo spots, improving performance",
+            category = "Mining",
+            subcategory = "Scanner"
+    )
+    public static boolean structureScanner_dillo = true;
 
 
     @Property(
@@ -398,6 +447,58 @@ public class Config extends Vigilant {
             max = 27
     )
     public static int verticalClip_ParameterDistance = 9;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Grass ESP",
+            description = "Overlays grass in Garden for the cleaning-up task.",
+            category = "Garden",
+            subcategory = "ESP"
+    )
+    public static boolean grassEsp = true;
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Auto-Composter",
+            description = "Configurable Auto-composter.",
+            category = "Garden",
+            subcategory = "Auto-Composter"
+    )
+    public static boolean autoComposter = true;
+    @Property(
+            type = PropertyType.SLIDER,
+            name = "Auto-Composter delay",
+            description = "Delay between actions (in ticks).",
+            category = "Garden",
+            subcategory = "Auto-Composter",
+            min=3,
+            max=20
+    )
+    public static int composter_delay = 8;
+    @Property(
+            type = PropertyType.SELECTOR,
+            name = "Crops insertion type",
+            description = "",
+            options = {"From sacks", "From inventory", "Don't insert"},
+            category = "Garden",
+            subcategory = "Auto-Composter"
+    )
+    public static int composter_crop = 1;
+    @Property(
+            type = PropertyType.CHECKBOX,
+            name = "Fuel insertion",
+            description = "",
+            category = "Garden",
+            subcategory = "Auto-Composter"
+    )
+    public static boolean composter_fuel = true;
+    @Property(
+            type = PropertyType.CHECKBOX,
+            name = "Collect compost",
+            description = "",
+            category = "Garden",
+            subcategory = "Auto-Composter"
+    )
+    public static boolean composter_compost = true;
 
     public static Config INSTANCE = new Config();
 

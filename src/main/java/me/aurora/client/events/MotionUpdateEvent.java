@@ -1,9 +1,11 @@
 package me.aurora.client.events;
+
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
 /**
  * IMPLEMENTED FROM SHADYADDONS
+ *
  * @author jxee
  */
 @Cancelable
