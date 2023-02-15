@@ -99,6 +99,15 @@ public class ToggledModulesUtility {
         if (Config.crystalPlacer) {
             test.add("crystalPlacer");
         }
+        if (Config.autoComposter) {
+            test.add("autoComposter");
+        }
+        if (Config.grassEsp) {
+            test.add("grassEsp");
+        }
+        if (Config.autoSellBz) {
+            test.add("autoSellBazaar");
+        }
         test.sort((String str1, String str2) -> (int) (kanitFontRenderer.getStringWidth(str2) - kanitFontRenderer.getStringWidth((String) str1)));
         return test;
     }
