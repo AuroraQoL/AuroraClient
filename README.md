@@ -7,4 +7,4 @@
 https://discord.gg/9GJXNKfHkC
 
 # Website
-https://auroraclient.lol
+https://auroraclient.lol/
