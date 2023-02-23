@@ -121,7 +121,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "Packet Debug",
-            description = "Displays time since last recieved packet (in seconds)",
+            description = "Displays time since last received packet (in seconds)",
             category = "HUD",
             subcategory = "Modules"
     )
@@ -161,7 +161,14 @@ public class Config extends Vigilant {
             subcategory = "No Slowdown"
     )
     public static boolean noSlowdown = false;
-
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Term Notification",
+            description = "Notifies you if we get terminated",
+            category = "Discord",
+            subcategory = "Server"
+    )
+    public static boolean termNotification = true;
     @Property(
             type = PropertyType.SWITCH,
             name = "Harp Stealer",
@@ -264,7 +271,6 @@ public class Config extends Vigilant {
             subcategory = "No Downtime"
     )
     public static boolean noDowntime = false;
-
     @Property(
             type = PropertyType.SLIDER,
             name = "No Downtime Delay",
@@ -290,8 +296,7 @@ public class Config extends Vigilant {
             name = "\247b[WIP]\247r Crystal Placer",
             description = "Jump into iron blocks while holding a crystal in order to place it",
             category = "Dungeons",
-            subcategory = "Crystals",
-            hidden = true
+            subcategory = "Crystals"
     )
     public static boolean crystalPlacer = false;
     @Property(
