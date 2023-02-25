@@ -1,6 +1,7 @@
 package me.aurora.client.features.dungeons;
 
 import me.aurora.client.config.Config;
+import me.aurora.client.features.Module;
 import me.aurora.client.utils.KeybindUtils;
 import me.aurora.client.utils.PacketUtils;
 import me.aurora.client.utils.RotationUtils;
@@ -16,7 +17,16 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
  * MODIFIED FROM SHADYADDONS
  * @author jxee
  */
-public class AutoCrystals {
+public class AutoCrystals implements Module {
+
+    public String name() {
+        return "AutoCrystal";
+    }
+
+    public boolean toggled() {
+        return Config.autoCrystals;
+    }
+
     static Minecraft mc = Minecraft.getMinecraft();
     private static boolean tped = false;
     private static boolean sentSneak = false;

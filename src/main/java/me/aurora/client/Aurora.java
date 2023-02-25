@@ -1,6 +1,7 @@
 package me.aurora.client;
 
 import gg.essential.api.EssentialAPI;
+import gg.essential.api.commands.Command;
 import me.aurora.client.commands.AuroraSpammerCommand;
 import me.aurora.client.commands.HUDCommand;
 import me.aurora.client.config.Config;
@@ -9,6 +10,7 @@ import me.aurora.client.config.HUDEdit;
 import me.aurora.client.events.TickEndEvent;
 import me.aurora.client.events.packets.PacketHandler;
 import me.aurora.client.features.ArrayList;
+import me.aurora.client.features.Module;
 import me.aurora.client.features.dungeons.*;
 import me.aurora.client.features.garden.AutoComposter;
 import me.aurora.client.features.garden.GrassESP;
@@ -18,10 +20,11 @@ import me.aurora.client.features.misc.*;
 import me.aurora.client.features.movement.*;
 import me.aurora.client.features.visual.*;
 import me.aurora.client.krypton.Main;
-import me.aurora.client.utils.Keybinds;
+import me.aurora.client.utils.FPSUtils;
 import me.aurora.client.utils.VersionUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -31,7 +34,6 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.opengl.Display;
-import scala.collection.parallel.ParIterableLike;
 
 import java.awt.*;
 import java.io.File;
@@ -40,85 +42,66 @@ import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
-@Mod(modid = Aurora.MODID, name = Aurora.MODNAME, version = Aurora.VERSION, clientSideOnly = true)
-public class Aurora
-{
-    public static final String MODID = "bossbar_customizer";
-    public static final String MODNAME = "BossbarCustomizer";
-    public static final String VERSION = "1.2.1";
-    public static final String CURRENTVERSIONBUILD = "333";
-    public static HUDEdit hudEdit = new HUDEdit();
-
-    public static GuiScreen guiToOpen = null;
-    public static Config config;
+@Mod(modid = "bossbar_customizer", name = "BossbarCustomizer", version = "1.2.1", clientSideOnly = true)
+public class Aurora {
+    public static final int CURRENT_VERSION_BUILD = 999;
+    private static final Set<Element> hudModules = new HashSet<>();
     public static Minecraft mc = Minecraft.getMinecraft();
-    public static File modFile = null;
-
-    public static java.util.ArrayList<Element> getHudModules() {
+    public static ResourceLocation fontLocation;
+    private static final HUDEdit hudEdit = new HUDEdit();
+    private static GuiScreen guiToOpen = null;
+    private static File modFile = null;
+    private static final java.util.ArrayList<Module> modules = new java.util.ArrayList<>();
+    public static Set<Element> getHudModules() {
         return hudModules;
     }
 
-    private static java.util.ArrayList<Element> hudModules = new java.util.ArrayList<Element>();
+    public static ResourceLocation getFontLocation() {
+        return fontLocation;
+    }
 
+    public static java.util.ArrayList<Module> getModules() {
+        return modules;
+    }
+
+    public static void setGuiToOpen(GuiScreen guiToOpen) {
+        Aurora.guiToOpen = guiToOpen;
+    }
+
+    public static HUDEdit getHudEdit() {
+        return hudEdit;
+    }
 
     @EventHandler
     public void init(FMLInitializationEvent event) throws IOException, FontFormatException {
-        Display.setTitle("Minecraft 1.8.9 - Aurora 3.3.3");
-        EssentialAPI.getCommandRegistry().registerCommand(new ConfigCommand());
-        EssentialAPI.getCommandRegistry().registerCommand(new HUDCommand());
-        EssentialAPI.getCommandRegistry().registerCommand(new AuroraSpammerCommand());
+        Display.setTitle("Minecraft 1.8.9 - Aurora 3.4 pre-release 2");
         MinecraftForge.EVENT_BUS.register(this);
-        config = new Config();
-        config.preload();
-        MinecraftForge.EVENT_BUS.register(new ArrayList());
-        MinecraftForge.EVENT_BUS.register(new AutoSell());
-        MinecraftForge.EVENT_BUS.register(new Ghostblock());
-        MinecraftForge.EVENT_BUS.register(new WitherDoorRemover());
-        MinecraftForge.EVENT_BUS.register(new TpAnywhere());
-        MinecraftForge.EVENT_BUS.register(new HarpStealer());
-        MinecraftForge.EVENT_BUS.register(new NoSlowButWorse());
-        MinecraftForge.EVENT_BUS.register(new GemstoneScanner());
-        MinecraftForge.EVENT_BUS.register(new TickEndEvent());
-        MinecraftForge.EVENT_BUS.register(new AutoJoinSkyblock());
-        MinecraftForge.EVENT_BUS.register(new AutoRogue());
-        MinecraftForge.EVENT_BUS.register(new AutoSecrets());
-        MinecraftForge.EVENT_BUS.register(new MelodyThrottle());
-        MinecraftForge.EVENT_BUS.register(new StructureScanner());
-/*        MinecraftForge.EVENT_BUS.register(new AutoGabagool());
-        MinecraftForge.EVENT_BUS.register(new AutoGabagoolTEST());*/
-        MinecraftForge.EVENT_BUS.register(new NoDowntime());
-        MinecraftForge.EVENT_BUS.register(new AutoSprint());
-        MinecraftForge.EVENT_BUS.register(new AutoCrystals());
-        MinecraftForge.EVENT_BUS.register(new WitherCloakAura());
-        MinecraftForge.EVENT_BUS.register(new DungeonMap());
-        MinecraftForge.EVENT_BUS.register(new AutoTank());
-        MinecraftForge.EVENT_BUS.register(new NoBedrock());
-        MinecraftForge.EVENT_BUS.register(new VClip());
-        MinecraftForge.EVENT_BUS.register(new CrystalPlacer());
-        MinecraftForge.EVENT_BUS.register(new AntiLimbo());
-        MinecraftForge.EVENT_BUS.register(new Main());
-        MinecraftForge.EVENT_BUS.register(new AutoSellBz());
-        MinecraftForge.EVENT_BUS.register(new PacketHandler());
-        MinecraftForge.EVENT_BUS.register(new GrassESP());
-        MinecraftForge.EVENT_BUS.register(new AutoComposter());
-        MinecraftForge.EVENT_BUS.register(new UpdateReminder());
-        Keybinds.register();
-        if (VersionUtil.isOutdated(Integer.parseInt(CURRENTVERSIONBUILD))) {
+        new Config().preload();
+        selectFont();
+        registerModules(new ArrayList(), new AutoSell(), new Ghostblock(), new WitherDoorRemover(),
+                new TpAnywhere(), new HarpStealer(), new NoSlowButWorse(), new GemstoneScanner(),
+                new AutoJoinSkyblock(), new AutoRogue(), new AutoSecrets(), new MelodyThrottle(),
+                new StructureScanner(), new NoDowntime(), new AutoSprint(), new AutoCrystals(),
+                new WitherCloakAura(), new AutoTank(), new NoBedrock(), new VClip(),
+                new CrystalPlacer(), new AntiLimbo(), new AutoSellBz(), new GrassESP(),
+                new AutoComposter(), new RatEsp());
+        registerHud(new Watermark(), new Keystrokes(), new PacketDebug(), new FPS());
+        registerEvents(new TickEndEvent(), new Main(), new PacketHandler(), new FPSUtils());
+        registerCommand(new AuroraSpammerCommand(), new HUDCommand(), new ConfigCommand());
+        if (VersionUtil.isOutdated(CURRENT_VERSION_BUILD))
             Runtime.getRuntime().addShutdownHook(new Thread(this::update));
-        }
-        hudModules.add(new Watermark());
-        hudModules.add(new Keystrokes());
-        hudModules.add(new PacketDebug());
-        hudModules.add(new FPS());
     }
 
     @SubscribeEvent
     public void onTick(TickEvent event) {
-        if (guiToOpen!=null){
+        if (guiToOpen != null) {
             mc.displayGuiScreen(guiToOpen);
-            guiToOpen=null;
+            setGuiToOpen(null);
         }
     }
 
@@ -131,9 +114,7 @@ public class Aurora
             ProcessBuilder pb = new ProcessBuilder("java", "-jar", "\"" + updater.getAbsolutePath() + "\"", "1000", "\"" + modFile.getAbsolutePath() + "\"", "mainrepo");
             Process p = pb.start();
             System.out.println("Updating...");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (IOException ignored) {}
     }
 
     @Mod.EventHandler
@@ -143,8 +124,47 @@ public class Aurora
 
     @SubscribeEvent
     public void renderGameOverlayEvent(RenderGameOverlayEvent.Post event) {
-        hudModules.forEach(x->hudEdit.RenderGUI(x));
+        for (Element hudModule : hudModules) {
+            getHudEdit().RenderGUI(hudModule);
+        }
     }
 
+    private void registerModules(Module... modules_t) {
+        for (Module module : modules_t) {
+            getModules().add(module);
+            MinecraftForge.EVENT_BUS.register(module);
+        }
+    }
 
+    private void registerEvents(Object... events) {
+        for (Object event : events) {
+            MinecraftForge.EVENT_BUS.register(event);
+        }
+    }
+
+    private void registerHud(Element... elements) {
+        hudModules.addAll(Arrays.asList(elements));
+    }
+
+    private void registerCommand(Command... commands) {
+        for (Command command : commands) {
+            EssentialAPI.getCommandRegistry().registerCommand(command);
+        }
+    }
+
+    private void selectFont() {
+        String location = "dailydungeons:res/";
+        switch (Config.hudFont) {
+            case 0:
+                location += "kanit.ttf";
+                break;
+            case 1:
+                location += "oldkanit.ttf";
+                break;
+            case 2:
+                location += "dys.ttf";
+                break;
+        }
+        fontLocation = new ResourceLocation(location);
+    }
 }

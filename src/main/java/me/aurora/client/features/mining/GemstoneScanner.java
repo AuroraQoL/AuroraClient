@@ -1,8 +1,10 @@
 package me.aurora.client.features.mining;
 
 import me.aurora.client.config.Config;
+import me.aurora.client.features.Module;
 import me.aurora.client.utils.ScannerUtils;
 import me.aurora.client.utils.conditions.Conditions;
+import me.aurora.client.utils.iteration.LoopUtils;
 import net.minecraft.block.BlockStainedGlass;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
@@ -23,7 +25,15 @@ import java.util.stream.IntStream;
  * Gemstone Scanner (ESP)
  */
 
-public class GemstoneScanner {
+public class GemstoneScanner  implements Module {
+    public String name() {
+        return "GemstoneScanner";
+    }
+
+    public boolean toggled() {
+        return Config.gemstoneEsp;
+    }
+
     private final ConcurrentHashMap<BlockPos, Color> espModeMap = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<BlockPos, String> textModeMap = new ConcurrentHashMap<>();
     boolean readyToScan = true;
@@ -42,9 +52,9 @@ public class GemstoneScanner {
 
     public void scanBlocks(int StartX, int StartY, int StartZ) {
         if (!Config.gemstoneEsp_ParameterKeep) {
-            espModeMap.clear();
-            textModeMap.clear();
+            removeMissing(espModeMap, textModeMap);
         }
+     //   LoopUtils.brLoopBound(StartX, StartY, StartZ, Config.gemstoneEsp_ParameterRange, lambda, 0, 255);
         IntStream.range(StartX - Config.gemstoneEsp_ParameterRange, StartX + Config.gemstoneEsp_ParameterRange).forEach(x -> {
             IntStream.range(StartY - Config.gemstoneEsp_ParameterRange, StartY + Config.gemstoneEsp_ParameterRange).forEach(y -> {
                 IntStream.range(StartZ - Config.gemstoneEsp_ParameterRange, StartZ + Config.gemstoneEsp_ParameterRange).filter(z -> (mc.theWorld.getBlockState(new BlockPos(x, y, z)).getBlock() == Blocks.stained_glass_pane || mc.theWorld.getBlockState(new BlockPos(x, y, z)).getBlock() == Blocks.stained_glass)).forEach(z -> {
@@ -136,6 +146,13 @@ public class GemstoneScanner {
     public void onWorldChange(WorldEvent.Load event) {
         espModeMap.clear();
         textModeMap.clear();
+    }
+
+    @SafeVarargs
+    private final void removeMissing(ConcurrentHashMap<BlockPos, ?>... hashmaps){
+        for (ConcurrentHashMap<BlockPos, ?> hashmap : hashmaps) {
+            hashmap.entrySet().removeIf(x -> mc.theWorld.getBlockState(x.getKey()).getBlock() == Blocks.stained_glass_pane || mc.theWorld.getBlockState(x.getKey()).getBlock() == Blocks.stained_glass);
+        }
     }
     
 }

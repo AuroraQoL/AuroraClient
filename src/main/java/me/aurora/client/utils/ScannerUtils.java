@@ -1,5 +1,6 @@
 package me.aurora.client.utils;
 
+import me.aurora.client.Aurora;
 import me.aurora.client.utils.font.MinecraftFontRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -12,7 +13,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
@@ -25,12 +25,11 @@ import java.io.IOException;
 
 public class ScannerUtils {
 
-    static ResourceLocation kanitLocation = new ResourceLocation("dailydungeons:font/kanit.ttf");
     static MinecraftFontRenderer kanitRender;
 
     static {
         try {
-            kanitRender = new MinecraftFontRenderer(Font.createFont(Font.TRUETYPE_FONT, Minecraft.getMinecraft().getResourceManager().getResource(kanitLocation).getInputStream()).deriveFont(Font.PLAIN, 19f), true, false);
+            kanitRender = new MinecraftFontRenderer(Font.createFont(Font.TRUETYPE_FONT, Minecraft.getMinecraft().getResourceManager().getResource(Aurora.getFontLocation()).getInputStream()).deriveFont(Font.PLAIN, 19f), true, false);
         } catch (FontFormatException | IOException ignored) {
         }
         ;

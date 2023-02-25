@@ -12,6 +12,6 @@ public class HUDCommand extends Command {
 
     @DefaultHandler
     public void handle() {
-        Aurora.hudEdit.display();
+        Aurora.getHudEdit().display();
     }
 }

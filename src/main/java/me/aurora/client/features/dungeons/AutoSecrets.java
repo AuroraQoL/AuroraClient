@@ -1,6 +1,7 @@
 package me.aurora.client.features.dungeons;
 
 import me.aurora.client.config.Config;
+import me.aurora.client.features.Module;
 import me.aurora.client.utils.KeybindUtils;
 import me.aurora.client.utils.PacketUtils;
 import me.aurora.client.utils.RotationUtils;
@@ -10,7 +11,15 @@ import net.minecraft.util.BlockPos;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-public class AutoSecrets {
+public class AutoSecrets implements Module {
+
+    public String name() {
+        return "AutoSecrets";
+    }
+
+    public boolean toggled() {
+        return Config.autoSecrets;
+    }
 
     static Minecraft mc = Minecraft.getMinecraft();
     private static boolean sentSneak = false;

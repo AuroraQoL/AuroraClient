@@ -2,12 +2,20 @@ package me.aurora.client.features.misc;
 
 import gg.essential.api.EssentialAPI;
 import me.aurora.client.config.Config;
+import me.aurora.client.features.Module;
 import me.aurora.client.utils.ClientMessages;
-import me.aurora.client.utils.Timer;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class UpdateReminder {
+public class UpdateReminder  implements Module {
+    public String name() {
+        return "UpdateReminder";
+    }
+
+    public boolean toggled() {
+        return false;
+    }
+
     private boolean sendMessage = true;
 
     @SubscribeEvent

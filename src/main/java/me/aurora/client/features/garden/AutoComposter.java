@@ -1,6 +1,7 @@
 package me.aurora.client.features.garden;
 
 import me.aurora.client.config.Config;
+import me.aurora.client.features.Module;
 import me.aurora.client.utils.InventoryUtils;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.init.Items;
@@ -11,7 +12,15 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import static me.aurora.client.Aurora.mc;
 
-public class AutoComposter {
+public class AutoComposter  implements Module {
+    public String name() {
+        return "AutoComposter";
+    }
+
+    public boolean toggled() {
+        return Config.autoComposter;
+    }
+
     private int delay = 0;
     private boolean inComposter = false;
     private boolean prevComposter = false;

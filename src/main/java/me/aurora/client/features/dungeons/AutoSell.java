@@ -1,6 +1,7 @@
 package me.aurora.client.features.dungeons;
 
 import me.aurora.client.config.Config;
+import me.aurora.client.features.Module;
 import me.aurora.client.utils.ClientMessages;
 import me.aurora.client.events.TickEndEvent;
 import me.aurora.client.utils.conditions.Conditions;
@@ -20,9 +21,16 @@ import java.util.List;
 /**
  * Modified code from (i think) ShadyAddons.
  * */
-public class AutoSell {
-    private boolean sellable = false;
+public class AutoSell  implements Module {
 
+    public String name() {
+        return "AutoSell";
+    }
+
+    public boolean toggled() {
+        return Config.autoSell;
+    }
+    private boolean sellable = false;
 
     private static final String[] dungeonShit = new String[]{
             "Training Weight",

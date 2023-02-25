@@ -1,6 +1,7 @@
 package me.aurora.client.features.dungeons;
 
 import me.aurora.client.config.Config;
+import me.aurora.client.features.Module;
 import me.aurora.client.utils.Keybinds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
@@ -13,7 +14,15 @@ import org.lwjgl.input.Keyboard;
 import java.util.function.Consumer;
 
 
-public class Ghostblock {
+public class Ghostblock  implements Module {
+
+    public String name() {
+        return "Ghostblock";
+    }
+
+    public boolean toggled() {
+        return Config.ghostblocks;
+    }
 
 
     Minecraft mc = Minecraft.getMinecraft();

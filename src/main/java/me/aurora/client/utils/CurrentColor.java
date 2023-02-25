@@ -33,6 +33,23 @@ public class CurrentColor {
         return Color.WHITE.getRGB();
     }
 
+    public static float getFloatValue(float offset, int color){
+        Color tempC = new Color(CurrentColor.currentColorGet(offset));
+        int tempC_ = 0;
+        switch (color){
+            case 0:
+                tempC_ = tempC.getRed();
+                break;
+            case 1:
+                tempC_ = tempC.getGreen();
+                break;
+            case 2:
+                tempC_ = tempC.getBlue();
+                break;
+
+        }
+        return (((float) tempC_) / 255F);
+    }
     /**
      * Following method has been circulating in Minecraft Hacking Community for a while, making it impossible to trace original author.
      */

@@ -1,13 +1,11 @@
 package me.aurora.client.features.misc;
 
 import me.aurora.client.config.Config;
+import me.aurora.client.features.Module;
 import me.aurora.client.utils.ClientMessages;
 import me.aurora.client.utils.InventoryUtils;
 import me.aurora.client.utils.Keybinds;
-import me.aurora.client.utils.conditions.Conditions;
 import net.minecraft.client.gui.inventory.GuiChest;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.event.world.WorldEvent;
@@ -17,8 +15,14 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import static me.aurora.client.Aurora.mc;
 
-public class AutoSellBz {
+public class AutoSellBz  implements Module {
+    public String name() {
+        return "AutoSellBZ";
+    }
 
+    public boolean toggled() {
+        return Config.autoSellBz;
+    }
     private int delay = 0;
     private boolean inBazaar = false;
     private boolean areYouSure = false;

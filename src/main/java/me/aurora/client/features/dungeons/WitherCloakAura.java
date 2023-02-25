@@ -1,6 +1,7 @@
 package me.aurora.client.features.dungeons;
 
 import me.aurora.client.config.Config;
+import me.aurora.client.features.Module;
 import me.aurora.client.utils.SkyBlockID;
 import me.aurora.client.utils.conditions.Conditions;
 import net.minecraft.client.Minecraft;
@@ -8,7 +9,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class WitherCloakAura {
+public class WitherCloakAura implements Module {
+
+    public String name() {
+        return "WitherCloakAura";
+    }
+
+    public boolean toggled() {
+        return Config.witherCloakAura;
+    }
 
     static Minecraft mc = Minecraft.getMinecraft();
 
