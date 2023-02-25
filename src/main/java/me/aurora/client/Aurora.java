@@ -18,6 +18,7 @@ import me.aurora.client.features.misc.*;
 import me.aurora.client.features.movement.*;
 import me.aurora.client.features.visual.*;
 import me.aurora.client.krypton.Main;
+import me.aurora.client.utils.Keybinds;
 import me.aurora.client.utils.VersionUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
@@ -30,6 +31,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.opengl.Display;
+import scala.collection.parallel.ParIterableLike;
 
 import java.awt.*;
 import java.io.File;
@@ -46,7 +48,7 @@ public class Aurora
     public static final String MODID = "bossbar_customizer";
     public static final String MODNAME = "BossbarCustomizer";
     public static final String VERSION = "1.2.1";
-    public static final String CURRENTVERSIONBUILD = "330";
+    public static final String CURRENTVERSIONBUILD = "333";
     public static HUDEdit hudEdit = new HUDEdit();
 
     public static GuiScreen guiToOpen = null;
@@ -63,7 +65,7 @@ public class Aurora
 
     @EventHandler
     public void init(FMLInitializationEvent event) throws IOException, FontFormatException {
-        Display.setTitle("Minecraft 1.8.9 - Aurora 3.3");
+        Display.setTitle("Minecraft 1.8.9 - Aurora 3.3.3");
         EssentialAPI.getCommandRegistry().registerCommand(new ConfigCommand());
         EssentialAPI.getCommandRegistry().registerCommand(new HUDCommand());
         EssentialAPI.getCommandRegistry().registerCommand(new AuroraSpammerCommand());
@@ -101,6 +103,8 @@ public class Aurora
         MinecraftForge.EVENT_BUS.register(new PacketHandler());
         MinecraftForge.EVENT_BUS.register(new GrassESP());
         MinecraftForge.EVENT_BUS.register(new AutoComposter());
+        MinecraftForge.EVENT_BUS.register(new UpdateReminder());
+        Keybinds.register();
         if (VersionUtil.isOutdated(Integer.parseInt(CURRENTVERSIONBUILD))) {
             Runtime.getRuntime().addShutdownHook(new Thread(this::update));
         }
