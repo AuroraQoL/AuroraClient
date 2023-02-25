@@ -4,11 +4,13 @@ import me.aurora.client.config.Config;
 import me.aurora.client.features.Module;
 import me.aurora.client.utils.ClientMessages;
 import me.aurora.client.utils.InventoryUtils;
+import me.aurora.client.utils.Keybinds;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import static me.aurora.client.Aurora.mc;
@@ -30,7 +32,7 @@ public class AutoSellBz  implements Module {
     public void onChat(ClientChatReceivedEvent event) {
         if(Config.autoSellBz && event.type == 0) {
             String message = event.message.getFormattedText().replaceAll("\u00a7.", "");
-            if (message.equals("Your inventory is full!")) {
+            if (message.equals("Your inventory is full!") && Config.autoSellBzType == 1) {
                 readyToSell = true;
                 mc.thePlayer.sendChatMessage("/bz");
                 ClientMessages.sendClientMessage("Selling Items on Bazaar...");
@@ -44,6 +46,15 @@ public class AutoSellBz  implements Module {
     }
 
     @SubscribeEvent
+    public void onKeyPress(InputEvent.KeyInputEvent event) {
+        if (Config.autoSellBz && Config.autoSellBzType == 0 && Keybinds.AutoSellBazaar.isPressed()) {
+            readyToSell = true;
+            mc.thePlayer.sendChatMessage("/bz");
+            ClientMessages.sendClientMessage("Selling Items on Bazaar...");
+        }
+    }
+
+    @SubscribeEvent
     public void onBackgroundRender(GuiScreenEvent.BackgroundDrawnEvent event) {
         String chestName = InventoryUtils.getGuiName(event.gui);
         inBazaar = chestName.contains("Bazaar");
@@ -52,7 +63,7 @@ public class AutoSellBz  implements Module {
 
     @SubscribeEvent
     public void onTick(TickEvent event) {
-        if (delay % 5 == 0) {
+        if (delay % 20 == 0) {
             if (mc.currentScreen instanceof GuiChest) {
                 if (inBazaar && Config.autoSellBz && readyToSell) {
                     mc.playerController.windowClick(mc.thePlayer.openContainer.windowId, 47, 1, 0, mc.thePlayer);

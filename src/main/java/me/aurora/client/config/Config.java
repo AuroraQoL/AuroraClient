@@ -87,6 +87,15 @@ public class Config extends Vigilant {
     )
     public static boolean autoSellBz = false;
     @Property(
+            type = PropertyType.SELECTOR,
+            name = "Auto Sell Items on Bazaar type",
+            description = "",
+            options = {"Keybind", "Full Inventory"},
+            category = "QOL",
+            subcategory = "Bazaar"
+    )
+    public static int autoSellBzType = 0;
+    @Property(
             type = PropertyType.SWITCH,
             name = "Rat ESP",
             description = "Turns other players into big rat monster",
@@ -177,7 +186,14 @@ public class Config extends Vigilant {
             subcategory = "No Slowdown"
     )
     public static boolean noSlowdown = false;
-
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Term Notification",
+            description = "Notifies you if we get terminated",
+            category = "Discord",
+            subcategory = "Server"
+    )
+    public static boolean termNotification = true;
     @Property(
             type = PropertyType.SWITCH,
             name = "Harp Stealer",
