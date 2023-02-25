@@ -89,6 +89,15 @@ public class Config extends Vigilant {
     public static boolean autoSellBz = false;
     @Property(
             type = PropertyType.SELECTOR,
+            name = "Auto Sell Items on Bazaar type",
+            description = "",
+            options = {"Keybind", "Full Inventory"},
+            category = "QOL",
+            subcategory = "Bazaar"
+    )
+    public static int autoSellBzType = 0;
+    @Property(
+            type = PropertyType.SELECTOR,
             name = "HUD Wave Theme",
             description = "Change color of RGB wave",
             options = {"\247cR\2476a\247ei\247an\2479b\247bo\2475w", "\247bB\247du\247bb\247db\247bl\247de\247bg\247du\247bm",
