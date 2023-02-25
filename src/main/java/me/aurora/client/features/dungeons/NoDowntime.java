@@ -1,6 +1,7 @@
 package me.aurora.client.features.dungeons;
 
 import me.aurora.client.config.Config;
+import me.aurora.client.features.Module;
 import me.aurora.client.utils.ClientMessages;
 import me.aurora.client.utils.conditions.Conditions;
 import net.minecraft.client.Minecraft;
@@ -18,7 +19,16 @@ import java.util.concurrent.TimeUnit;
  * NoDowntime.
  * Improving this is a downtime. Works? Works.
  */
-public class NoDowntime {
+public class NoDowntime implements Module {
+
+    public String name() {
+        return "NoDowntime";
+    }
+
+    public boolean toggled() {
+        return Config.noDowntime;
+    }
+
 
     static Minecraft mc = Minecraft.getMinecraft();
     static Queue<String> messagesQueue = new LinkedList<String> ();

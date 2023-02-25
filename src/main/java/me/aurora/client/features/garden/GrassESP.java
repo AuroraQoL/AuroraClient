@@ -1,14 +1,11 @@
 package me.aurora.client.features.garden;
 
 import me.aurora.client.config.Config;
+import me.aurora.client.features.Module;
 import me.aurora.client.utils.ScannerUtils;
 import me.aurora.client.utils.conditions.Conditions;
-import net.minecraft.block.BlockGrass;
-import net.minecraft.block.BlockStainedGlass;
 import net.minecraft.block.BlockTallGrass;
-import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.EnumDyeColor;
 import net.minecraft.util.BlockPos;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.event.world.WorldEvent;
@@ -16,7 +13,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.awt.*;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.IntStream;
@@ -29,7 +25,15 @@ import static me.aurora.client.Aurora.mc;
  * Gemstone Scanner (ESP)
  */
 
-public class GrassESP {
+public class GrassESP  implements Module {
+    public String name() {
+        return "GrassESP";
+    }
+
+    public boolean toggled() {
+        return Config.grassEsp;
+    }
+
     boolean enquery;
     private Set<BlockPos> grassBlocks = ConcurrentHashMap.newKeySet();
     private Set<BlockPos> tempGrassBlocks = ConcurrentHashMap.newKeySet();

@@ -1,13 +1,20 @@
 package me.aurora.client.features.misc;
 
 import me.aurora.client.config.Config;
+import me.aurora.client.features.Module;
 import me.aurora.client.utils.ClientMessages;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class MelodyThrottle {
+public class MelodyThrottle  implements Module {
+    public String name() {
+        return "MelodyThrottle";
+    }
 
+    public boolean toggled() {
+        return Config.melodyThrottle;
+    }
     static Minecraft mc = Minecraft.getMinecraft();
 
     @SubscribeEvent

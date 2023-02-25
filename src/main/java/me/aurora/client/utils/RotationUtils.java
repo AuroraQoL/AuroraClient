@@ -1,21 +1,28 @@
 package me.aurora.client.utils;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.util.BlockPos;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-/**
- * IMPLEMENTED FROM SHADYADDONS
- * @author jxee
- */
+import static me.aurora.client.Aurora.mc;
+
 public class RotationUtils {
-    public static float yawDifference;
-    static Minecraft mc = Minecraft.getMinecraft();
+
     private static float pitchDifference;
+    public static float yawDifference;
     private static int ticks = -1;
     private static int tickCounter = 0;
     private static Runnable callback = null;
+
+    public static class Rotation {
+        public float pitch;
+        public float yaw;
+
+        public Rotation(float pitch, float yaw) {
+            this.pitch = pitch;
+            this.yaw = yaw;
+        }
+    }
 
     private static double wrapAngleTo180(double angle) {
         return angle - Math.floor(angle / 360 + 0.5) * 360;
@@ -29,16 +36,16 @@ public class RotationUtils {
 
         float pitch = (float) -Math.atan2(dist, diffY);
         float yaw = (float) Math.atan2(diffZ, diffX);
-        pitch = (float) wrapAngleTo180((pitch * 180F / Math.PI + 90) * -1);
+        pitch = (float) wrapAngleTo180((pitch * 180F / Math.PI + 90)*-1);
         yaw = (float) wrapAngleTo180((yaw * 180 / Math.PI) - 90);
 
         return new Rotation(pitch, yaw);
     }
 
     public static void smoothLook(Rotation rotation, int ticks, Runnable callback) {
-        if (ticks == 0) {
+        if(ticks == 0) {
             look(rotation);
-            if (callback != null) callback.run();
+            if(callback != null) callback.run();
             return;
         }
 
@@ -66,23 +73,13 @@ public class RotationUtils {
 
     @SubscribeEvent
     public void onTick(TickEvent event) {
-        if (tickCounter < ticks) {
+        if(tickCounter < ticks) {
             mc.thePlayer.rotationPitch += pitchDifference / ticks;
             mc.thePlayer.rotationYaw += yawDifference / ticks;
             tickCounter++;
-        } else if (callback != null) {
+        } else if(callback != null) {
             callback.run();
             callback = null;
-        }
-    }
-
-    public static class Rotation {
-        public float pitch;
-        public float yaw;
-
-        public Rotation(float pitch, float yaw) {
-            this.pitch = pitch;
-            this.yaw = yaw;
         }
     }
 

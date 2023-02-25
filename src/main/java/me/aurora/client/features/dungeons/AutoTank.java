@@ -1,6 +1,7 @@
 package me.aurora.client.features.dungeons;
 
 import me.aurora.client.config.Config;
+import me.aurora.client.features.Module;
 import me.aurora.client.utils.KeybindUtils;
 import me.aurora.client.utils.PacketUtils;
 import me.aurora.client.utils.RotationUtils;
@@ -17,7 +18,16 @@ import static me.aurora.client.Aurora.mc;
  * MODIFIED FROM SHADYADDONS
  * @author jxee
  */
-public class AutoTank {
+public class AutoTank implements Module {
+
+    public String name() {
+        return "AutoTank";
+    }
+
+    public boolean toggled() {
+        return Config.autoTank;
+    }
+
     private static boolean tped = false;
     private static boolean sentSneak = false;
 

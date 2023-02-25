@@ -1,6 +1,7 @@
 package me.aurora.client.features.movement;
 
 import me.aurora.client.config.Config;
+import me.aurora.client.features.Module;
 import me.aurora.client.utils.PacketUtils;
 import me.aurora.client.events.TickEndEvent;
 import me.aurora.client.utils.SkyBlockID;
@@ -13,8 +14,14 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class NoSlowButWorse {
+public class NoSlowButWorse  implements Module {
+    public String name() {
+        return "NoSlow";
+    }
 
+    public boolean toggled() {
+        return Config.noSlowdown;
+    }
     static Minecraft mc = Minecraft.getMinecraft();
 
     private final ArrayList<String> swords = new ArrayList<>(Arrays.asList(

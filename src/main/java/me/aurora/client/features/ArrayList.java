@@ -7,13 +7,13 @@ import me.aurora.client.utils.font.MinecraftFontRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.awt.*;
 import java.io.IOException;
 
+import static me.aurora.client.Aurora.fontLocation;
 import static me.aurora.client.Aurora.mc;
 
 /**
@@ -22,9 +22,16 @@ import static me.aurora.client.Aurora.mc;
  * Head-Up Display.
  */
 
-public class ArrayList {
-    ResourceLocation kanitFontResourceLoc = new ResourceLocation("dailydungeons:font/kanit.ttf");
-    MinecraftFontRenderer kanitFontRenderer = new MinecraftFontRenderer(Font.createFont(Font.TRUETYPE_FONT, Minecraft.getMinecraft().getResourceManager().getResource(kanitFontResourceLoc).getInputStream()).deriveFont(Font.PLAIN, 19f), true, false);
+public class ArrayList  implements Module {
+    public String name() {
+        return "ArrayList";
+    }
+
+    public boolean toggled() {
+        return Config.hudArraylist;
+    }
+
+    MinecraftFontRenderer kanitFontRenderer = new MinecraftFontRenderer(Font.createFont(Font.TRUETYPE_FONT, Minecraft.getMinecraft().getResourceManager().getResource(fontLocation).getInputStream()).deriveFont(Font.PLAIN, 19f), true, false);
     public ArrayList() throws IOException, FontFormatException {
     }
 

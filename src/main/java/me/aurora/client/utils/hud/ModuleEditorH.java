@@ -3,7 +3,6 @@ package me.aurora.client.utils.hud;
 import me.aurora.client.Aurora;
 import me.aurora.client.features.visual.Element;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.ChatComponentText;
 
 public class ModuleEditorH {
 
@@ -23,7 +22,7 @@ public class ModuleEditorH {
         if (moduleEditor == null) moduleEditor = new ModuleEditor();
       //  Minecraft.getMinecraft().displayGuiScreen(moduleEditor);
         moduleEditor.initGui();
-        Aurora.guiToOpen=moduleEditor;
+        Aurora.setGuiToOpen(moduleEditor);
 
     }
 

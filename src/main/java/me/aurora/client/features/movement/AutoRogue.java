@@ -2,6 +2,7 @@ package me.aurora.client.features.movement;
 
 
 import me.aurora.client.config.Config;
+import me.aurora.client.features.Module;
 import me.aurora.client.utils.ClientMessages;
 import me.aurora.client.utils.SkyBlockID;
 import me.aurora.client.utils.conditions.Conditions;
@@ -10,8 +11,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class AutoRogue {
+public class AutoRogue implements Module {
+    public String name() {
+        return "RogueSwordAura";
+    }
 
+    public boolean toggled() {
+        return Config.rogueSwordAura;
+    }
     static Minecraft mc = Minecraft.getMinecraft();
 
     @SubscribeEvent

@@ -1,6 +1,7 @@
 package me.aurora.client.features.dungeons;
 
 import me.aurora.client.config.Config;
+import me.aurora.client.features.Module;
 import me.aurora.client.utils.conditions.Conditions;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
@@ -17,7 +18,15 @@ import static me.aurora.client.Aurora.mc;
  * Removes bedrock
  */
 
-public class NoBedrock {
+public class NoBedrock implements Module {
+
+    public String name() {
+        return "SecretsUnblock";
+    }
+
+    public boolean toggled() {
+        return Config.ghost_secretsUnblock;
+    }
 
     private boolean readyToScan = true;
 

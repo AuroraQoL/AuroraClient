@@ -7,7 +7,6 @@ import gg.essential.vigilance.data.PropertyType;
 import me.aurora.client.Aurora;
 
 import java.io.File;
-import java.util.Locale;
 
 public class Config extends Vigilant {
     @Property(
@@ -18,7 +17,7 @@ public class Config extends Vigilant {
             placeholder = "Edit HUD"
     )
     void button() {
-        Aurora.hudEdit.display();
+        Aurora.getHudEdit().display();
     }
 
     ////////////
@@ -88,14 +87,13 @@ public class Config extends Vigilant {
     )
     public static boolean autoSellBz = false;
     @Property(
-            type = PropertyType.SELECTOR,
-            name = "Auto Sell Items on Bazaar type",
-            description = "",
-            options = {"Keybind", "Full Inventory"},
-            category = "QOL",
-            subcategory = "Bazaar"
+            type = PropertyType.SWITCH,
+            name = "Rat ESP",
+            description = "Turns other players into big rat monster",
+            category = "Memes",
+            subcategory = "Rat ESP"
     )
-    public static int autoSellBzType = 0;
+    public static boolean ratEsp = false;
     @Property(
             type = PropertyType.SELECTOR,
             name = "HUD Wave Theme",
@@ -107,9 +105,18 @@ public class Config extends Vigilant {
                     "\2470B\2471o\2479n\2477e", "\2478C\2477o\2476p\247ep\2476e\2477r",
                     "No Wave"},
             category = "HUD",
-            subcategory = "Colors"
+            subcategory = "Looks"
     )
     public static int hudThemeColor = 1;
+    @Property(
+            type = PropertyType.SELECTOR,
+            name = "HUD Font",
+            description = "Change font of hud. \247c\247lApplies after game restart!",
+            options = {"\247lPrompt (New Default)", "Kanit (Old Default)", "OpenDyslexic"},
+            category = "HUD",
+            subcategory = "Looks"
+    )
+    public static int hudFont = 0;
     @Property(
             type = PropertyType.SWITCH,
             name = "Keystrokes",
@@ -130,7 +137,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "Packet Debug",
-            description = "Displays time since last received packet (in seconds)",
+            description = "Displays time since last recieved packet (in seconds)",
             category = "HUD",
             subcategory = "Modules"
     )
@@ -170,14 +177,7 @@ public class Config extends Vigilant {
             subcategory = "No Slowdown"
     )
     public static boolean noSlowdown = false;
-    @Property(
-            type = PropertyType.SWITCH,
-            name = "Term Notification",
-            description = "Notifies you if we get terminated",
-            category = "Discord",
-            subcategory = "Server"
-    )
-    public static boolean termNotification = true;
+
     @Property(
             type = PropertyType.SWITCH,
             name = "Harp Stealer",
@@ -280,6 +280,7 @@ public class Config extends Vigilant {
             subcategory = "No Downtime"
     )
     public static boolean noDowntime = false;
+
     @Property(
             type = PropertyType.SLIDER,
             name = "No Downtime Delay",
@@ -305,7 +306,8 @@ public class Config extends Vigilant {
             name = "\247b[WIP]\247r Crystal Placer",
             description = "Jump into iron blocks while holding a crystal in order to place it",
             category = "Dungeons",
-            subcategory = "Crystals"
+            subcategory = "Crystals",
+            hidden = true
     )
     public static boolean crystalPlacer = false;
     @Property(

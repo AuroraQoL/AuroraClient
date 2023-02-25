@@ -30,7 +30,6 @@ public class PacketHandler extends SimpleChannelInboundHandler {
 
     @SubscribeEvent
     public void join(FMLNetworkEvent.ClientConnectedToServerEvent e){
-
         if(firstConnection) {
             firstConnection = false;
             ChannelPipeline pipeline = e.manager.channel().pipeline();

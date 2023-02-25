@@ -2,11 +2,20 @@ package me.aurora.client.features.misc;
 
 import me.aurora.client.Aurora;
 import me.aurora.client.config.Config;
+import me.aurora.client.features.Module;
 import me.aurora.client.utils.ClientMessages;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class AntiLimbo {
+public class AntiLimbo  implements Module {
+    public String name() {
+        return "AntiLimbo";
+    }
+
+    public boolean toggled() {
+        return Config.antiLimbo;
+    }
+
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
         if(Config.antiLimbo && event.type == 0) {

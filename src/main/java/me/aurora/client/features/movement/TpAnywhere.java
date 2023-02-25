@@ -2,6 +2,7 @@ package me.aurora.client.features.movement;
 
 
 import me.aurora.client.config.Config;
+import me.aurora.client.features.Module;
 import me.aurora.client.utils.SkyBlockID;
 import me.aurora.client.utils.conditions.Conditions;
 import net.minecraft.client.Minecraft;
@@ -10,8 +11,14 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 
-public class TpAnywhere {
+public class TpAnywhere  implements Module {
+    public String name() {
+        return "AotvAura";
+    }
 
+    public boolean toggled() {
+        return Config.aotvAura;
+    }
     static Minecraft mc = Minecraft.getMinecraft();
 
     @SubscribeEvent

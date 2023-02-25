@@ -4,6 +4,7 @@ import com.electronwill.nightconfig.core.AbstractCommentedConfig;
 import com.electronwill.nightconfig.core.AbstractConfig;
 import com.electronwill.nightconfig.core.UnmodifiableConfig;
 import me.aurora.client.config.Config;
+import me.aurora.client.features.Module;
 import me.aurora.client.utils.ClientMessages;
 import me.aurora.client.events.TickEndEvent;
 import me.aurora.client.utils.InventoryUtils;
@@ -18,8 +19,14 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.List;
 
-public class HarpStealer {
+public class HarpStealer  implements Module {
+    public String name() {
+        return "HarpStealer";
+    }
 
+    public boolean toggled() {
+        return Config.harpStealer;
+    }
     boolean inHarp = false;
 
     Minecraft mc = Minecraft.getMinecraft();
