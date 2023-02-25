@@ -21,6 +21,7 @@ import me.aurora.client.features.movement.*;
 import me.aurora.client.features.visual.*;
 import me.aurora.client.krypton.Main;
 import me.aurora.client.utils.FPSUtils;
+import me.aurora.client.utils.Keybinds;
 import me.aurora.client.utils.VersionUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
@@ -89,10 +90,11 @@ public class Aurora {
                 new StructureScanner(), new NoDowntime(), new AutoSprint(), new AutoCrystals(),
                 new WitherCloakAura(), new AutoTank(), new NoBedrock(), new VClip(),
                 new CrystalPlacer(), new AntiLimbo(), new AutoSellBz(), new GrassESP(),
-                new AutoComposter(), new RatEsp());
+                new AutoComposter(), new RatEsp()); new UpdateReminder();
         registerHud(new Watermark(), new Keystrokes(), new PacketDebug(), new FPS());
         registerEvents(new TickEndEvent(), new Main(), new PacketHandler(), new FPSUtils());
         registerCommand(new AuroraSpammerCommand(), new HUDCommand(), new ConfigCommand());
+        Keybinds.register();
         if (VersionUtil.isOutdated(CURRENT_VERSION_BUILD))
             Runtime.getRuntime().addShutdownHook(new Thread(this::update));
     }
