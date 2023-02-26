@@ -2,9 +2,9 @@ package me.aurora.client.features.misc;
 
 import me.aurora.client.config.Config;
 import me.aurora.client.features.Module;
+import me.aurora.client.utils.BindUtils;
 import me.aurora.client.utils.ClientMessages;
 import me.aurora.client.utils.InventoryUtils;
-import me.aurora.client.utils.Keybinds;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
@@ -47,7 +47,7 @@ public class AutoSellBz  implements Module {
 
     @SubscribeEvent
     public void onKeyPress(InputEvent.KeyInputEvent event) {
-        if (Config.autoSellBz && Config.autoSellBzType == 0 && Keybinds.AutoSellBazaar.isPressed()) {
+        if (Config.autoSellBz && Config.autoSellBzType == 0 && BindUtils.getBindStatus("AutoSellBazaar")) {
             readyToSell = true;
             mc.thePlayer.sendChatMessage("/bz");
             ClientMessages.sendClientMessage("Selling Items on Bazaar...");

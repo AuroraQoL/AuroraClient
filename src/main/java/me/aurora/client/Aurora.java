@@ -3,13 +3,13 @@ package me.aurora.client;
 import gg.essential.api.EssentialAPI;
 import gg.essential.api.commands.Command;
 import me.aurora.client.commands.AuroraSpammerCommand;
+import me.aurora.client.commands.ConfigCommand;
 import me.aurora.client.commands.HUDCommand;
 import me.aurora.client.config.Config;
-import me.aurora.client.commands.ConfigCommand;
 import me.aurora.client.config.HUDEdit;
 import me.aurora.client.events.TickEndEvent;
 import me.aurora.client.events.packets.PacketHandler;
-import me.aurora.client.features.ArrayList;
+import me.aurora.client.features.ModuleList;
 import me.aurora.client.features.Module;
 import me.aurora.client.features.dungeons.*;
 import me.aurora.client.features.garden.AutoComposter;
@@ -20,8 +20,8 @@ import me.aurora.client.features.misc.*;
 import me.aurora.client.features.movement.*;
 import me.aurora.client.features.visual.*;
 import me.aurora.client.krypton.Main;
+import me.aurora.client.utils.BindUtils;
 import me.aurora.client.utils.FPSUtils;
-import me.aurora.client.utils.Keybinds;
 import me.aurora.client.utils.VersionUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
@@ -34,6 +34,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 
 import java.awt.*;
@@ -43,10 +44,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 @Mod(modid = "bossbar_customizer", name = "BossbarCustomizer", version = "1.2.1", clientSideOnly = true)
 public class Aurora {
@@ -57,16 +55,15 @@ public class Aurora {
     private static final HUDEdit hudEdit = new HUDEdit();
     private static GuiScreen guiToOpen = null;
     private static File modFile = null;
-    private static final java.util.ArrayList<Module> modules = new java.util.ArrayList<>();
+    private static final ArrayList<Module> modules = new ArrayList<>();
     public static Set<Element> getHudModules() {
         return hudModules;
     }
-
     public static ResourceLocation getFontLocation() {
         return fontLocation;
     }
 
-    public static java.util.ArrayList<Module> getModules() {
+    public static ArrayList<Module> getModules() {
         return modules;
     }
 
@@ -84,17 +81,20 @@ public class Aurora {
         MinecraftForge.EVENT_BUS.register(this);
         new Config().preload();
         selectFont();
-        registerModules(new ArrayList(), new AutoSell(), new Ghostblock(), new WitherDoorRemover(),
+        BindUtils.registerBinds(
+                new BindUtils.Bind(Keyboard.KEY_NONE, "AutoSellBazaar"),
+                new BindUtils.Bind(Keyboard.KEY_G, "GhostBlocks")
+        );
+        registerModules(new ModuleList(), new AutoSell(), new Ghostblock(), new WitherDoorRemover(),
                 new TpAnywhere(), new HarpStealer(), new NoSlowButWorse(), new GemstoneScanner(),
                 new AutoJoinSkyblock(), new AutoRogue(), new AutoSecrets(), new MelodyThrottle(),
                 new StructureScanner(), new NoDowntime(), new AutoSprint(), new AutoCrystals(),
                 new WitherCloakAura(), new AutoTank(), new NoBedrock(), new VClip(),
                 new CrystalPlacer(), new AntiLimbo(), new AutoSellBz(), new GrassESP(),
-                new AutoComposter(), new RatEsp()); new UpdateReminder();
+                new AutoComposter(), new RatEsp());
         registerHud(new Watermark(), new Keystrokes(), new PacketDebug(), new FPS());
         registerEvents(new TickEndEvent(), new Main(), new PacketHandler(), new FPSUtils());
         registerCommand(new AuroraSpammerCommand(), new HUDCommand(), new ConfigCommand());
-        Keybinds.register();
         if (VersionUtil.isOutdated(CURRENT_VERSION_BUILD))
             Runtime.getRuntime().addShutdownHook(new Thread(this::update));
     }

@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * Modified code from (i think) ShadyAddons.
  * */
-public class AutoSell  implements Module {
+public class AutoSell implements Module {
 
     public String name() {
         return "AutoSell";

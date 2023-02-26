@@ -64,7 +64,7 @@ public class Watermark extends Element {
         ScaledResolution scaledResolution = new ScaledResolution(mc);
         int rbw = CurrentColor.currentColorGet(0);
        // if ((Config.hudWatermark)) {
-            kanitFontRenderer.drawStringWithShadow("\247lAurora QoL \247r[" + "private 3.4 pre-release 1" + "]", getX(), getY(), 0xA9A9A9);
+            kanitFontRenderer.drawStringWithShadow("\247lAurora QoL \247r[" + "private 3.4 pre-release 2" + "]", getX(), getY(), 0xA9A9A9);
             kanitFontRenderer.drawStringWithShadow("\247lAurora QoL \247r", getX(), getY(), 0xFFFFFF);
             kanitFontRenderer.drawStringWithShadow("\247lAurora", getX(), getY(), rbw);
             kanitFontRenderer.drawStringWithShadow("Build " + Aurora.CURRENT_VERSION_BUILD, getX(), getY()+10, 0x444444);

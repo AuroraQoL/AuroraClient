@@ -2,7 +2,7 @@ package me.aurora.client.features.dungeons;
 
 import me.aurora.client.config.Config;
 import me.aurora.client.features.Module;
-import me.aurora.client.utils.KeybindUtils;
+import me.aurora.client.utils.KeyUtils;
 import me.aurora.client.utils.PacketUtils;
 import me.aurora.client.utils.RotationUtils;
 import me.aurora.client.utils.conditions.Conditions;
@@ -48,7 +48,7 @@ public class AutoCrystals implements Module {
         }
         if (sentSneak) {
             sentSneak = false;
-            KeybindUtils.rightClick();
+            KeyUtils.rightClick();
             mc.thePlayer.movementInput.sneak = false;
             PacketUtils.sendPacket(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.STOP_SNEAKING));
         }

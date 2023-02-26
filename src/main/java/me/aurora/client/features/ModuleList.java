@@ -22,9 +22,9 @@ import static me.aurora.client.Aurora.mc;
  * Head-Up Display.
  */
 
-public class ArrayList  implements Module {
+public class ModuleList implements Module {
     public String name() {
-        return "ArrayList";
+        return "ModuleList";
     }
 
     public boolean toggled() {
@@ -32,7 +32,7 @@ public class ArrayList  implements Module {
     }
 
     MinecraftFontRenderer kanitFontRenderer = new MinecraftFontRenderer(Font.createFont(Font.TRUETYPE_FONT, Minecraft.getMinecraft().getResourceManager().getResource(fontLocation).getInputStream()).deriveFont(Font.PLAIN, 19f), true, false);
-    public ArrayList() throws IOException, FontFormatException {
+    public ModuleList() throws IOException, FontFormatException {
     }
 
     @SubscribeEvent

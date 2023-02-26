@@ -155,7 +155,7 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.SWITCH,
             name = "Ghostblocks",
-            description = "Make ghostblocks by pressing G",
+            description = "Make ghostblocks",
             category = "Dungeons",
             subcategory = "Ghostblocks"
     )
@@ -186,14 +186,7 @@ public class Config extends Vigilant {
             subcategory = "No Slowdown"
     )
     public static boolean noSlowdown = false;
-    @Property(
-            type = PropertyType.SWITCH,
-            name = "Term Notification",
-            description = "Notifies you if we get terminated",
-            category = "Discord",
-            subcategory = "Server"
-    )
-    public static boolean termNotification = true;
+
     @Property(
             type = PropertyType.SWITCH,
             name = "Harp Stealer",

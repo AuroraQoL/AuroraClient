@@ -1,27 +1,12 @@
 package me.aurora.client.utils;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.KeyBinding;
-
-import java.util.HashMap;
+import static me.aurora.client.Aurora.mc;
 
 /**
  * IMPLEMENTED FROM SHADYADDONS
  * @author jxee
  */
-public class KeybindUtils {
-
-    static Minecraft mc = Minecraft.getMinecraft();
-
-    public static HashMap<String, KeyBinding> keyBindings = new HashMap<>();
-
-    public static boolean isPressed(String name) {
-        return get(name).isPressed();
-    }
-
-    public static KeyBinding get(String name) {
-        return keyBindings.get(name);
-    }
+public class KeyUtils {
 
     public static void rightClick() {
         if(!ReflectionUtils.invoke(mc, "func_147121_ag")) {
