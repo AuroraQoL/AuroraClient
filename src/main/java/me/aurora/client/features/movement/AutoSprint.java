@@ -3,6 +3,7 @@ package me.aurora.client.features.movement;
 import me.aurora.client.config.Config;
 import me.aurora.client.features.Module;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.living.LivingEvent;
