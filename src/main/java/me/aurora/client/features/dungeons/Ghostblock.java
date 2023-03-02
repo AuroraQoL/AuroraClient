@@ -22,7 +22,7 @@ public class Ghostblock  implements Module {
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
-        if(BindUtils.getBindStatus("GhostBlocks") && Config.ghostblocks) {
+        if(BindUtils.getBindStatusDown("GhostBlocks") && Config.ghostblocks) {
             MovingObjectPosition POSITIONOFBLOCK = mc.thePlayer.rayTrace(mc.playerController.getBlockReachDistance(), 1);
             mc.theWorld.setBlockToAir(POSITIONOFBLOCK.getBlockPos());
         }
