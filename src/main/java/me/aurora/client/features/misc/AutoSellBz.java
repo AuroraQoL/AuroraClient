@@ -47,7 +47,7 @@ public class AutoSellBz  implements Module {
 
     @SubscribeEvent
     public void onKeyPress(InputEvent.KeyInputEvent event) {
-        if (Config.autoSellBz && Config.autoSellBzType == 0 && BindUtils.getBindStatus("AutoSellBazaar")) {
+        if (Config.autoSellBz && Config.autoSellBzType == 0 && BindUtils.getBindStatusPressed("AutoSellBazaar")) {
             readyToSell = true;
             mc.thePlayer.sendChatMessage("/bz");
             ClientMessages.sendClientMessage("Selling Items on Bazaar...");
