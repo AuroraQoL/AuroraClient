@@ -31,7 +31,11 @@ public class BindUtils {
             ClientRegistry.registerKeyBinding(bindingHashMap.get(bind.getBindName()));
         }
     }
-    public static boolean getBindStatus(String bindName){
+    public static boolean getBindStatusPressed(String bindName){
         return bindingHashMap.get(bindName).isPressed();
+    }
+
+    public static boolean getBindStatusDown(String bindName){
+        return bindingHashMap.get(bindName).isKeyDown();
     }
 }
