@@ -10,6 +10,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockStone;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -96,7 +97,7 @@ public class StructureScanner implements Module {
     }
 
     public void scanBlocks(int StartX, int StartY, int StartZ) {
-        LoopUtils.brLoopBound(StartX, StartY, StartZ, Config.structureScanner_ParameterRange, (x, y, z) -> {
+        LoopUtils.brLoopBoundChunk(StartX, StartY, StartZ, Config.structureScanner_ParameterRange, (x, y, z) -> {
             String structureCheckResult = checkForStructureOnBlock(x, y, z);
             if (!Objects.equals(structureCheckResult, "null"))
                 structures.put(new BlockPos(x, y, z), structureCheckResult);
@@ -124,6 +125,7 @@ public class StructureScanner implements Module {
     public void onWorldChange(WorldEvent.Load event) {
         structures.clear();
     }
+
 }
 
 class Check{

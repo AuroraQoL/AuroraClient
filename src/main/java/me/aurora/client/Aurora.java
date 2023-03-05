@@ -77,13 +77,14 @@ public class Aurora {
 
     @EventHandler
     public void init(FMLInitializationEvent event) throws IOException, FontFormatException {
-        Display.setTitle("Minecraft 1.8.9 - Aurora 3.4 pre-release 2");
+        Display.setTitle("Minecraft 1.8.9 - Aurora 3.4 release-candidate 1");
         MinecraftForge.EVENT_BUS.register(this);
         new Config().preload();
         selectFont();
         BindUtils.registerBinds(
                 new BindUtils.Bind(Keyboard.KEY_NONE, "AutoSellBazaar"),
-                new BindUtils.Bind(Keyboard.KEY_G, "GhostBlocks")
+                new BindUtils.Bind(Keyboard.KEY_G, "GhostBlocks"),
+                new BindUtils.Bind(Keyboard.KEY_NONE, "VClip")
         );
         registerModules(new ModuleList(), new AutoSell(), new Ghostblock(), new WitherDoorRemover(),
                 new TpAnywhere(), new HarpStealer(), new NoSlowButWorse(), new GemstoneScanner(),

@@ -20,7 +20,7 @@ public class VClip implements Module {
 
     @SubscribeEvent
     public void onKeyPress(InputEvent.KeyInputEvent event) {
-        if(BindUtils.getBindStatusPressed("VerticalClip") && Config.verticalClip) {
+        if(BindUtils.isBindDown("VClip") && Config.verticalClip) {
             mc.thePlayer.setPosition(mc.thePlayer.posX, mc.thePlayer.posY - Config.verticalClip_ParameterDistance, mc.thePlayer.posZ);
         }
     }
