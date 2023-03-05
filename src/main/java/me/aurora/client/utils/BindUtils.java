@@ -35,6 +35,6 @@ public class BindUtils {
         return bindingHashMap.get(bindName).isPressed();
     }
     public static boolean isBindDown(String bindName){
-        return bindingHashMap.get(bindName).isPressed();
+        return bindingHashMap.get(bindName).isKeyDown();
     }
 }
