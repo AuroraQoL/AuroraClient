@@ -3,8 +3,8 @@
 
 [![GPLv3 Logo](https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/GPLv3_Logo.svg/192px-GPLv3_Logo.svg.png)](https://commons.wikimedia.org/wiki/File:GPLv3_Logo.svg "Free Software Foundation, Public domain, via Wikimedia Commons")
 
-# Discord
+# Join Aurora Discord community!
 https://discord.gg/9GJXNKfHkC
 
-# Website
+# Check our website!
 https://auroraclient.lol/
