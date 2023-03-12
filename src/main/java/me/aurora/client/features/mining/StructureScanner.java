@@ -1,7 +1,10 @@
 package me.aurora.client.features.mining;
 
+import gg.essential.api.EssentialAPI;
 import me.aurora.client.config.Config;
 import me.aurora.client.features.Module;
+import me.aurora.client.utils.CalculationUtils;
+import me.aurora.client.utils.ClientMessages;
 import me.aurora.client.utils.LookupBlockUtils;
 import me.aurora.client.utils.ScannerUtils;
 import me.aurora.client.utils.conditions.Conditions;
@@ -17,15 +20,18 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static me.aurora.client.Aurora.mc;
+import static me.aurora.client.config.Config.scanType;
 
 /**
  * @author Gabagooooooooooool
- * @version 3.0
+ * @version 4.0
  * Structure Scanner.
  */
 
@@ -39,6 +45,8 @@ public class StructureScanner implements Module {
         return Config.structureScanner;
     }
     private final ConcurrentHashMap<BlockPos, String> structures = new ConcurrentHashMap<>();
+    private Set<BlockPos> checked = ConcurrentHashMap.newKeySet();
+
     boolean readyToScan = true;
 
     private final HashSet<Check> checks = new HashSet<Check>(){{
@@ -99,8 +107,12 @@ public class StructureScanner implements Module {
     public void scanBlocks(int StartX, int StartY, int StartZ) {
         LoopUtils.brLoopBoundChunk(StartX, StartY, StartZ, Config.structureScanner_ParameterRange, (x, y, z) -> {
             String structureCheckResult = checkForStructureOnBlock(x, y, z);
-            if (!Objects.equals(structureCheckResult, "null"))
-                structures.put(new BlockPos(x, y, z), structureCheckResult);
+            if (!Objects.equals(structureCheckResult, "null")) {
+                BlockPos strPos = new BlockPos(x, y, z);
+                checked.add(strPos);
+                addStructure(strPos, structureCheckResult);
+            }
+              //  , structureCheckResult
         }, 31, 180);
         readyToScan = true;
     }
@@ -117,9 +129,29 @@ public class StructureScanner implements Module {
 
     @SubscribeEvent
     public void onRenderWorld(RenderWorldLastEvent event) {
-        if (Config.structureScanner)
+        if (Config.structureScanner && (scanType == 3 || scanType == 2))
             structures.forEach((key, value) -> ScannerUtils.renderBeaconText(String.format("%s - %d %d %d", value, key.getX(), key.getY(), key.getZ()), key, event.partialTicks));
     }
+
+    private void addStructure(BlockPos checkPos, String checkName){
+        if (structures.contains(checkPos)) return;
+        Set<String> nearStructures = new HashSet<>();
+        for (Map.Entry<BlockPos, String> structEntry : structures.entrySet()) {
+            if (CalculationUtils.blockEuclideanDistance(checkPos, structEntry.getKey()) < 16){
+                nearStructures.add(structEntry.getValue());
+            }
+        }
+        if (!nearStructures.contains(checkName)) {
+            structures.put(checkPos, checkName);
+            if (scanType == 3 || scanType == 1)
+                ClientMessages.sendMultilineClientMessage(
+                    "* * * * * * * * * *",
+                    "\247lFOUND STRUCTURE",
+                    String.format("%s - %d %d %d", checkName, checkPos.getX(), checkPos.getY(), checkPos.getZ()),
+                    "* * * * * * * * * *");
+        }
+    }
+
 
     @SubscribeEvent
     public void onWorldChange(WorldEvent.Load event) {

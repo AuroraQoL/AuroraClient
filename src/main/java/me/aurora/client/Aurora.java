@@ -77,7 +77,7 @@ public class Aurora {
 
     @EventHandler
     public void init(FMLInitializationEvent event) throws IOException, FontFormatException {
-        Display.setTitle("Minecraft 1.8.9 - Aurora 3.4 release-candidate 1");
+        Display.setTitle("Minecraft 1.8.9 - Aurora 3.4 release-candidate 2");
         MinecraftForge.EVENT_BUS.register(this);
         new Config().preload();
         selectFont();

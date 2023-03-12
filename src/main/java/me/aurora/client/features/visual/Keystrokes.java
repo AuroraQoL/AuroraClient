@@ -18,7 +18,7 @@ import static me.aurora.client.Aurora.mc;
 
 public class Keystrokes extends Element {
 
-    final int standby = new Color(0, 0, 0, 99).getRGB();
+    final int standby = new Color(0, 0, 0, 50).getRGB();
     final int pressed = new Color(255, 255, 255, 200).getRGB();
 
 

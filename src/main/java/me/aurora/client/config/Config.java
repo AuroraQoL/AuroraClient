@@ -104,6 +104,14 @@ public class Config extends Vigilant {
     )
     public static boolean ratEsp = false;
     @Property(
+            type = PropertyType.CHECKBOX,
+            name = "Crabby Mode",
+            description = "Replaces rat with Crabby",
+            category = "Memes",
+            subcategory = "Rat ESP"
+    )
+    public static boolean ratEsp_crabbyMode = false;
+    @Property(
             type = PropertyType.SELECTOR,
             name = "HUD Wave Theme",
             description = "Change color of RGB wave",
@@ -386,6 +394,15 @@ public class Config extends Vigilant {
             subcategory = "Scanner"
     )
     public static boolean structureScanner = true;
+    @Property(
+            type = PropertyType.SELECTOR,
+            name = "Scan Display Mode",
+            description = "",
+            options = {"None", "Message", "Waypoint", "Message + Waypoint"},
+            category = "Mining",
+            subcategory = "Scanner"
+    )
+    public static int scanType = 3;
     @Property(
             type = PropertyType.CHECKBOX,
             name = "Freecam Structure Scanning",
