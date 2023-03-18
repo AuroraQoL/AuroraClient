@@ -1,16 +1,10 @@
 package me.aurora.client.utils;
 
-import me.aurora.client.utils.conditions.Conditions;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStone;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
-
-import java.util.Arrays;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.IntStream;
 
 import static me.aurora.client.Aurora.mc;
 
@@ -20,14 +14,16 @@ import static me.aurora.client.Aurora.mc;
  * Util for verifying stacked blocks integrity.
  */
 public class LookupBlockUtils {
-
     public static boolean blocksAbove(BlockPos baseBlock, Block[] blockList, BlockStone.EnumType[] stoneParameters) {
+        int x = baseBlock.getX();
+        int y = baseBlock.getY();
+        int z = baseBlock.getZ();
         for (int i = 0; i < blockList.length; i++) {
-            if (mc.theWorld.getBlockState(new BlockPos(baseBlock.getX(), baseBlock.getY() + i, baseBlock.getZ())).getBlock() == blockList[i]) {
-                if (stoneParameters[i] != null && (mc.theWorld.getBlockState(new BlockPos(baseBlock.getX(), baseBlock.getY() + i, baseBlock.getZ())).getBlock() == Blocks.stone)) {
-                    IBlockState BS = mc.theWorld.getBlockState(new BlockPos(baseBlock.getX(), baseBlock.getY() + i, baseBlock.getZ()));
-                    if (BS.getBlock() == Blocks.stone && !(BS == Blocks.air)) {
-                        if (BS.getValue(BlockStone.VARIANT) != stoneParameters[i]) {
+            if (mc.theWorld.getBlockState(new BlockPos(x, y + i, z)).getBlock() == blockList[i]) {
+                if (stoneParameters[i] != null && (mc.theWorld.getBlockState(new BlockPos(x, y + i, z)).getBlock() == Blocks.stone)) {
+                    IBlockState CheckedBlockParameter = mc.theWorld.getBlockState(new BlockPos(x, y + i, z));
+                    if (CheckedBlockParameter.getBlock() == Blocks.stone) {
+                        if (CheckedBlockParameter.getValue(BlockStone.VARIANT) != stoneParameters[i]) {
                             return false;
                         }
                     }
@@ -35,7 +31,6 @@ public class LookupBlockUtils {
             } else {
                 return false;
             }
-
         }
         return true;
     }

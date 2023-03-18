@@ -21,9 +21,8 @@ import static me.aurora.client.Aurora.mc;
 
 public class RatEsp implements Module {
 
-    private static final Set<Entity> entities = ConcurrentHashMap.newKeySet();
-    private static ResourceLocation CRABBY = new ResourceLocation("dailydungeons:res/crab.png");
-    private static ResourceLocation RAT = new ResourceLocation("dailydungeons:res/bigrat.png");
+    private static final ResourceLocation CRABBY = new ResourceLocation("dailydungeons:res/crab.png");
+    private static final ResourceLocation RAT = new ResourceLocation("dailydungeons:res/bigrat.png");
 
 
     /**

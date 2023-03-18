@@ -2,8 +2,8 @@ package me.aurora.client.features.dungeons;
 
 import me.aurora.client.config.Config;
 import me.aurora.client.features.Module;
-import me.aurora.client.utils.SkyBlockID;
-import me.aurora.client.utils.conditions.Conditions;
+import me.aurora.client.utils.ItemUtils;
+import me.aurora.client.utils.conditions.ConditionUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -23,9 +23,9 @@ public class WitherCloakAura implements Module {
 
     @SubscribeEvent
     public void onInteract(PlayerInteractEvent event) {
-        if (Config.witherCloakAura && Conditions.inSkyblock() && mc.thePlayer.isInLava()) {
+        if (Config.witherCloakAura && ConditionUtils.inSkyblock() && mc.thePlayer.isInLava()) {
             if (mc.thePlayer.getHeldItem() != null) {
-                String itemID = SkyBlockID.getSkyBlockID(mc.thePlayer.getHeldItem());
+                String itemID = ItemUtils.getSkyBlockID(mc.thePlayer.getHeldItem());
                 ItemStack item = mc.thePlayer.inventory.getCurrentItem();
                 if ((itemID.equals("WITHER_CLOAK_SWORD"))) {
                     event.setCanceled(true);

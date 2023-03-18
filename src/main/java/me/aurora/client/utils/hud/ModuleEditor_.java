@@ -4,7 +4,7 @@ import me.aurora.client.Aurora;
 import me.aurora.client.features.visual.Element;
 import net.minecraft.client.Minecraft;
 
-public class ModuleEditorH {
+public class ModuleEditor_ {
 
     /**
      * IMPLEMENTED/MODIFIED FROM

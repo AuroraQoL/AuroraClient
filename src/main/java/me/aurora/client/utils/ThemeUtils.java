@@ -10,31 +10,32 @@ import java.awt.*;
  * Basic utility for aurora theming engine.
  */
 
-public class CurrentColor {
+public class ThemeUtils {
     public static int currentColorGet(float offset) {
+        double colorOffset = Math.abs(System.currentTimeMillis() / 16L) / 100.0 + offset;
         switch (Config.hudThemeColor) {
             case 0:
                 return getRainbow(-4000, (int) (offset * 3000)).getRGB();
             case 1:
-                return getGradientOffset(new Color(223, 94, 255), new Color(0, 170, 255).brighter(), Math.abs(System.currentTimeMillis() / 16L) / 100.0 + offset).getRGB();
+                return getGradientOffset(new Color(223, 94, 255), new Color(0, 170, 255).brighter(), colorOffset).getRGB();
             case 2:
-                return getGradientOffset(new Color(255, 0, 255), new Color(255, 255, 0), Math.abs(System.currentTimeMillis() / 16L) / 100.0 + offset).getRGB();
+                return getGradientOffset(new Color(255, 0, 255), new Color(255, 255, 0), colorOffset).getRGB();
             case 3:
-                return getGradientOffset(new Color(0, 132, 99), new Color(255, 255, 99), Math.abs(System.currentTimeMillis() / 16L) / 100.0 + offset).getRGB();
+                return getGradientOffset(new Color(0, 132, 99), new Color(255, 255, 99), colorOffset).getRGB();
             case 4:
-                return getGradientOffset(new Color(255, 0, 0), new Color(255, 255, 0), Math.abs(System.currentTimeMillis() / 16L) / 100.0 + offset).getRGB();
+                return getGradientOffset(new Color(255, 0, 0), new Color(255, 255, 0), colorOffset).getRGB();
             case 5:
-                return getGradientOffset(new Color(0, 0, 255), new Color(0, 255, 132), Math.abs(System.currentTimeMillis() / 16L) / 100.0 + offset).getRGB();
+                return getGradientOffset(new Color(0, 0, 255), new Color(0, 255, 132), colorOffset).getRGB();
             case 6:
-                return getGradientOffset(new Color(250, 250, 250), new Color(5, 5, 5), Math.abs(System.currentTimeMillis() / 16L) / 100.0 + offset).getRGB();
+                return getGradientOffset(new Color(250, 250, 250), new Color(5, 5, 5), colorOffset).getRGB();
             case 7:
-                return getGradientOffset(new Color(231, 239, 239), new Color(16, 16, 24), Math.abs(System.currentTimeMillis() / 16L) / 100.0 + offset).getRGB();
+                return getGradientOffset(new Color(231, 239, 239), new Color(16, 16, 24), colorOffset).getRGB();
             }
         return Color.WHITE.getRGB();
     }
 
     public static float getFloatValue(float offset, int color){
-        Color tempC = new Color(CurrentColor.currentColorGet(offset));
+        Color tempC = new Color(ThemeUtils.currentColorGet(offset));
         int tempC_ = 0;
         switch (color){
             case 0:

@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 /**
  * Implemented from some russian minecraft forum idk
  * */
-public class CFont {
+public class FontCore {
     float imgSize = 512;
     protected CharData[] charData = new CharData[256];
     protected Font font;
@@ -20,7 +20,7 @@ public class CFont {
     protected int charOffset = 0;
     protected DynamicTexture tex;
 
-    public CFont(Font font, boolean antiAlias, boolean fractionalMetrics) {
+    public FontCore(Font font, boolean antiAlias, boolean fractionalMetrics) {
         this.font = font;
         this.antiAlias = antiAlias;
         this.fractionalMetrics = fractionalMetrics;

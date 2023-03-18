@@ -2,7 +2,7 @@ package me.aurora.client.config;
 
 import gg.essential.api.EssentialAPI;
 import me.aurora.client.Aurora;
-import me.aurora.client.utils.CurrentColor;
+import me.aurora.client.utils.ThemeUtils;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -10,24 +10,33 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 
+import java.util.Arrays;
+
 public class MainHud extends GuiScreen {
-    private GuiButton mButtonClose;
-    private GuiButton buttonConfig;
-    private GuiButton buttonEdit;
 
     @Override
     public void initGui() {
         super.initGui();
-        this.buttonList.add(mButtonClose = new GuiButton(1, this.width / 2 - 64, this.height/2 + 25, 128, 20, "Close"));
-        this.buttonList.add(buttonEdit = new GuiButton(1, this.width / 2 - 64, this.height/2 , 128, 20, "Edit Hud"));
-        this.buttonList.add(buttonConfig = new GuiButton(2, this.width / 2 - 64, this.height/2 - 25, 128, 20, "Config"));
+        this.buttonList.addAll(Arrays.asList(
+                buttonConstructor(1, -25, "Config"),
+                buttonConstructor(2, 25, "Close"),
+                buttonConstructor(3, 0, "Edit HUD")
+        ));
     }
 
     @Override
     protected void actionPerformed(GuiButton button) {
-        if (button == mButtonClose) mc.thePlayer.closeScreen();
-        if (button == buttonConfig) EssentialAPI.getGuiUtil().openScreen(Config.INSTANCE.gui());
-        if (button == buttonEdit) Aurora.getHudEdit().display();
+        switch (button.id) {
+            case 1:
+                EssentialAPI.getGuiUtil().openScreen(Config.INSTANCE.gui());
+                break;
+            case 2:
+                mc.thePlayer.closeScreen();
+                break;
+            case 3:
+                Aurora.getHudEdit().display();
+                break;
+        }
     }
 
     @Override
@@ -36,7 +45,7 @@ public class MainHud extends GuiScreen {
         ScaledResolution scaledResolution = new ScaledResolution(mc);
         GlStateManager.pushMatrix();
         mc.getTextureManager().bindTexture(new ResourceLocation("dailydungeons:res/biglogo.png"));
-        GlStateManager.color(CurrentColor.getFloatValue(0, 0), CurrentColor.getFloatValue(0, 1), CurrentColor.getFloatValue(0, 2));
+        GlStateManager.color(ThemeUtils.getFloatValue(0, 0), ThemeUtils.getFloatValue(0, 1), ThemeUtils.getFloatValue(0, 2));
         Gui.drawModalRectWithCustomSizedTexture(scaledResolution.getScaledWidth() / 2 - 64, scaledResolution.getScaledHeight() / 2 - 64, 0, 0, 128, 32, 128, 32);
         GlStateManager.popMatrix();
         super.drawScreen(mouseX, mouseY, partialTicks);
@@ -45,5 +54,13 @@ public class MainHud extends GuiScreen {
     @Override
     public boolean doesGuiPauseGame() {
         return true;
+    }
+
+    private GuiButton buttonConstructor(int id, int heightOffset, String text) {
+        final int buttonHeight = 20;
+        final int buttonWidth = 128;
+        final int centerPos = this.width / 2 - buttonWidth/2;
+        final int baseHeight = this.height/2;
+        return new GuiButton(id, centerPos, baseHeight + heightOffset, buttonWidth, buttonHeight, text);
     }
 }

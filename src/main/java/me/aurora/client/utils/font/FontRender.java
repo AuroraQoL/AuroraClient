@@ -10,15 +10,15 @@ import java.util.ArrayList;
 /**
  * Implemented from some russian minecraft forum idk
  * */
-public class MinecraftFontRenderer extends CFont {
-    CFont.CharData[] boldChars = new CFont.CharData[256],
-            italicChars = new CFont.CharData[256],
-            boldItalicChars = new CFont.CharData[256];
+public class FontRender extends FontCore {
+    FontCore.CharData[] boldChars = new FontCore.CharData[256],
+            italicChars = new FontCore.CharData[256],
+            boldItalicChars = new FontCore.CharData[256];
     int[] colorCode = new int[32];
     String colorcodeIdentifiers = "0123456789abcdefklmnor";
     DynamicTexture texBold, texItalic, texItalicBold;
 
-    public MinecraftFontRenderer(Font font, boolean antiAlias, boolean fractionalMetrics) {
+    public FontRender(Font font, boolean antiAlias, boolean fractionalMetrics) {
         super(font, antiAlias, fractionalMetrics);
         this.setupMinecraftColorcodes();
         this.setupBoldItalicIDs();
@@ -82,7 +82,7 @@ public class MinecraftFontRenderer extends CFont {
             color = (color & 0xFCFCFC) >> 2 | color & 0xFF000000;
         }
 
-        CFont.CharData[] currentData = this.charData;
+        FontCore.CharData[] currentData = this.charData;
         float alpha = (float) (color >> 24 & 255) / 255f;
         boolean randomCase = false,
                 bold = false,
@@ -200,7 +200,7 @@ public class MinecraftFontRenderer extends CFont {
             return 0;
         }
 
-        CFont.CharData[] currentData = this.charData;
+        FontCore.CharData[] currentData = this.charData;
         float alpha = (float) (color >> 24 & 255) / 255f;
         boolean randomCase = false,
                 bold = false,
@@ -320,7 +320,7 @@ public class MinecraftFontRenderer extends CFont {
             return 0;
         }
 
-        CFont.CharData[] currentData = this.charData;
+        FontCore.CharData[] currentData = this.charData;
         float alpha = (float) (color >> 24 & 0xFF) / 255f;
         boolean randomCase = false,
                 bold = false,
@@ -439,7 +439,7 @@ public class MinecraftFontRenderer extends CFont {
         }
 
         float width = 0;
-        CFont.CharData[] currentData = charData;
+        FontCore.CharData[] currentData = charData;
         boolean bold = false, italic = false;
 
         for (int index = 0; index < text.length(); index++) {
@@ -466,7 +466,7 @@ public class MinecraftFontRenderer extends CFont {
         }
 
         float width = 0;
-        CFont.CharData[] currentData = charData;
+        FontCore.CharData[] currentData = charData;
         boolean bold = false, italic = false;
 
         for (int index = 0; index < text.length(); index++) {

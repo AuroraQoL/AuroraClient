@@ -1,9 +1,7 @@
 package me.aurora.client.utils.iteration;
 
-import me.aurora.client.utils.ClientMessages;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
 
 import static me.aurora.client.Aurora.mc;
 

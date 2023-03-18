@@ -2,6 +2,7 @@ package me.aurora.client.features.misc;
 
 import gg.essential.api.EssentialAPI;
 import me.aurora.client.features.Module;
+import me.aurora.client.utils.VersionUtils;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
@@ -20,7 +21,7 @@ public class UpdateReminder  implements Module {
 
     @SubscribeEvent
     public void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) throws IOException {
-        if ((me.aurora.client.utils.VersionUtil.isOutdated(CURRENT_VERSION_BUILD)))
+        if ((VersionUtils.isOutdated(CURRENT_VERSION_BUILD)))
             EssentialAPI.getNotifications().push("This Version of Aurora is Outdated", "%s %s %s\n%s");
     }
 }

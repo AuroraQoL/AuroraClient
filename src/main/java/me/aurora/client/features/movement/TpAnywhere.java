@@ -3,8 +3,8 @@ package me.aurora.client.features.movement;
 
 import me.aurora.client.config.Config;
 import me.aurora.client.features.Module;
-import me.aurora.client.utils.SkyBlockID;
-import me.aurora.client.utils.conditions.Conditions;
+import me.aurora.client.utils.ItemUtils;
+import me.aurora.client.utils.conditions.ConditionUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -23,10 +23,10 @@ public class TpAnywhere  implements Module {
 
     @SubscribeEvent
     public void onInteract(PlayerInteractEvent event) {
-        if(Config.aotvAura && Conditions.inSkyblock()  && mc.thePlayer.inventory.currentItem == 0 && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR) {
+        if(toggled() && ConditionUtils.inSkyblock() && mc.thePlayer.inventory.currentItem == 0 && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR) {
                 for (int i = 0; i < 8; i++) {
                     ItemStack item = mc.thePlayer.inventory.getStackInSlot(i);
-                    String itemID = SkyBlockID.getSkyBlockID(item);
+                    String itemID = ItemUtils.getSkyBlockID(item);
 
                     if ((itemID.equals("ASPECT_OF_THE_END") || itemID.equals("ASPECT_OF_THE_VOID"))) {
                         event.setCanceled(true);

@@ -1,12 +1,12 @@
 package me.aurora.client.config;
 
 import me.aurora.client.features.visual.Element;
-import me.aurora.client.utils.hud.ModuleEditorH;
+import me.aurora.client.utils.hud.ModuleEditor_;
 import net.minecraft.client.gui.Gui;
 
 import java.awt.*;
 
-public class HUDEdit extends ModuleEditorH
+public class HUDEdit extends ModuleEditor_
 {
     /**
      * IMPLEMENTED/MODIFIED FROM

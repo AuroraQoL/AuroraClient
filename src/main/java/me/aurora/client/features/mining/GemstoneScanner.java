@@ -2,9 +2,8 @@ package me.aurora.client.features.mining;
 
 import me.aurora.client.config.Config;
 import me.aurora.client.features.Module;
-import me.aurora.client.utils.ScannerUtils;
-import me.aurora.client.utils.conditions.Conditions;
-import me.aurora.client.utils.iteration.LoopUtils;
+import me.aurora.client.utils.BlockRenderUtils;
+import me.aurora.client.utils.conditions.ConditionUtils;
 import net.minecraft.block.BlockStainedGlass;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
@@ -43,7 +42,7 @@ public class GemstoneScanner  implements Module {
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
-        if (Config.gemstoneEsp && (Config.gemstoneEsp_ParameterAggressiveScan || ((mc.theWorld.getTotalWorldTime() % (2L * Config.gemstoneEsp_ParameterRange)) == 0)) && readyToScan && Conditions.inGame()) {
+        if (Config.gemstoneEsp && (Config.gemstoneEsp_ParameterAggressiveScan || ((mc.theWorld.getTotalWorldTime() % (2L * Config.gemstoneEsp_ParameterRange)) == 0)) && readyToScan && ConditionUtils.inGame()) {
             readyToScan = false;
             new Thread(() -> scanBlocks((int) mc.thePlayer.posX, (int) mc.thePlayer.posY, (int) mc.thePlayer.posZ), "ScannerThread").start();
         }
@@ -122,21 +121,21 @@ public class GemstoneScanner  implements Module {
                 espModeTemportaryMap.entrySet().stream().filter(b -> {
                     return (mc.theWorld.getBlockState(b.getKey()).getBlock() != Blocks.air);
                 }).forEach(b -> {
-                    ScannerUtils.drawOutlinedBoundingBox(b.getKey(), b.getValue(), Config.gemstoneEsp_thicc, event.partialTicks);
+                    BlockRenderUtils.drawOutlinedBoundingBox(b.getKey(), b.getValue(), Config.gemstoneEsp_thicc, event.partialTicks);
                 });
             } else if (Config.gemstoneEsp_ParameterVisualType == 1) {
                 if (espModeMap.entrySet().size() != 0) espModeTemportaryMap = espModeMap;
                 espModeTemportaryMap.entrySet().stream().filter(b -> {
                     return (mc.theWorld.getBlockState(b.getKey()).getBlock() != Blocks.air);
                 }).forEach(b -> {
-                    ScannerUtils.highlightBlock(b.getKey(), b.getValue(), event.partialTicks);
+                    BlockRenderUtils.highlightBlock(b.getKey(), b.getValue(), event.partialTicks);
                 });
             } else {
                 if (textModeMap.entrySet().size() != 0) textModeTemportaryMap = textModeMap;
                 textModeTemportaryMap.entrySet().stream().filter(b -> {
                     return (mc.theWorld.getBlockState(b.getKey()).getBlock() != Blocks.air);
                 }).forEach(b -> {
-                    ScannerUtils.renderBeaconText(b.getValue(), b.getKey(), event.partialTicks);
+                    BlockRenderUtils.renderBeaconText(b.getValue(), b.getKey(), event.partialTicks);
                 });
             }
         }

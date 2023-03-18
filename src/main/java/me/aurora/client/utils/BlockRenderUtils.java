@@ -1,7 +1,7 @@
 package me.aurora.client.utils;
 
-import me.aurora.client.Aurora;
-import me.aurora.client.utils.font.MinecraftFontRenderer;
+import me.aurora.client.utils.font.FontDefiner;
+import me.aurora.client.utils.font.FontRender;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -16,24 +16,15 @@ import net.minecraft.util.EnumChatFormatting;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
-import java.io.IOException;
 
 /**
  * IMPLEMENTED FROM SHADYADDONS
  * @author jxee
  */
 
-public class ScannerUtils {
+public class BlockRenderUtils {
 
-    static MinecraftFontRenderer kanitRender;
-
-    static {
-        try {
-            kanitRender = new MinecraftFontRenderer(Font.createFont(Font.TRUETYPE_FONT, Minecraft.getMinecraft().getResourceManager().getResource(Aurora.getFontLocation()).getInputStream()).deriveFont(Font.PLAIN, 19f), true, false);
-        } catch (FontFormatException | IOException ignored) {
-        }
-        ;
-    }
+    private static final FontRender fontRenderer = FontDefiner.getFontRenderer();
 
     /**
      * Taken from NotEnoughUpdates under Creative Commons Attribution-NonCommercial 3.0
@@ -142,7 +133,7 @@ public class ScannerUtils {
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();
         int i = 0;
-        int j = (int) (kanitRender.getStringWidth(str) / 2);
+        int j = (int) (fontrenderer.getStringWidth(str) / 2);
         GlStateManager.disableTexture2D();
         worldrenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
         worldrenderer.pos(-j - 1, -1 + i, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
@@ -151,9 +142,9 @@ public class ScannerUtils {
         worldrenderer.pos(j + 1, -1 + i, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();
         tessellator.draw();
         GlStateManager.enableTexture2D();
-        kanitRender.drawString(str, -kanitRender.getStringWidth(str) / 2, i, 553648127);
+        fontrenderer.drawString(str, -fontrenderer.getStringWidth(str) / 2, i, 553648127);
         GlStateManager.depthMask(true);
-        kanitRender.drawString(str, -kanitRender.getStringWidth(str) / 2, i, -1);
+        fontrenderer.drawString(str, -fontrenderer.getStringWidth(str) / 2, i, -1);
         GlStateManager.enableDepth();
         GlStateManager.enableBlend();
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);

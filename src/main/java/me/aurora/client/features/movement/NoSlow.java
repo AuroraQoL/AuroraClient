@@ -4,7 +4,7 @@ import me.aurora.client.config.Config;
 import me.aurora.client.features.Module;
 import me.aurora.client.utils.PacketUtils;
 import me.aurora.client.events.TickEndEvent;
-import me.aurora.client.utils.SkyBlockID;
+import me.aurora.client.utils.ItemUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 import net.minecraft.util.BlockPos;
@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class NoSlowButWorse  implements Module {
+public class NoSlow implements Module {
     public String name() {
         return "NoSlow";
     }
@@ -41,9 +41,9 @@ public class NoSlowButWorse  implements Module {
 
     @SubscribeEvent
     public void onInteract(PlayerInteractEvent event) {
-        if(Config.noSlowdown && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR) {
+        if(toggled() && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR) {
             if(mc.thePlayer.getHeldItem() != null) {
-                String itemID = SkyBlockID.getSkyBlockID(mc.thePlayer.getHeldItem());
+                String itemID = ItemUtils.getSkyBlockID(mc.thePlayer.getHeldItem());
                 if(swords.contains(itemID)) {
                     event.setCanceled(true);
                     if(!isRightClickKeyDown) {

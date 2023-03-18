@@ -3,7 +3,7 @@ package me.aurora.client.features.misc;
 import me.aurora.client.config.Config;
 import me.aurora.client.features.Module;
 import me.aurora.client.utils.BindUtils;
-import me.aurora.client.utils.ClientMessages;
+import me.aurora.client.utils.MessageUtils;
 import me.aurora.client.utils.InventoryUtils;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -35,12 +35,12 @@ public class AutoSellBz  implements Module {
             if (message.equals("Your inventory is full!") && Config.autoSellBzType == 1) {
                 readyToSell = true;
                 mc.thePlayer.sendChatMessage("/bz");
-                ClientMessages.sendClientMessage("Selling Items on Bazaar...");
+                MessageUtils.sendClientMessage("Selling Items on Bazaar...");
             }
             else if (message.equals("[Bazaar] Executing instant sell...")) {
                 readyToSell = false;
                 mc.thePlayer.closeScreen();
-                ClientMessages.sendClientMessage("Sold Items on Bazaar");
+                MessageUtils.sendClientMessage("Sold Items on Bazaar");
             }
         }
     }
@@ -50,7 +50,7 @@ public class AutoSellBz  implements Module {
         if (Config.autoSellBz && Config.autoSellBzType == 0 && BindUtils.isBindPressed("AutoSellBazaar")) {
             readyToSell = true;
             mc.thePlayer.sendChatMessage("/bz");
-            ClientMessages.sendClientMessage("Selling Items on Bazaar...");
+            MessageUtils.sendClientMessage("Selling Items on Bazaar...");
         }
     }
 

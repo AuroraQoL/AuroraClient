@@ -10,7 +10,7 @@ import java.util.Scanner;
  * Basic utilty for checking if current version is the newest one.
  */
 
-public class VersionUtil {
+public class VersionUtils {
     public static boolean isOutdated(int num) {
         try {
             return (new Scanner(new URL("https://raw.githubusercontent.com/Gabagooooooooooool/sup/main/ver.txt").openConnection().getInputStream()).nextInt()) > num;

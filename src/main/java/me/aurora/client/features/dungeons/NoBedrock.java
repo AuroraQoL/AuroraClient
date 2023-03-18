@@ -2,7 +2,7 @@ package me.aurora.client.features.dungeons;
 
 import me.aurora.client.config.Config;
 import me.aurora.client.features.Module;
-import me.aurora.client.utils.conditions.Conditions;
+import me.aurora.client.utils.conditions.ConditionUtils;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -32,7 +32,7 @@ public class NoBedrock implements Module {
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
-        if (Config.ghost_secretsUnblock && ((mc.theWorld.getTotalWorldTime() % 128L == 0) && readyToScan && Conditions.inGame())) {
+        if (Config.ghost_secretsUnblock && ((mc.theWorld.getTotalWorldTime() % 128L == 0) && readyToScan && ConditionUtils.inGame())) {
             readyToScan = false;
             new Thread(() -> scanBlocks((int) mc.thePlayer.posX, (int) mc.thePlayer.posY, (int) mc.thePlayer.posZ), "NoBedrock_thread").start();
         }

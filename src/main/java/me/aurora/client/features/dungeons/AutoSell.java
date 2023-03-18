@@ -2,9 +2,9 @@ package me.aurora.client.features.dungeons;
 
 import me.aurora.client.config.Config;
 import me.aurora.client.features.Module;
-import me.aurora.client.utils.ClientMessages;
+import me.aurora.client.utils.MessageUtils;
 import me.aurora.client.events.TickEndEvent;
-import me.aurora.client.utils.conditions.Conditions;
+import me.aurora.client.utils.conditions.ConditionUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.init.Blocks;
@@ -44,13 +44,13 @@ public class AutoSell implements Module {
 
     @SubscribeEvent
     public void onTick(TickEndEvent event) {
-        if (sellable && Config.autoSell && Conditions.inSkyblock() && mc.currentScreen instanceof GuiChest) {
+        if (sellable && Config.autoSell && ConditionUtils.inSkyblock() && mc.currentScreen instanceof GuiChest) {
             List<Slot> chestInventory = ((GuiChest) mc.currentScreen).inventorySlots.inventorySlots;
             if(chestInventory.get(49).getStack() != null && chestInventory.get(49).getStack().getItem() != Item.getItemFromBlock(Blocks.barrier)) {
                 for(Slot slot : mc.thePlayer.inventoryContainer.inventorySlots) {
                     if(properItem(slot.getStack())) {
                         mc.playerController.windowClick(mc.thePlayer.openContainer.windowId, 45 + slot.slotNumber, 2, 3, mc.thePlayer);
-                        ClientMessages.sendClientMessage("Auto Selling Useless Items");
+                        MessageUtils.sendClientMessage("Auto Selling Useless Items");
                         break;
 
                     }
@@ -62,7 +62,7 @@ public class AutoSell implements Module {
 
     @SubscribeEvent
     public void onRenderGuiBackground(GuiScreenEvent.DrawScreenEvent.Pre event) {
-        if (Conditions.inSkyblock() && Config.autoSell) {
+        if (ConditionUtils.inSkyblock() && Config.autoSell) {
             if (event.gui instanceof GuiChest) {
                 GuiChest guiChest = (GuiChest) event.gui;
                 Container inventorySlots = guiChest.inventorySlots;

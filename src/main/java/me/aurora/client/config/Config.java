@@ -5,6 +5,7 @@ import gg.essential.vigilance.Vigilant;
 import gg.essential.vigilance.data.Property;
 import gg.essential.vigilance.data.PropertyType;
 import me.aurora.client.Aurora;
+import me.aurora.client.features.misc.RatEsp;
 
 import java.io.File;
 
@@ -168,6 +169,26 @@ public class Config extends Vigilant {
             subcategory = "Ghostblocks"
     )
     public static boolean ghostblocks = false;
+    @Property(
+            type = PropertyType.SLIDER,
+            name = "Ghostblocks Range",
+            description = "",
+            category = "Dungeons",
+            subcategory = "Ghostblocks",
+            min = 1,
+            max = 32
+    )
+    public static int ghostblocks_range = 6;
+    @Property(
+            type = PropertyType.DECIMAL_SLIDER,
+            name = "Ghostblocks Delay (Seconds)",
+            description = "",
+            category = "Dungeons",
+            subcategory = "Ghostblocks",
+            min = 0,
+            max = 1
+    )
+    public static float ghostblocks_delay = 0.1f;
     @Property(
             type = PropertyType.SWITCH,
             name = "\2478[GHOST] \247rSecrets Unblock",
@@ -551,5 +572,7 @@ public class Config extends Vigilant {
         );
         initialize();
     }
+
+
 
 }

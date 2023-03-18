@@ -2,8 +2,8 @@ package me.aurora.client.features.dungeons;
 
 import me.aurora.client.config.Config;
 import me.aurora.client.features.Module;
-import me.aurora.client.utils.ClientMessages;
-import me.aurora.client.utils.conditions.Conditions;
+import me.aurora.client.utils.MessageUtils;
+import me.aurora.client.utils.conditions.ConditionUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -35,7 +35,7 @@ public class NoDowntime implements Module {
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) throws InterruptedException {
-        if(Config.noDowntime && Conditions.inSkyblock()) {
+        if(Config.noDowntime && ConditionUtils.inSkyblock()) {
             String message = event.message.getFormattedText().replaceAll("\u00a7.", "");
             messagesQueue.offer(message);
             if (messagesQueue.size() > 3) {
@@ -93,7 +93,7 @@ public class NoDowntime implements Module {
 
                     }
                 }
-                ClientMessages.sendClientMessage("Waiting...");
+                MessageUtils.sendClientMessage("Waiting...");
                 ScheduledThreadPoolExecutor exec = new ScheduledThreadPoolExecutor(1);
 
                 if (!(floor == 0)) {
@@ -105,9 +105,9 @@ public class NoDowntime implements Module {
                         public void run() {
                             mc.thePlayer.sendChatMessage("/joindungeon " + finalType + " " + String.valueOf(finalFl));
                             if (finalType1 == "catacombs") {
-                                ClientMessages.sendClientMessage("Joining Catacombs Floor " + finalFl1);
+                                MessageUtils.sendClientMessage("Joining Catacombs Floor " + finalFl1);
                             } else {
-                                ClientMessages.sendClientMessage("Joining Master Mode Catacombs Floor " + finalFl1);
+                                MessageUtils.sendClientMessage("Joining Master Mode Catacombs Floor " + finalFl1);
                             }
                         }
                     }, Config.noDowntime_ParameterDelay, TimeUnit.SECONDS);

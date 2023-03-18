@@ -11,9 +11,6 @@ public class ConfigCommand extends Command {
     }
 
     @DefaultHandler
-/*    public void handle() {
-        EssentialAPI.getGuiUtil().openScreen(Config.INSTANCE.gui());
-    }*/
     public void handle() {
         EssentialAPI.getGuiUtil().openScreen(new me.aurora.client.config.MainHud());
     }

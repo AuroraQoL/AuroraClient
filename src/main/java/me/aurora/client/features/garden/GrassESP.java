@@ -2,8 +2,9 @@ package me.aurora.client.features.garden;
 
 import me.aurora.client.config.Config;
 import me.aurora.client.features.Module;
-import me.aurora.client.utils.ScannerUtils;
-import me.aurora.client.utils.conditions.Conditions;
+import me.aurora.client.utils.BlockRenderUtils;
+import me.aurora.client.utils.conditions.ConditionUtils;
+import me.aurora.client.utils.iteration.LoopUtils;
 import net.minecraft.block.BlockTallGrass;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
@@ -15,7 +16,6 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import java.awt.*;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.IntStream;
 
 import static me.aurora.client.Aurora.mc;
 
@@ -31,17 +31,16 @@ public class GrassESP  implements Module {
     }
 
     public boolean toggled() {
-        return Config.grassEsp;
+    //    return Config.grassEsp;
+        return false; // TEMPORTARY
     }
-
-    boolean enquery;
     private Set<BlockPos> grassBlocks = ConcurrentHashMap.newKeySet();
     private Set<BlockPos> tempGrassBlocks = ConcurrentHashMap.newKeySet();
     boolean readyToScan = true;
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
-        if (Config.grassEsp && readyToScan && Conditions.inGame()) {
+        if (Config.grassEsp && readyToScan && ConditionUtils.inGame()) {
             readyToScan = false;
             new Thread(() -> scanBlocks((int) mc.thePlayer.posX, (int) mc.thePlayer.posY, (int) mc.thePlayer.posZ), "GrassScan").start();
         }
@@ -50,24 +49,16 @@ public class GrassESP  implements Module {
 
     public void scanBlocks(int StartX, int StartY, int StartZ) {
             tempGrassBlocks.clear();
-            grassBlocks.stream().filter(b -> !blockIsGrass(b)).forEach(b -> tempGrassBlocks.add(b));
-            tempGrassBlocks.forEach(b->{grassBlocks.remove(b);});
-            IntStream.range(StartX - 50, StartX + 50).forEach(x -> {
-                IntStream.range(StartY - 50, StartY + 50).forEach(y -> {
-                    IntStream.range(StartZ - 50, StartZ + 50).filter(z -> (blockIsGrass(new BlockPos(x, y, z)))).forEach(z -> {
-                        grassBlocks.add(new BlockPos(x, y, z));
-                    });
-                });
-            });
-            readyToScan = true;
+            grassBlocks.stream().filter(b -> !blockIsGrass(b)).forEach(tempGrassBlocks::add);
+            tempGrassBlocks.forEach(grassBlocks::remove);
+            LoopUtils.brLoop(StartX, StartY, StartZ, 50, (x, y, z) -> grassBlocks.add(new BlockPos(x,y,z)));
+        readyToScan = true;
     }
 
     @SubscribeEvent
     public void onRenderWorld(RenderWorldLastEvent event) {
         if (Config.grassEsp) {
-            grassBlocks.stream().filter(this::blockIsGrass).forEach(b -> {
-                ScannerUtils.drawOutlinedBoundingBox(b, new Color(146, 255, 65, 255), 3, event.partialTicks);
-            });
+            grassBlocks.stream().filter(this::blockIsGrass).forEach(b -> BlockRenderUtils.drawOutlinedBoundingBox(b, new Color(146, 255, 65, 255), 3, event.partialTicks));
         }
     }
 

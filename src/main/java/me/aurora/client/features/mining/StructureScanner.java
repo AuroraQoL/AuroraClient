@@ -1,19 +1,17 @@
 package me.aurora.client.features.mining;
 
-import gg.essential.api.EssentialAPI;
 import me.aurora.client.config.Config;
 import me.aurora.client.features.Module;
 import me.aurora.client.utils.CalculationUtils;
-import me.aurora.client.utils.ClientMessages;
+import me.aurora.client.utils.MessageUtils;
 import me.aurora.client.utils.LookupBlockUtils;
-import me.aurora.client.utils.ScannerUtils;
-import me.aurora.client.utils.conditions.Conditions;
+import me.aurora.client.utils.BlockRenderUtils;
+import me.aurora.client.utils.conditions.ConditionUtils;
 import me.aurora.client.utils.iteration.LoopUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStone;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
-import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -91,7 +89,7 @@ public class StructureScanner implements Module {
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
         int cachedRange = Config.structureScanner_ParameterRange;
-        if ((((!Config.structureScanner_ParameterAggressiveScan) ? (((mc.theWorld.getTotalWorldTime()) % (4L * cachedRange)) == 0) : (((mc.theWorld.getTotalWorldTime()) % ((int) (Config.structureScanner_ParameterRange / 8))) == 0)) && Config.structureScanner && readyToScan && Conditions.inGame())) {
+        if ((((!Config.structureScanner_ParameterAggressiveScan) ? (((mc.theWorld.getTotalWorldTime()) % (4L * cachedRange)) == 0) : (((mc.theWorld.getTotalWorldTime()) % ((int) (Config.structureScanner_ParameterRange / 8))) == 0)) && Config.structureScanner && readyToScan && ConditionUtils.inGame())) {
             readyToScan = false;
             CompletableFuture.runAsync(() -> {
                 if (Config.structureScanner_freecam) {
@@ -130,7 +128,7 @@ public class StructureScanner implements Module {
     @SubscribeEvent
     public void onRenderWorld(RenderWorldLastEvent event) {
         if (Config.structureScanner && (scanType == 3 || scanType == 2))
-            structures.forEach((key, value) -> ScannerUtils.renderBeaconText(String.format("%s - %d %d %d", value, key.getX(), key.getY(), key.getZ()), key, event.partialTicks));
+            structures.forEach((key, value) -> BlockRenderUtils.renderBeaconText(String.format("%s - %d %d %d", value, key.getX(), key.getY(), key.getZ()), key, event.partialTicks));
     }
 
     private void addStructure(BlockPos checkPos, String checkName){
@@ -144,7 +142,7 @@ public class StructureScanner implements Module {
         if (!nearStructures.contains(checkName)) {
             structures.put(checkPos, checkName);
             if (scanType == 3 || scanType == 1)
-                ClientMessages.sendMultilineClientMessage(
+                MessageUtils.sendMultilineClientMessage(
                     "* * * * * * * * * *",
                     "\247lFOUND STRUCTURE",
                     String.format("%s - %d %d %d", checkName, checkPos.getX(), checkPos.getY(), checkPos.getZ()),

@@ -79,14 +79,14 @@ public class AutoComposter  implements Module {
                             break;
                     }
                 }
-                if(!fuelAdded && !actionDone && inComposter){
+                if(!fuelAdded && !actionDone){
                     if (Config.composter_fuel){
                         mc.playerController.windowClick(mc.thePlayer.openContainer.windowId, 50, 0, 0, mc.thePlayer);
                         actionDone = true;
                     }
                     fuelAdded = true;
                 }
-                if(!compostCollected && !actionDone && inComposter){
+                if(!compostCollected && !actionDone){
                     if (mc.thePlayer.openContainer.inventorySlots.get(22).getStack().getItem() == Items.skull){
                         if(Config.composter_compost) {
                             mc.playerController.windowClick(mc.thePlayer.openContainer.windowId, 22, 0, 0, mc.thePlayer);

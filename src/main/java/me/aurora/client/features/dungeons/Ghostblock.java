@@ -11,6 +11,7 @@ import static me.aurora.client.Aurora.mc;
 
 
 public class Ghostblock  implements Module {
+    private volatile static double lastUsed;
 
     public String name() {
         return "Ghostblock";
@@ -22,9 +23,9 @@ public class Ghostblock  implements Module {
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
-        if(BindUtils.isBindDown("GhostBlocks") && Config.ghostblocks) {
-            MovingObjectPosition POSITIONOFBLOCK = mc.thePlayer.rayTrace(mc.playerController.getBlockReachDistance(), 1);
-            mc.theWorld.setBlockToAir(POSITIONOFBLOCK.getBlockPos());
+        if(BindUtils.isBindDown("GhostBlocks") && toggled() && ((System.currentTimeMillis() - lastUsed) > (Config.ghostblocks_delay * 1000))) {
+            lastUsed = System.currentTimeMillis();
+            mc.theWorld.setBlockToAir(mc.thePlayer.rayTrace(Config.ghostblocks_range, 1).getBlockPos());
         }
     }
 }

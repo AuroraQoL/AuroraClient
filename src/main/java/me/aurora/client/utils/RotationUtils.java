@@ -13,7 +13,6 @@ public class RotationUtils {
     private static int ticks = -1;
     private static int tickCounter = 0;
     private static Runnable callback = null;
-
     public static class Rotation {
         public float pitch;
         public float yaw;

@@ -5,6 +5,7 @@ import me.aurora.client.features.Module;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.settings.GameSettings;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -21,19 +22,31 @@ public class AutoSprint  implements Module {
     }
     @SubscribeEvent
     public void LivingUpdateEvent(LivingEvent.LivingUpdateEvent event) {
-        if (Config.autoSprintSettings == 0) {
-            if (event.entityLiving instanceof EntityPlayer) {
-                if (Config.autoSprint && Minecraft.getMinecraft().thePlayer.onGround && !(mc.currentScreen instanceof GuiChat) && !mc.thePlayer.isSneaking() && !mc.thePlayer.isUsingItem() && (GameSettings.isKeyDown(mc.gameSettings.keyBindForward))) {
-                    mc.thePlayer.setSprinting(true);
-                }
+        if (toggled() && event.entityLiving instanceof EntityPlayer && !(mc.currentScreen instanceof GuiChat) && !mc.thePlayer.isSneaking() && !mc.thePlayer.isUsingItem()) {
+            switch (Config.autoSprintSettings){
+                case 0: // Legit
+                    if (mc.thePlayer.onGround && Key.FORWARD.keyDown())
+                        mc.thePlayer.setSprinting(true);
+                    break;
+                case 1: // Omnidirectional
+                    if (Key.FORWARD.keyDown() || Key.LEFT.keyDown() || Key.RIGHT.keyDown() || Key.BACK.keyDown())
+                        mc.thePlayer.setSprinting(true);
+                    break;
             }
         }
-        if (Config.autoSprintSettings == 1) {
-            if (event.entityLiving instanceof EntityPlayer) {
-                if (Config.autoSprint && !(mc.currentScreen instanceof GuiChat) && !mc.thePlayer.isSneaking() && !mc.thePlayer.isUsingItem() && (GameSettings.isKeyDown(mc.gameSettings.keyBindRight) || GameSettings.isKeyDown(mc.gameSettings.keyBindLeft) || GameSettings.isKeyDown(mc.gameSettings.keyBindForward) || GameSettings.isKeyDown(mc.gameSettings.keyBindBack))) {
-                    mc.thePlayer.setSprinting(true);
-                }
-            }
+    }
+
+    private enum Key {
+        FORWARD(mc.gameSettings.keyBindForward),
+        LEFT(mc.gameSettings.keyBindForward),
+        RIGHT(mc.gameSettings.keyBindForward),
+        BACK(mc.gameSettings.keyBindForward);
+        private final KeyBinding keyBinding;
+        Key(KeyBinding kb) {
+            keyBinding = kb;
+        }
+        boolean keyDown(){
+            return GameSettings.isKeyDown(keyBinding);
         }
     }
 }
