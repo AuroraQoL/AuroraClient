@@ -1,4 +1,4 @@
-package me.aurora.client.events.packets;
+package me.aurora.client.utils;
 
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;

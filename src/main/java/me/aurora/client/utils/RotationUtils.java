@@ -1,5 +1,7 @@
 package me.aurora.client.utils;
 
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import net.minecraft.util.BlockPos;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -13,14 +15,11 @@ public class RotationUtils {
     private static int ticks = -1;
     private static int tickCounter = 0;
     private static Runnable callback = null;
+
+    @AllArgsConstructor
     public static class Rotation {
         public float pitch;
         public float yaw;
-
-        public Rotation(float pitch, float yaw) {
-            this.pitch = pitch;
-            this.yaw = yaw;
-        }
     }
 
     private static double wrapAngleTo180(double angle) {
@@ -32,7 +31,6 @@ public class RotationUtils {
         double diffY = block.getY() - mc.thePlayer.posY + 0.5 - mc.thePlayer.getEyeHeight();
         double diffZ = block.getZ() - mc.thePlayer.posZ + 0.5;
         double dist = Math.sqrt(diffX * diffX + diffZ * diffZ);
-
         float pitch = (float) -Math.atan2(dist, diffY);
         float yaw = (float) Math.atan2(diffZ, diffX);
         pitch = (float) wrapAngleTo180((pitch * 180F / Math.PI + 90)*-1);

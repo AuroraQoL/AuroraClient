@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.IntStream;
 
 import static me.aurora.client.Aurora.mc;
 
@@ -96,12 +97,12 @@ public class NoDowntime implements Module {
                 MessageUtils.sendClientMessage("Waiting...");
                 ScheduledThreadPoolExecutor exec = new ScheduledThreadPoolExecutor(1);
 
-                if (!(floor == 0)) {
+                if (!(floor == 0)) { //THE FxCK IS THIS
                     String finalType = type;
                     int finalFl = floor;
                     String finalType1 = type;
                     int finalFl1 = floor;
-                    exec.schedule(new Runnable() {
+                    exec.schedule(new Runnable() { //LAMBDA EXIST WTF IS THIS CODE I WAS DEF DRUNK WHEN I WROTE IT
                         public void run() {
                             mc.thePlayer.sendChatMessage("/joindungeon " + finalType + " " + finalFl);
                             if (finalType1 == "catacombs") {
@@ -113,8 +114,6 @@ public class NoDowntime implements Module {
                     }, Config.noDowntime_ParameterDelay, TimeUnit.SECONDS);
                 }
             }
-
-
         }
     }
 }

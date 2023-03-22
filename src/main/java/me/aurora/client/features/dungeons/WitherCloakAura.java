@@ -12,7 +12,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import static me.aurora.client.Aurora.mc;
 
 /**
- * @author OctoSplash01 Gabagooooooooooool
+ * @credit ShadyAddons (jxee)
+ * @author jxee OctoSplash01 Gabagooooooooooool
  * @version 2.0
  * @brief Automaticly uses Wither Cloak
  * @todo Find more ways to optimize the code (Held Item?)

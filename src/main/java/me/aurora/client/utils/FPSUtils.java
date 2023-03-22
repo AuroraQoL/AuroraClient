@@ -8,7 +8,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Gabagooooooooooool
- * Enchanted FPS Utilities
+ * @version 1.0
+ * @brief Precise FPS Utilities
  */
 public class FPSUtils {
 

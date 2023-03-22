@@ -8,8 +8,9 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import java.util.HashMap;
 
 /**
- * @author Gabagool
- * BindUtils
+ * @author Gabagooooooooooool
+ * @version 2.0
+ * @brief Binding Utils
  */
 public class BindUtils {
     private static final HashMap<String, KeyBinding> bindingHashMap = new HashMap<>();

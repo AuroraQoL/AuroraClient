@@ -3,8 +3,10 @@ package me.aurora.client.utils;
 import static me.aurora.client.Aurora.mc;
 
 /**
- * IMPLEMENTED FROM SHADYADDONS
- * @author jxee
+ * @credit ShadyAddons (jxee)
+ * @author jxee Gabagooooooooooool
+ * @version 2.0
+ * @brief Mouse Utils
  */
 public class MouseUtils {
 

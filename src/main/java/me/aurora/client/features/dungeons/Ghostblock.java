@@ -9,7 +9,11 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import static me.aurora.client.Aurora.mc;
 
-
+/**
+ * @author  Gabagooooooooooool
+ * @version 2.0
+ * @brief Ghostblocks + Range etc
+ */
 public class Ghostblock  implements Module {
     private volatile static double lastUsed;
 

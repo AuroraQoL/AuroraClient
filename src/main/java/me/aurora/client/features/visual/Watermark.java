@@ -40,13 +40,13 @@ public class Watermark extends Element {
     }
     @Override
     public void editorDraw(){
-        drawForVersion(1337, "version xyz");
+        drawForVersion(1337, "6.9 funni update");
     }
 
     private void drawForVersion(int build, String buildID){
         fontRenderer.drawStringWithShadow(String.format("\247lAurora QoL \247r[ %s ]", buildID), getX(), getY(), 0xA9A9A9);
         fontRenderer.drawStringWithShadow("\247lAurora QoL \247r", getX(), getY(), 0xFFFFFF);
         fontRenderer.drawStringWithShadow("\247lAurora", getX(), getY(), ThemeUtils.currentColorGet(0));
-        fontRenderer.drawStringWithShadow("Build " + build, getX(), getY()+10, 0x444444);
+        fontRenderer.drawStringWithShadow("Codename Lambda | Build " + build, getX(), getY()+10, 0x444444);
     }
 }

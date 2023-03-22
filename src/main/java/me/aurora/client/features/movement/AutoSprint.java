@@ -45,9 +45,9 @@ public class AutoSprint  implements Module {
     @AllArgsConstructor
     private enum Key {
         FORWARD(mc.gameSettings.keyBindForward),
-        LEFT(mc.gameSettings.keyBindForward),
-        RIGHT(mc.gameSettings.keyBindForward),
-        BACK(mc.gameSettings.keyBindForward);
+        LEFT(mc.gameSettings.keyBindLeft),
+        RIGHT(mc.gameSettings.keyBindRight),
+        BACK(mc.gameSettings.keyBindBack);
         private final KeyBinding keyBinding;
         boolean keyDown(){
             return GameSettings.isKeyDown(keyBinding);

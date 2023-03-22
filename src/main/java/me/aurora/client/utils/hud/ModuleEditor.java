@@ -6,14 +6,14 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ResourceLocation;
 
+
+/**
+ * @credit ClientAPI (Papa-Stalin)
+ * @author Papa-Stalin Gabagooooooooooool
+ * @version 1.1
+ * @brief Module Editor
+ */
 public class ModuleEditor extends GuiScreen {
-
-    /**
-     * IMPLEMENTED/MODIFIED FROM
-     * https://github.com/Papa-Stalin/ClientAPI
-     * UNDER MIT LICENSE
-     */
-
 
         @Override
         public void drawScreen(int mouseX, int mouseY, float partialTicks)

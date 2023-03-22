@@ -1,7 +1,7 @@
 package me.aurora.client.features.visual;
 
 import me.aurora.client.config.Config;
-import me.aurora.client.events.packets.PacketHandler;
+import me.aurora.client.utils.PacketHandler;
 import me.aurora.client.utils.font.FontDefiner;
 import me.aurora.client.utils.font.FontRender;
 

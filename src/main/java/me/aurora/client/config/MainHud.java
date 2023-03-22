@@ -19,9 +19,10 @@ public class MainHud extends GuiScreen {
         super.initGui();
         this.buttonList.addAll(Arrays.asList(
                 buttonConstructor(1, -25, "Config"),
-                buttonConstructor(2, 25, "Close"),
-                buttonConstructor(3, 0, "Edit HUD")
-        ));
+                buttonConstructor(2, 0, "Edit HUD"),
+                buttonConstructor(3, 25, "Close")
+
+                ));
     }
 
     @Override
@@ -31,10 +32,10 @@ public class MainHud extends GuiScreen {
                 EssentialAPI.getGuiUtil().openScreen(Config.INSTANCE.gui());
                 break;
             case 2:
-                mc.thePlayer.closeScreen();
+                Aurora.getHudEdit().display();
                 break;
             case 3:
-                Aurora.getHudEdit().display();
+                mc.thePlayer.closeScreen();
                 break;
         }
     }

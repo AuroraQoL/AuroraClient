@@ -1,4 +1,4 @@
-package me.aurora.client.features.dungeons;
+package me.aurora.client.features.test;
 
 public class DungeonMap {
 

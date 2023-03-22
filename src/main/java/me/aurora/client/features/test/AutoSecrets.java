@@ -1,4 +1,4 @@
-package me.aurora.client.features.dungeons;
+package me.aurora.client.features.test;
 
 import me.aurora.client.config.Config;
 import me.aurora.client.features.Module;

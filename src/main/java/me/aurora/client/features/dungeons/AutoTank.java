@@ -13,10 +13,15 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import static me.aurora.client.Aurora.mc;
+import static me.aurora.client.utils.MouseUtils.ClickType.*;
+import static net.minecraft.network.play.client.C0BPacketEntityAction.Action.*;
 
 /**
- * MODIFIED FROM SHADYADDONS
- * @author jxee
+ * @credit ShadyAddons (jxee)
+ * @author jxee OctoSplash01 Gabagooooooooooool
+ * @version 2.0
+ * @brief Auto Maxor Platform TP
+ * @todo Check code
  */
 public class AutoTank implements Module {
 
@@ -29,34 +34,25 @@ public class AutoTank implements Module {
     }
 
     private static boolean teleported = false;
-    private static boolean sentSneak = false;
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
-        if (toggled() && !teleported && ConditionUtils.inSkyblock()) {
-            if (mc.thePlayer.posX == 73.5 && mc.thePlayer.posZ == 14.5) {
-                RotationUtils.Rotation rotation = RotationUtils.getRotationToBlock(new BlockPos(73.5, 224, 70.5));
-                if (!sentSneak) {
-                    mc.thePlayer.movementInput.sneak = true;
-                    PacketUtils.sendPacket(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.START_SNEAKING));
-                    RotationUtils.look(rotation);
-                    sentSneak = true;
-                }
-
-                teleported = true;
-            }
-        }
-
-        if (sentSneak) {
-            sentSneak = false;
-            MouseUtils.rightClick();
-            mc.thePlayer.movementInput.sneak = false;
-            PacketUtils.sendPacket(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.STOP_SNEAKING));
+        if (toggled() && !teleported && ConditionUtils.inSkyblock() && mc.thePlayer.posX == 73.5 && mc.thePlayer.posZ == 14.5) {
+            setSneakStatus(true);
+            RotationUtils.look(RotationUtils.getRotationToBlock(new BlockPos(73.5, 224, 70.5)));
+            teleported = true;
+            MouseUtils.click(RIGHT);
+            setSneakStatus(false);
         }
     }
 
     @SubscribeEvent
     public void onWorldLoad(WorldEvent.Load event) {
         teleported = false;
+    }
+
+    private void setSneakStatus(boolean status) {
+        mc.thePlayer.movementInput.sneak = status;
+        PacketUtils.sendPacket(new C0BPacketEntityAction(mc.thePlayer, status ? START_SNEAKING : STOP_SNEAKING));
     }
 }

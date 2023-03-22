@@ -13,7 +13,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import static me.aurora.client.Aurora.mc;
 
 /**
- * @author OctoSplash01 Gabagooooooooooool
+ * @credit ShadyAddons (jxee)
+ * @author jxee OctoSplash01 Gabagooooooooooool
  * @version 1.1
  * @brief Rogue Sword Aura
  */

@@ -10,22 +10,9 @@ import me.aurora.client.features.misc.RatEsp;
 import java.io.File;
 
 public class Config extends Vigilant {
-    @Property(
-            type = PropertyType.BUTTON,
-            name = "Move Elements",
-            category = "HUD",
-            description = "Move elements",
-            placeholder = "Edit HUD"
-    )
-    void button() {
-        Aurora.getHudEdit().display();
-    }
-
     ////////////
     ////////////
     ////////////
-
-
     @Property(
             type = PropertyType.NUMBER, name = "WATERMARK_X", category = "pos", hidden = true)
     public static int WATERMARK_X = 5;
@@ -50,7 +37,6 @@ public class Config extends Vigilant {
     @Property(
             type = PropertyType.NUMBER, name = "P_Y", category = "pos", hidden = true)
     public static int PACKET_Y = 100;
-
     ////////////
     ////////////
     ////////////

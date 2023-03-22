@@ -2,6 +2,12 @@ package me.aurora.client.utils.rotation;
 
 import net.minecraft.client.Minecraft;
 
+/**
+ * @credit Lilaise (night0721)
+ * @author night0721 Gabagooooooooooool
+ * @version 1.1
+ * @brief Angle Utilities
+ */
 public class AngleUtils {
     private static final Minecraft mc = Minecraft.getMinecraft();
 

@@ -14,9 +14,10 @@ import static me.aurora.client.Aurora.mc;
 
 
 /**
- * @author OctoSplash01 Gabagooooooooooool
+ * @credit ShadyAddons (jxee)
+ * @author jxee OctoSplash01 Gabagooooooooooool
  * @version 1.1
- * @brief AotV Aura
+ * @brief AOTV/E Aura
  */
 public class AotvAura implements Module {
     public String name() {

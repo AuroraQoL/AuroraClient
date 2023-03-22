@@ -11,9 +11,12 @@ import me.aurora.client.commands.HUDCommand;
 import me.aurora.client.config.Config;
 import me.aurora.client.config.HUDEdit;
 import me.aurora.client.events.TickEndEvent;
-import me.aurora.client.events.packets.PacketHandler;
+import me.aurora.client.features.test.CrystalPlacer;
+import me.aurora.client.utils.FPSUtils;
+import me.aurora.client.utils.PacketHandler;
 import me.aurora.client.features.Module;
-import me.aurora.client.features.ModuleList;
+import me.aurora.client.features.visual.LegacyModuleList;
+import me.aurora.client.features.test.AutoCrystals;
 import me.aurora.client.features.dungeons.*;
 import me.aurora.client.features.garden.AutoComposter;
 import me.aurora.client.features.garden.GrassESP;
@@ -21,10 +24,11 @@ import me.aurora.client.features.mining.GemstoneScanner;
 import me.aurora.client.features.mining.StructureScanner;
 import me.aurora.client.features.misc.*;
 import me.aurora.client.features.movement.*;
+import me.aurora.client.features.test.AutoSecrets;
+import me.aurora.client.features.dungeons.AutoTank;
 import me.aurora.client.features.visual.*;
 import me.aurora.client.krypton.Main;
 import me.aurora.client.utils.BindUtils;
-import me.aurora.client.utils.FPSUtils;
 import me.aurora.client.utils.VersionUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
@@ -72,7 +76,7 @@ public class Aurora {
                 new BindUtils.Bind(Keyboard.KEY_NONE, "VClip"),
                 new BindUtils.Bind(Keyboard.KEY_K, "FastJoin")
         );
-        registerModules(new ModuleList(), new AutoSell(), new Ghostblock(), new WitherDoorRemover(),
+        registerModules(new LegacyModuleList(), new AutoSell(), new Ghostblock(), new WitherDoorRemover(),
                 new AotvAura(), new HarpStealer(), new NoSlow(), new GemstoneScanner(),
                 new AutoJoinSkyblock(), new AutoRogue(), new AutoSecrets(), new MelodyThrottle(),
                 new StructureScanner(), new NoDowntime(), new AutoSprint(), new AutoCrystals(),

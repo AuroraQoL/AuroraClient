@@ -17,6 +17,7 @@ import static me.aurora.client.Aurora.mc;
  * @version 1.1
  * @brief Automatic Composter
  * @todo Rewrite States Using Enums
+ * @todo Move inventory name to dedicated utility & integrate
  */
 public class AutoComposter  implements Module {
     public String name() {

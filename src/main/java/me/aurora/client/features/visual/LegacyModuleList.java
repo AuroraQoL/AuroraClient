@@ -1,8 +1,9 @@
-package me.aurora.client.features;
+package me.aurora.client.features.visual;
 
 import lombok.SneakyThrows;
 import me.aurora.client.Aurora;
 import me.aurora.client.config.Config;
+import me.aurora.client.features.Module;
 import me.aurora.client.utils.ThemeUtils;
 import me.aurora.client.utils.font.FontDefiner;
 import me.aurora.client.utils.font.FontRender;
@@ -23,7 +24,7 @@ import static me.aurora.client.Aurora.mc;
  * @brief Simple Module List
  */
 
-public class ModuleList implements Module {
+public class LegacyModuleList implements Module {
 
     public String name() {
         return "ModuleList";

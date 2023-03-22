@@ -1,8 +1,16 @@
 package me.aurora.client.utils.rotation;
 import net.minecraft.client.Minecraft;
 
+import static me.aurora.client.Aurora.mc;
+
+/**
+ * @credit Lilaise (night0721)
+ * @author night0721 Gabagooooooooooool
+ * @version 1.1
+ * @brief Rotation Utilities
+ * I decided to use primitive array instead of pair to improve performance
+ */
 public class Rotation {
-    private final static Minecraft mc = Minecraft.getMinecraft();
     public boolean rotating;
     public boolean completed;
     private long startTime;

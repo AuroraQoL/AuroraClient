@@ -4,18 +4,14 @@ import me.aurora.client.Aurora;
 import me.aurora.client.features.visual.Element;
 import net.minecraft.client.Minecraft;
 
+/**
+ * @credit ClientAPI (Papa-Stalin)
+ * @author Papa-Stalin Gabagooooooooooool
+ * @version 1.1
+ * @brief Module Editor
+ */
 public class ModuleEditor_ {
-
-    /**
-     * IMPLEMENTED/MODIFIED FROM
-     * https://github.com/Papa-Stalin/ClientAPI
-     * UNDER MIT LICENSE
-     */
-
     private ModuleEditor moduleEditor;
-
-
-
     public final void display()
     {
 
@@ -52,8 +48,6 @@ public class ModuleEditor_ {
     }
 
     public void RenderGUI(Element m){
-        if (!(Minecraft.getMinecraft().currentScreen instanceof ModuleEditor)){
-            if (m.enabled()) m.guiDraw();
-        }
+        if (!(Minecraft.getMinecraft().currentScreen instanceof ModuleEditor) && m.enabled()) m.guiDraw();
     }
 }
