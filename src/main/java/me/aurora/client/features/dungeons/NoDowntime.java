@@ -13,11 +13,14 @@ import java.util.Queue;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import static me.aurora.client.Aurora.mc;
+
 /**
  * @author Gabagooooooooooool
  * @version 1.0
  * NoDowntime.
  * Improving this is a downtime. Works? Works.
+ * @wontfix
  */
 public class NoDowntime implements Module {
 
@@ -28,10 +31,7 @@ public class NoDowntime implements Module {
     public boolean toggled() {
         return Config.noDowntime;
     }
-
-
-    static Minecraft mc = Minecraft.getMinecraft();
-    static Queue<String> messagesQueue = new LinkedList<String> ();
+    private final static Queue<String> messagesQueue = new LinkedList<String> ();
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) throws InterruptedException {
@@ -103,7 +103,7 @@ public class NoDowntime implements Module {
                     int finalFl1 = floor;
                     exec.schedule(new Runnable() {
                         public void run() {
-                            mc.thePlayer.sendChatMessage("/joindungeon " + finalType + " " + String.valueOf(finalFl));
+                            mc.thePlayer.sendChatMessage("/joindungeon " + finalType + " " + finalFl);
                             if (finalType1 == "catacombs") {
                                 MessageUtils.sendClientMessage("Joining Catacombs Floor " + finalFl1);
                             } else {

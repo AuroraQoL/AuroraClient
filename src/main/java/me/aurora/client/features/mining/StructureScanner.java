@@ -1,5 +1,7 @@
 package me.aurora.client.features.mining;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import me.aurora.client.config.Config;
 import me.aurora.client.features.Module;
 import me.aurora.client.utils.CalculationUtils;
@@ -43,8 +45,7 @@ public class StructureScanner implements Module {
         return Config.structureScanner;
     }
     private final ConcurrentHashMap<BlockPos, String> structures = new ConcurrentHashMap<>();
-    private Set<BlockPos> checked = ConcurrentHashMap.newKeySet();
-
+    private final Set<BlockPos> checked = ConcurrentHashMap.newKeySet();
     boolean readyToScan = true;
 
     private final HashSet<Check> checks = new HashSet<Check>(){{
@@ -89,7 +90,7 @@ public class StructureScanner implements Module {
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
         int cachedRange = Config.structureScanner_ParameterRange;
-        if ((((!Config.structureScanner_ParameterAggressiveScan) ? (((mc.theWorld.getTotalWorldTime()) % (4L * cachedRange)) == 0) : (((mc.theWorld.getTotalWorldTime()) % ((int) (Config.structureScanner_ParameterRange / 8))) == 0)) && Config.structureScanner && readyToScan && ConditionUtils.inGame())) {
+        if ((((!Config.structureScanner_ParameterAggressiveScan) ? (((mc.theWorld.getTotalWorldTime()) % (4L * cachedRange)) == 0) : (((mc.theWorld.getTotalWorldTime()) % (Config.structureScanner_ParameterRange / 8)) == 0)) && Config.structureScanner && readyToScan && ConditionUtils.inGame())) {
             readyToScan = false;
             CompletableFuture.runAsync(() -> {
                 if (Config.structureScanner_freecam) {
@@ -158,31 +159,11 @@ public class StructureScanner implements Module {
 
 }
 
+@Getter
+@AllArgsConstructor
 class Check{
     private final Block[] blocks;
     private final BlockStone.EnumType[] blocks_stoneProp;
     private final boolean dillo;
     private final String checkname;
-
-    public Block[] getBlocks() {
-        return blocks;
-    }
-
-    public BlockStone.EnumType[] getBlocks_stoneProp() {
-        return blocks_stoneProp;
-    }
-
-    public boolean isDillo() {
-        return dillo;
-    }
-
-    public String getCheckname() {
-        return checkname;
-    }
-    Check(Block[] blocks, BlockStone.EnumType[] blocks_stoneProp, boolean dillo, String checkname){
-        this.blocks = blocks;
-        this.blocks_stoneProp = blocks_stoneProp;
-        this.dillo = dillo;
-        this.checkname = checkname;
-    }
 }

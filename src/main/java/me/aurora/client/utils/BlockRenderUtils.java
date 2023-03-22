@@ -95,7 +95,7 @@ public class BlockRenderUtils {
             z *= 12 / dist;
         }
         GlStateManager.translate(x, y, z);
-        GlStateManager.translate(0, ((Entity) viewer).getEyeHeight(), 0);
+        GlStateManager.translate(0, viewer.getEyeHeight(), 0);
 
         drawNametag(str);
 
@@ -133,7 +133,7 @@ public class BlockRenderUtils {
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();
         int i = 0;
-        int j = (int) (fontrenderer.getStringWidth(str) / 2);
+        int j = fontrenderer.getStringWidth(str) / 2;
         GlStateManager.disableTexture2D();
         worldrenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
         worldrenderer.pos(-j - 1, -1 + i, 0.0D).color(0.0F, 0.0F, 0.0F, 0.25F).endVertex();

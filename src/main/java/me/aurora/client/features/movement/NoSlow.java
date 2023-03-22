@@ -13,7 +13,16 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
+import static me.aurora.client.Aurora.mc;
+
+/**
+ * @author OctoSplash01 Gabagooooooooooool
+ * @version 1.1
+ * @brief No Slowdown
+ */
 public class NoSlow implements Module {
     public String name() {
         return "NoSlow";
@@ -22,35 +31,23 @@ public class NoSlow implements Module {
     public boolean toggled() {
         return Config.noSlowdown;
     }
-    static Minecraft mc = Minecraft.getMinecraft();
 
-    private final ArrayList<String> swords = new ArrayList<>(Arrays.asList(
+    // Since set access is O(n) it's better to use it instead of list which access time is higher.
+    // Using String[] would also be a good choice but would make a lot of mess.
+    private final Set<String> validItems = new HashSet<>(Arrays.asList(
             "HYPERION",
             "VALKYRIE",
             "SCYLLA",
             "ASTRAEA",
             "ASPECT_OF_THE_END",
-            "ROGUE_SWORD"
-    ));
-    private static boolean isRightClickKeyDown = false;
-
-    @SubscribeEvent
-    public void onTick(TickEndEvent event) {
-        isRightClickKeyDown = mc.gameSettings.keyBindUseItem.isKeyDown();
-    }
+            "ROGUE_SWORD"));
 
     @SubscribeEvent
     public void onInteract(PlayerInteractEvent event) {
-        if(toggled() && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR) {
-            if(mc.thePlayer.getHeldItem() != null) {
-                String itemID = ItemUtils.getSkyBlockID(mc.thePlayer.getHeldItem());
-                if(swords.contains(itemID)) {
-                    event.setCanceled(true);
-                    if(!isRightClickKeyDown) {
-                        PacketUtils.sendPacket(new C08PacketPlayerBlockPlacement(new BlockPos(-1, -1, -1), 255, mc.thePlayer.getHeldItem(), 0, 0, 0));
-                    }
-                }
-            }
+        if (toggled() && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR && validItems.contains(ItemUtils.getSkyBlockID(mc.thePlayer.getHeldItem()))) {
+            event.setCanceled(true);
+            if (!mc.gameSettings.keyBindUseItem.isKeyDown())
+                PacketUtils.sendPacket(new C08PacketPlayerBlockPlacement(new BlockPos(-1, -1, -1), 255, mc.thePlayer.getHeldItem(), 0, 0, 0));
         }
     }
 }

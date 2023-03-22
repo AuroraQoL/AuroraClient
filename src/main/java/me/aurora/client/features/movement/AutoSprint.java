@@ -1,5 +1,6 @@
 package me.aurora.client.features.movement;
 
+import lombok.AllArgsConstructor;
 import me.aurora.client.config.Config;
 import me.aurora.client.features.Module;
 import net.minecraft.client.Minecraft;
@@ -12,6 +13,11 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import static me.aurora.client.Aurora.mc;
 
+/**
+ * @author OctoSplash01 Gabagooooooooooool
+ * @version 1.1
+ * @brief Auto Sprint
+ */
 public class AutoSprint  implements Module {
     public String name() {
         return "AutoSprint";
@@ -36,15 +42,13 @@ public class AutoSprint  implements Module {
         }
     }
 
+    @AllArgsConstructor
     private enum Key {
         FORWARD(mc.gameSettings.keyBindForward),
         LEFT(mc.gameSettings.keyBindForward),
         RIGHT(mc.gameSettings.keyBindForward),
         BACK(mc.gameSettings.keyBindForward);
         private final KeyBinding keyBinding;
-        Key(KeyBinding kb) {
-            keyBinding = kb;
-        }
         boolean keyDown(){
             return GameSettings.isKeyDown(keyBinding);
         }

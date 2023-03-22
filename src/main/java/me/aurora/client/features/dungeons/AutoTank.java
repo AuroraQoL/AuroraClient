@@ -33,7 +33,7 @@ public class AutoTank implements Module {
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
-        if (Config.autoTank && !teleported && ConditionUtils.inSkyblock()) {
+        if (toggled() && !teleported && ConditionUtils.inSkyblock()) {
             if (mc.thePlayer.posX == 73.5 && mc.thePlayer.posZ == 14.5) {
                 RotationUtils.Rotation rotation = RotationUtils.getRotationToBlock(new BlockPos(73.5, 224, 70.5));
                 if (!sentSneak) {

@@ -11,10 +11,12 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import org.lwjgl.input.Keyboard;
 
+import static me.aurora.client.Aurora.mc;
+
 /**
  * @author Gabagooooooooooool
- * @version 3.0
- * Wither Door Remover
+ * @version 3.1
+ * @brief This automaticly removes wither doors
  */
 public class WitherDoorRemover implements Module {
 
@@ -26,18 +28,15 @@ public class WitherDoorRemover implements Module {
         return Config.witherDoorRemover;
     }
 
-    Minecraft mc = Minecraft.getMinecraft();
-
     @SubscribeEvent
     public void onKeyPress(InputEvent.KeyInputEvent event) {
-        if(Keyboard.isKeyDown(Keyboard.KEY_H) && Config.witherDoorRemover) {
+        if(Keyboard.isKeyDown(Keyboard.KEY_H) && toggled()) {
             MovingObjectPosition keyBlock = mc.thePlayer.rayTrace(mc.playerController.getBlockReachDistance(), 1);
             LoopUtils.brLoop(keyBlock.getBlockPos().getX(), keyBlock.getBlockPos().getY(), keyBlock.getBlockPos().getZ(), 5,
                     (x, y, z) -> {
                 BlockPos tempBlockPos = new BlockPos(x,y,z);
                 if (mc.theWorld.getBlockState(tempBlockPos).getBlock() == Blocks.coal_block) mc.theWorld.setBlockToAir(tempBlockPos);
             });
-
         }
     }
 }

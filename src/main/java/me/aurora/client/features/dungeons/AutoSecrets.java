@@ -11,6 +11,12 @@ import net.minecraft.util.BlockPos;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
+import static me.aurora.client.Aurora.mc;
+import static me.aurora.client.utils.MouseUtils.ClickType.RIGHT;
+
+/**
+ * @todo Remove (@OctoSplash01)
+ */
 public class AutoSecrets implements Module {
 
     public String name() {
@@ -20,16 +26,13 @@ public class AutoSecrets implements Module {
     public boolean toggled() {
         return Config.autoSecrets;
     }
-
-    static Minecraft mc = Minecraft.getMinecraft();
     private static boolean sentSneak = false;
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
-        if (Config.autoSecrets) {
+        if (toggled()) {
             if (mc.thePlayer.posX == 5 && mc.thePlayer.posZ == 0) {
                 RotationUtils.Rotation rotation = RotationUtils.getRotationToBlock(new BlockPos(0, 5, 0));
-
                 if (!sentSneak) {
                     mc.thePlayer.movementInput.sneak = true;
                     PacketUtils.sendPacket(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.START_SNEAKING));
@@ -38,10 +41,9 @@ public class AutoSecrets implements Module {
                 }
             }
         }
-
         if (sentSneak) {
             sentSneak = false;
-            MouseUtils.rightClick();
+            MouseUtils.click(RIGHT);
             mc.thePlayer.movementInput.sneak = false;
             PacketUtils.sendPacket(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.STOP_SNEAKING));
         }

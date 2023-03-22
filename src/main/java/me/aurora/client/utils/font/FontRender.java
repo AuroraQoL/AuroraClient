@@ -6,11 +6,12 @@ import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  * Implemented from some russian minecraft forum idk
  * */
-public class FontRender extends FontCore {
+public class FontRender extends FontCore implements Comparator<String> {
     FontCore.CharData[] boldChars = new FontCore.CharData[256],
             italicChars = new FontCore.CharData[256],
             boldItalicChars = new FontCore.CharData[256];
@@ -460,6 +461,9 @@ public class FontRender extends FontCore {
         return width / 2;
     }
 
+    private int getScaledIntWidth(String text){
+        return (int) getStringWidth(text) * 100;
+    }
     public double getStringWidth(String text, float kerning) {
         if (text == null) {
             return 0;
@@ -696,5 +700,10 @@ public class FontRender extends FontCore {
     }
 
     public void drawString(String text, float v, float v1, int color, boolean b) {
+    }
+
+    @Override
+    public int compare(String o1, String o2) {
+        return getScaledIntWidth(o2) - getScaledIntWidth(o1);
     }
 }

@@ -11,7 +11,6 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 public class TickEndEvent extends Event {
     private static int staticCount = 0;
     public int count;
-
     public TickEndEvent() {
         count = staticCount;
     }

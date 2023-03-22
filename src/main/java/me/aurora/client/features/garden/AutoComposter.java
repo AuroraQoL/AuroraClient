@@ -12,6 +12,12 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import static me.aurora.client.Aurora.mc;
 
+/**
+ * @author Gabagooooooooooool
+ * @version 1.1
+ * @brief Automatic Composter
+ * @todo Rewrite States Using Enums
+ */
 public class AutoComposter  implements Module {
     public String name() {
         return "AutoComposter";
@@ -20,7 +26,6 @@ public class AutoComposter  implements Module {
     public boolean toggled() {
         return Config.autoComposter;
     }
-
     private int delay = 0;
     private boolean inComposter = false;
     private boolean prevComposter = false;
@@ -39,14 +44,8 @@ public class AutoComposter  implements Module {
     @SubscribeEvent
     public void onBackgroundRender(GuiScreenEvent.BackgroundDrawnEvent event) {
         String chestName = InventoryUtils.getGuiName(event.gui);
-        if (!chestName.contains("Confirm")) {
-            prevName = chestName;
-        } else {
-            if (prevName.contains("Composter")) {
-                prevComposter = true;
-            }
-            prevName = chestName;
-        }
+        if (chestName.contains("Confirm") && prevName.contains("Composter")) prevComposter = true;
+        prevName = chestName;
         inComposter = chestName.contains("Composter");
         if (!chestName.contains("Confirm") && !chestName.contains("Composter")){
             prevComposter = false;

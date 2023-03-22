@@ -1,8 +1,9 @@
 package me.aurora.client.features;
 
+import lombok.SneakyThrows;
+import me.aurora.client.Aurora;
 import me.aurora.client.config.Config;
 import me.aurora.client.utils.ThemeUtils;
-import me.aurora.client.utils.FeaturesUtils;
 import me.aurora.client.utils.font.FontDefiner;
 import me.aurora.client.utils.font.FontRender;
 import net.minecraft.client.gui.Gui;
@@ -11,17 +12,19 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.awt.*;
-import java.io.IOException;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import static me.aurora.client.Aurora.mc;
 
 /**
  * @author Gabagooooooooooool
- * @version 2.0
- * Head-Up Display.
+ * @version 3.0
+ * @brief Simple Module List
  */
 
 public class ModuleList implements Module {
+
     public String name() {
         return "ModuleList";
     }
@@ -29,36 +32,24 @@ public class ModuleList implements Module {
     public boolean toggled() {
         return Config.hudArraylist;
     }
+
     private static final FontRender fontRenderer = FontDefiner.getFontRenderer();
 
-
-    public ModuleList() throws IOException, FontFormatException {
-    }
-
     @SubscribeEvent
+    @SneakyThrows
     public void onRender(RenderGameOverlayEvent event) {
+        if (!(event.type == RenderGameOverlayEvent.ElementType.TEXT && toggled())) return;
         ScaledResolution scaledResolution = new ScaledResolution(mc);
-        if (event.type != RenderGameOverlayEvent.ElementType.TEXT) {
-            return;
-        }
-        int rbw = ThemeUtils.currentColorGet(0);
-        if (Config.hudArraylist) {
-            int yPos = 0;
-            float y3 = 0.0f;
-            for (String module : FeaturesUtils.toggled()) {
-                rbw = ThemeUtils.currentColorGet(y3);
-                double aa = fontRenderer.getStringWidth(module) + 2;
-                final float xPos = scaledResolution.getScaledWidth() - ((float) aa);
-                Gui.drawRect((int) (xPos - 3f), yPos, scaledResolution.getScaledWidth(), yPos + 11,
-                        new Color(0, 0, 0, 100).getRGB());
-                Gui.drawRect((int) (scaledResolution.getScaledWidth() - 1f), yPos, (int) (scaledResolution.getScaledWidth() + 0.5f),
-                        yPos + 11, rbw);
-                fontRenderer.drawStringWithShadow(module, xPos - 1f, yPos + 1f, rbw);
-                yPos += 11;
-                y3 += 0.07f;
-            }
-        }
+        AtomicInteger counter = new AtomicInteger(0);
+        Aurora.getModules().stream().filter(Module::toggled).map(Module::name).sorted(fontRenderer).collect(Collectors.toList()).forEach(module -> {
+            int currentPhase = counter.getAndIncrement();
+            int color = ThemeUtils.currentColorGet(currentPhase * 0.07f);
+            int xPos = (int) (scaledResolution.getScaledWidth() - fontRenderer.getStringWidth(module) - 2);
+            int yPos = currentPhase * 11;
+            Gui.drawRect(xPos - 3, yPos, scaledResolution.getScaledWidth(), yPos + 11, new Color(0, 0, 0, 100).getRGB());
+            Gui.drawRect(scaledResolution.getScaledWidth() - 1, yPos, scaledResolution.getScaledWidth(), yPos + 11, color);
+            fontRenderer.drawStringWithShadow(module, xPos - 1f, yPos + 1f, color);
+        });
     }
-
 }
 

@@ -10,7 +10,7 @@ import static me.aurora.client.Aurora.mc;
 
 /**
  * @author Gabagooooooooooool
- * @version 1.1
+ * @version 1.2
  * Util for verifying stacked blocks integrity.
  */
 public class LookupBlockUtils {
@@ -21,12 +21,8 @@ public class LookupBlockUtils {
         for (int i = 0; i < blockList.length; i++) {
             if (mc.theWorld.getBlockState(new BlockPos(x, y + i, z)).getBlock() == blockList[i]) {
                 if (stoneParameters[i] != null && (mc.theWorld.getBlockState(new BlockPos(x, y + i, z)).getBlock() == Blocks.stone)) {
-                    IBlockState CheckedBlockParameter = mc.theWorld.getBlockState(new BlockPos(x, y + i, z));
-                    if (CheckedBlockParameter.getBlock() == Blocks.stone) {
-                        if (CheckedBlockParameter.getValue(BlockStone.VARIANT) != stoneParameters[i]) {
-                            return false;
-                        }
-                    }
+                    if (mc.theWorld.getBlockState(new BlockPos(x, y + i, z)).getValue(BlockStone.VARIANT) != stoneParameters[i])
+                        return false;
                 }
             } else {
                 return false;

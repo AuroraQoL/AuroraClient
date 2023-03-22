@@ -15,8 +15,9 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import static me.aurora.client.Aurora.mc;
 
 /**
- * MODIFIED FROM SHADYADDONS
- * @author jxee
+ * @credit ShadyAddons (jxee)
+ * @author jxee OctoSplash01 Gabagooooooooooool
+ * @brief Auto F7 Crystal Pickup
  */
 public class AutoCrystals implements Module {
 
@@ -32,23 +33,20 @@ public class AutoCrystals implements Module {
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
-        if (Config.autoCrystals && !teleported && ConditionUtils.inSkyblock()) {
+        if (toggled() && !teleported && ConditionUtils.inSkyblock()) {
             if (mc.thePlayer.posX == 73.5 && mc.thePlayer.posZ == 14.5) {
                 RotationUtils.Rotation rotation = RotationUtils.getRotationToBlock(new BlockPos(66.5, 237.5, 49.5));
-
                 if (!sentSneak) {
-                    mc.thePlayer.movementInput.sneak = true;
+                    setSneak(true);
                     PacketUtils.sendPacket(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.START_SNEAKING));
                     RotationUtils.look(rotation);
-                    sentSneak = true;
                 }
                 teleported = true;
             }
         }
         if (sentSneak) {
-            sentSneak = false;
-            MouseUtils.rightClick();
-            mc.thePlayer.movementInput.sneak = false;
+            MouseUtils.click(MouseUtils.ClickType.RIGHT);
+            setSneak(false);
             PacketUtils.sendPacket(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.STOP_SNEAKING));
         }
     }
@@ -56,5 +54,10 @@ public class AutoCrystals implements Module {
     @SubscribeEvent
     public void onWorldLoad(WorldEvent.Load event) {
         teleported = false;
+    }
+
+    private void setSneak(boolean status){
+        sentSneak = status;
+        mc.thePlayer.movementInput.sneak = status;
     }
 }

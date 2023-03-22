@@ -6,7 +6,7 @@ import net.minecraft.scoreboard.ScoreObjective;
 import static me.aurora.client.Aurora.mc;
 
 public class ConditionUtils {
-    public static boolean inGame() { return (mc.thePlayer != null && mc.theWorld != null); };
+    public static boolean inGame() { return (mc.thePlayer != null && mc.theWorld != null); }
 
     /**
      * Modified code from HyAddons.

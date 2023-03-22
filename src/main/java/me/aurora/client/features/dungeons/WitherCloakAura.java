@@ -9,6 +9,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import static me.aurora.client.Aurora.mc;
+
+/**
+ * @author OctoSplash01 Gabagooooooooooool
+ * @version 2.0
+ * @brief Automaticly uses Wither Cloak
+ * @todo Find more ways to optimize the code (Held Item?)
+ */
 public class WitherCloakAura implements Module {
 
     public String name() {
@@ -19,19 +27,13 @@ public class WitherCloakAura implements Module {
         return Config.witherCloakAura;
     }
 
-    static Minecraft mc = Minecraft.getMinecraft();
-
     @SubscribeEvent
     public void onInteract(PlayerInteractEvent event) {
-        if (Config.witherCloakAura && ConditionUtils.inSkyblock() && mc.thePlayer.isInLava()) {
-            if (mc.thePlayer.getHeldItem() != null) {
-                String itemID = ItemUtils.getSkyBlockID(mc.thePlayer.getHeldItem());
-                ItemStack item = mc.thePlayer.inventory.getCurrentItem();
-                if ((itemID.equals("WITHER_CLOAK_SWORD"))) {
-                    event.setCanceled(true);
-                    mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, item);
-                    mc.thePlayer.inventory.currentItem = 0;
-                }
+        if (toggled() && ConditionUtils.inSkyblock() && mc.thePlayer.isInLava() && mc.thePlayer.getHeldItem() != null) {
+            if (ItemUtils.getSkyBlockID(mc.thePlayer.getHeldItem()).equals("WITHER_CLOAK_SWORD")) {
+                event.setCanceled(true);
+                mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, mc.thePlayer.inventory.getCurrentItem());
+                mc.thePlayer.inventory.currentItem = 0;
             }
         }
     }

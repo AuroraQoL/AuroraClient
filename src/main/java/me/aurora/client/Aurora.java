@@ -2,8 +2,11 @@ package me.aurora.client;
 
 import gg.essential.api.EssentialAPI;
 import gg.essential.api.commands.Command;
-import me.aurora.client.commands.CrabbyCommand;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.SneakyThrows;
 import me.aurora.client.commands.ConfigCommand;
+import me.aurora.client.commands.CrabbyCommand;
 import me.aurora.client.commands.HUDCommand;
 import me.aurora.client.config.Config;
 import me.aurora.client.config.HUDEdit;
@@ -36,9 +39,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 
-import java.awt.*;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
@@ -48,37 +49,31 @@ import java.util.*;
 @Mod(modid = "bossbar_customizer", name = "BossbarCustomizer", version = "1.2.1", clientSideOnly = true)
 public class Aurora {
     public static final int CURRENT_VERSION_BUILD = 999;
+    @Getter
     private static final Set<Element> hudModules = new HashSet<>();
     public static Minecraft mc = Minecraft.getMinecraft();
+    @Getter
     private static final HUDEdit hudEdit = new HUDEdit();
+    @Setter
     private static GuiScreen guiToOpen = null;
     private static File modFile = null;
+    @Getter
     private static final ArrayList<Module> modules = new ArrayList<>();
-    public static Set<Element> getHudModules() {
-        return hudModules;
-    }
-    public static ArrayList<Module> getModules() {
-        return modules;
-    }
-    public static void setGuiToOpen(GuiScreen guiToOpen) {
-        Aurora.guiToOpen = guiToOpen;
-    }
-    public static HUDEdit getHudEdit() {
-        return hudEdit;
-    }
 
     @EventHandler
-    public void init(FMLInitializationEvent event) throws IOException, FontFormatException {
+    @SneakyThrows
+    public void init(FMLInitializationEvent event) {
         Display.setTitle("Minecraft 1.8.9 - Aurora 3.4 preview");
         MinecraftForge.EVENT_BUS.register(this);
         new Config().preload();
         BindUtils.registerBinds(
                 new BindUtils.Bind(Keyboard.KEY_NONE, "AutoSellBazaar"),
                 new BindUtils.Bind(Keyboard.KEY_G, "GhostBlocks"),
-                new BindUtils.Bind(Keyboard.KEY_NONE, "VClip")
+                new BindUtils.Bind(Keyboard.KEY_NONE, "VClip"),
+                new BindUtils.Bind(Keyboard.KEY_K, "FastJoin")
         );
         registerModules(new ModuleList(), new AutoSell(), new Ghostblock(), new WitherDoorRemover(),
-                new TpAnywhere(), new HarpStealer(), new NoSlow(), new GemstoneScanner(),
+                new AotvAura(), new HarpStealer(), new NoSlow(), new GemstoneScanner(),
                 new AutoJoinSkyblock(), new AutoRogue(), new AutoSecrets(), new MelodyThrottle(),
                 new StructureScanner(), new NoDowntime(), new AutoSprint(), new AutoCrystals(),
                 new WitherCloakAura(), new AutoTank(), new NoBedrock(), new VClip(),
@@ -99,16 +94,16 @@ public class Aurora {
         }
     }
 
+    @SneakyThrows
     private void update() {
-        if (!Config.autoUpdate) return;
-        try {
+        if (Config.autoUpdate) {
             InputStream in = new URL("https://github.com/Gabagooooooooooool/AuroraUpdater/releases/download/1.0/updater.jar").openStream();
             File updater = new File(System.getProperty("java.io.tmpdir") + "aurora_updater_" + new Random().nextInt() + ".jar");
             Files.copy(in, updater.toPath(), StandardCopyOption.REPLACE_EXISTING);
             ProcessBuilder pb = new ProcessBuilder("java", "-jar", "\"" + updater.getAbsolutePath() + "\"", "1000", "\"" + modFile.getAbsolutePath() + "\"", "mainrepo");
             Process p = pb.start();
             System.out.println("Updating...");
-        } catch (IOException ignored) {}
+        }
     }
 
     @Mod.EventHandler
@@ -118,9 +113,7 @@ public class Aurora {
 
     @SubscribeEvent
     public void renderGameOverlayEvent(RenderGameOverlayEvent.Post event) {
-        for (Element hudModule : hudModules) {
-            getHudEdit().RenderGUI(hudModule);
-        }
+        hudModules.forEach(getHudEdit()::RenderGUI);
     }
 
     private void registerModules(Module... modules_t) {
@@ -131,9 +124,8 @@ public class Aurora {
     }
 
     private void registerEvents(Object... events) {
-        for (Object event : events) {
+        for (Object event : events)
             MinecraftForge.EVENT_BUS.register(event);
-        }
     }
 
     private void registerHud(Element... elements) {
@@ -141,8 +133,7 @@ public class Aurora {
     }
 
     private void registerCommand(Command... commands) {
-        for (Command command : commands) {
+        for (Command command : commands)
             EssentialAPI.getCommandRegistry().registerCommand(command);
-        }
     }
 }

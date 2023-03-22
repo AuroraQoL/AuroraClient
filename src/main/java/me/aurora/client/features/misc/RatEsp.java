@@ -19,23 +19,25 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import static me.aurora.client.Aurora.mc;
 
+/**
+ * @author Gabagooooooooooool
+ * @version 1.2
+ * @brief Rat/Crabby ESP
+ */
 public class RatEsp implements Module {
-
     private static final ResourceLocation CRABBY = new ResourceLocation("dailydungeons:res/crab.png");
     private static final ResourceLocation RAT = new ResourceLocation("dailydungeons:res/bigrat.png");
-
 
     /**
      * Following method has been circulating in Minecraft Hacking Community for a while, making it impossible to trace original author.
      */
     @SubscribeEvent
-    public void onRender(RenderWorldLastEvent e) {
-        if(Config.ratEsp) {
-            for (Entity entity : mc.theWorld.getLoadedEntityList()) {
-                if (!(entity instanceof EntityOtherPlayerMP)) continue;
-                final double x = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * e.partialTicks - mc.getRenderManager().viewerPosX;
-                final double y = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * e.partialTicks - mc.getRenderManager().viewerPosY;
-                final double z = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * e.partialTicks - mc.getRenderManager().viewerPosZ;
+    public void onRender(RenderWorldLastEvent event) {
+        if(toggled()) {
+            mc.theWorld.getLoadedEntityList().stream().filter(e -> e instanceof EntityOtherPlayerMP).forEach(entity -> {
+                double x = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * event.partialTicks - mc.getRenderManager().viewerPosX;
+                double y = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * event.partialTicks - mc.getRenderManager().viewerPosY;
+                double z = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * event.partialTicks - mc.getRenderManager().viewerPosZ;
                 GL11.glPushMatrix();
                 GL11.glTranslated(x, y - 0.2, z);
                 GL11.glScalef(0.03f, 0.03f, 0.03f);
@@ -46,7 +48,7 @@ public class RatEsp implements Module {
                 Gui.drawModalRectWithCustomSizedTexture(50, 90, 0.0f, 0.0f, -100, -100, -100.0f, -100.0f);
                 GlStateManager.enableDepth();
                 GL11.glPopMatrix();
-            }
+            });
         }
     }
 

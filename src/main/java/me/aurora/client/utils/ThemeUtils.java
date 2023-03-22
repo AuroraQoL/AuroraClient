@@ -11,27 +11,31 @@ import java.awt.*;
  */
 
 public class ThemeUtils {
-    public static int currentColorGet(float offset) {
+    private static Color getThemeColor(float offset) {
         double colorOffset = Math.abs(System.currentTimeMillis() / 16L) / 100.0 + offset;
         switch (Config.hudThemeColor) {
             case 0:
-                return getRainbow(-4000, (int) (offset * 3000)).getRGB();
+                return getRainbow(-4000, (int) (offset * 3000));
             case 1:
-                return getGradientOffset(new Color(223, 94, 255), new Color(0, 170, 255).brighter(), colorOffset).getRGB();
+                return getGradientOffset(new Color(223, 94, 255), new Color(0, 170, 255).brighter(), colorOffset);
             case 2:
-                return getGradientOffset(new Color(255, 0, 255), new Color(255, 255, 0), colorOffset).getRGB();
+                return getGradientOffset(new Color(255, 0, 255), new Color(255, 255, 0), colorOffset);
             case 3:
-                return getGradientOffset(new Color(0, 132, 99), new Color(255, 255, 99), colorOffset).getRGB();
+                return getGradientOffset(new Color(0, 132, 99), new Color(255, 255, 99), colorOffset);
             case 4:
-                return getGradientOffset(new Color(255, 0, 0), new Color(255, 255, 0), colorOffset).getRGB();
+                return getGradientOffset(new Color(255, 0, 0), new Color(255, 255, 0), colorOffset);
             case 5:
-                return getGradientOffset(new Color(0, 0, 255), new Color(0, 255, 132), colorOffset).getRGB();
+                return getGradientOffset(new Color(0, 0, 255), new Color(0, 255, 132), colorOffset);
             case 6:
-                return getGradientOffset(new Color(250, 250, 250), new Color(5, 5, 5), colorOffset).getRGB();
+                return getGradientOffset(new Color(250, 250, 250), new Color(5, 5, 5), colorOffset);
             case 7:
-                return getGradientOffset(new Color(231, 239, 239), new Color(16, 16, 24), colorOffset).getRGB();
+                return getGradientOffset(new Color(231, 239, 239), new Color(16, 16, 24), colorOffset);
             }
-        return Color.WHITE.getRGB();
+        return Color.WHITE;
+    }
+
+    public static int currentColorGet(float offset) {
+        return getThemeColor(offset).getRGB();
     }
 
     public static float getFloatValue(float offset, int color){

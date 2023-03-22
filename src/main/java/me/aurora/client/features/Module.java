@@ -1,6 +1,6 @@
 package me.aurora.client.features;
 
 public interface Module {
-    public boolean toggled();
+    boolean toggled();
     String name();
 }

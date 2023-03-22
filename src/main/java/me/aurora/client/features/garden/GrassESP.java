@@ -5,6 +5,7 @@ import me.aurora.client.features.Module;
 import me.aurora.client.utils.BlockRenderUtils;
 import me.aurora.client.utils.conditions.ConditionUtils;
 import me.aurora.client.utils.iteration.LoopUtils;
+import me.gabagool.pico.collections.util.Conc;
 import net.minecraft.block.BlockTallGrass;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
@@ -15,14 +16,13 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.awt.*;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 import static me.aurora.client.Aurora.mc;
 
 /**
  * @author Gabagooooooooooool
  * @version 2.1
- * Gemstone Scanner (ESP)
+ * Grass Esp
  */
 
 public class GrassESP  implements Module {
@@ -34,8 +34,8 @@ public class GrassESP  implements Module {
     //    return Config.grassEsp;
         return false; // TEMPORTARY
     }
-    private Set<BlockPos> grassBlocks = ConcurrentHashMap.newKeySet();
-    private Set<BlockPos> tempGrassBlocks = ConcurrentHashMap.newKeySet();
+    private final Set<BlockPos> grassBlocks = Conc.newConcSet();
+    private final Set<BlockPos> tempGrassBlocks = Conc.newConcSet();
     boolean readyToScan = true;
 
     @SubscribeEvent
