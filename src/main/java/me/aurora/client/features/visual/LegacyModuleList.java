@@ -42,7 +42,7 @@ public class LegacyModuleList implements Module {
         if (!(event.type == RenderGameOverlayEvent.ElementType.TEXT && toggled())) return;
         ScaledResolution scaledResolution = new ScaledResolution(mc);
         AtomicInteger counter = new AtomicInteger(0);
-        Aurora.getModules().stream().filter(Module::toggled).map(Module::name).sorted(fontRenderer).collect(Collectors.toList()).forEach(module -> {
+        Aurora.getModules().stream().filter(Module::toggled).map(Module::name).sorted(fontRenderer).forEachOrdered(module -> {
             int currentPhase = counter.getAndIncrement();
             int color = ThemeUtils.currentColorGet(currentPhase * 0.07f);
             int xPos = (int) (scaledResolution.getScaledWidth() - fontRenderer.getStringWidth(module) - 2);
