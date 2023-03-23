@@ -13,6 +13,7 @@ public class CrabbyCommand extends Command {
     public CrabbyCommand() {
         super("crabby", true, false);
     }
+
     @DefaultHandler
     public void handle() {
         MessageUtils.sendDelayedMultilinePlayerMessage(

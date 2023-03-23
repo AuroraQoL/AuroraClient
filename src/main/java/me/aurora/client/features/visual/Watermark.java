@@ -36,7 +36,7 @@ public class Watermark extends Element {
     }
     @Override
     public void guiDraw(){
-        drawForVersion(Aurora.CURRENT_VERSION_BUILD, "3.4 preview");
+        drawForVersion(Aurora.CURRENT_VERSION_BUILD, "3.4 preview 2");
     }
     @Override
     public void editorDraw(){

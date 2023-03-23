@@ -34,7 +34,6 @@ public class NoBedrock implements Module {
     public void onTick(TickEvent.PlayerTickEvent event) {
         if (toggled() && ((mc.theWorld.getTotalWorldTime() % 128L == 0) && readyToScan && ConditionUtils.inGame()))
             new Thread(() -> scanBlocks((int) mc.thePlayer.posX, (int) mc.thePlayer.posY, (int) mc.thePlayer.posZ), "NoBedrock_thread").start();
-
     }
 
     public void scanBlocks(int StartX, int StartY, int StartZ) {

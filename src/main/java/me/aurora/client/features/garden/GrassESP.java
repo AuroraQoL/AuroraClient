@@ -13,10 +13,13 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import org.commonmark.ext.ins.Ins;
 
 import java.awt.*;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static me.aurora.client.Aurora.mc;
@@ -50,23 +53,20 @@ public class GrassESP  implements Module {
 
     public void scanBlocks(int StartX, int StartY, int StartZ) {
         tempGrassBlocks.clear();
-        grassBlocks.stream().filter(b -> !blockIsGrass(b)).forEach(b -> tempGrassBlocks.add(b));
+        grassBlocks.stream().filter(b -> !blockIsGrass(b)).forEach(tempGrassBlocks::add);
         tempGrassBlocks.forEach(b->{grassBlocks.remove(b);});
-        IntStream.range(StartX - 50, StartX + 50).forEach(x -> {
-            IntStream.range(StartY - 50, StartY + 50).forEach(y -> {
-                IntStream.range(StartZ - 50, StartZ + 50).filter(z -> (blockIsGrass(new BlockPos(x, y, z)))).forEach(z -> {
-                    grassBlocks.add(new BlockPos(x, y, z));
-                });
-            });
+        LoopUtils.brLoop(StartX, StartY, StartZ, 50, (x, y, z) -> {
+            BlockPos block = new BlockPos(x, y, z);
+            if (blockIsGrass(block)) grassBlocks.add(block);
         });
         readyToScan = true;
     }
 
     @SubscribeEvent
     public void onRenderWorld(RenderWorldLastEvent event) {
-        if (Config.grassEsp) {
+        if (Config.grassEsp)
             grassBlocks.stream().filter(this::blockIsGrass).forEach(b -> BlockRenderUtils.drawOutlinedBoundingBox(b, new Color(146, 255, 65, 255), 3, event.partialTicks));
-        }
+
     }
 
     @SubscribeEvent
@@ -74,13 +74,9 @@ public class GrassESP  implements Module {
         readyToScan = true;
         grassBlocks.clear();
     }
-
     private boolean blockIsGrass(BlockPos b){
-        if (mc.theWorld.getBlockState(b).getBlock() == Blocks.tallgrass){
+        if (mc.theWorld.getBlockState(b).getBlock() == Blocks.tallgrass)
             return (mc.theWorld.getBlockState(b).getValue(BlockTallGrass.TYPE) == BlockTallGrass.EnumType.GRASS);
-        } else {
-            return false;
-        }
+        return false;
     }
-
 }

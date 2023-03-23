@@ -12,6 +12,7 @@ import me.aurora.client.utils.conditions.ConditionUtils;
 import me.aurora.client.utils.iteration.LoopUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStone;
+import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
@@ -46,8 +47,7 @@ public class StructureScanner implements Module {
     }
     private final ConcurrentHashMap<BlockPos, String> structures = new ConcurrentHashMap<>();
     private final Set<BlockPos> checked = ConcurrentHashMap.newKeySet();
-    boolean readyToScan = true;
-
+    volatile boolean readyToScan = true;
     private final HashSet<Check> checks = new HashSet<Check>(){{
         add(new Check(new Block[]{Blocks.stone, Blocks.stone, Blocks.stone, Blocks.stone, Blocks.stone, Blocks.stone, Blocks.stone, Blocks.stone_brick_stairs},
                 new BlockStone.EnumType[]{BlockStone.EnumType.DIORITE_SMOOTH, BlockStone.EnumType.DIORITE, BlockStone.EnumType.DIORITE, BlockStone.EnumType.DIORITE, BlockStone.EnumType.DIORITE, BlockStone.EnumType.DIORITE_SMOOTH, BlockStone.EnumType.ANDESITE_SMOOTH, null},
@@ -89,29 +89,21 @@ public class StructureScanner implements Module {
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
-        int cachedRange = Config.structureScanner_ParameterRange;
-        if ((((!Config.structureScanner_ParameterAggressiveScan) ? (((mc.theWorld.getTotalWorldTime()) % (4L * cachedRange)) == 0) : (((mc.theWorld.getTotalWorldTime()) % (Config.structureScanner_ParameterRange / 8)) == 0)) && Config.structureScanner && readyToScan && ConditionUtils.inGame())) {
-            readyToScan = false;
-            CompletableFuture.runAsync(() -> {
-                if (Config.structureScanner_freecam) {
-                    scanBlocks((int) mc.getRenderViewEntity().posX, (int) mc.getRenderViewEntity().posY, (int) mc.getRenderViewEntity().posZ);
-                } else {
-                    scanBlocks((int) mc.thePlayer.posX, (int) mc.thePlayer.posY, (int) mc.thePlayer.posZ);
-                }
-            });
-        }
-        if ((((mc.theWorld.getTotalWorldTime()) % (16L * cachedRange)) == 0) && !readyToScan) readyToScan = true;
+        int range = Config.structureScanner_ParameterRange;
+        if ((((!Config.structureScanner_ParameterAggressiveScan) ? (((mc.theWorld.getTotalWorldTime()) % (4L * range)) == 0) : (((mc.theWorld.getTotalWorldTime()) % (range / 8)) == 0)) && Config.structureScanner && readyToScan && ConditionUtils.inGame()))
+            CompletableFuture.runAsync(() -> scanBlocks(toCoordArray(Config.structureScanner_freecam ? mc.getRenderViewEntity() : mc.thePlayer)));
+        if ((((mc.theWorld.getTotalWorldTime()) % (16L * range)) == 0) && !readyToScan) readyToScan = true;
     }
 
-    public void scanBlocks(int StartX, int StartY, int StartZ) {
-        LoopUtils.brLoopBoundChunk(StartX, StartY, StartZ, Config.structureScanner_ParameterRange, (x, y, z) -> {
+    public void scanBlocks(int[] pos) {
+        readyToScan = false;
+        LoopUtils.brLoopBoundChunk(pos[0], pos[1], pos[2], Config.structureScanner_ParameterRange, (x, y, z) -> {
             String structureCheckResult = checkForStructureOnBlock(x, y, z);
             if (!Objects.equals(structureCheckResult, "null")) {
                 BlockPos strPos = new BlockPos(x, y, z);
                 checked.add(strPos);
                 addStructure(strPos, structureCheckResult);
             }
-              //  , structureCheckResult
         }, 31, 180);
         readyToScan = true;
     }
@@ -128,21 +120,19 @@ public class StructureScanner implements Module {
 
     @SubscribeEvent
     public void onRenderWorld(RenderWorldLastEvent event) {
-        if (Config.structureScanner && (scanType == 3 || scanType == 2))
-            structures.forEach((key, value) -> BlockRenderUtils.renderBeaconText(String.format("%s - %d %d %d", value, key.getX(), key.getY(), key.getZ()), key, event.partialTicks));
+        if (Config.structureScanner && scanType >= 2)
+            structures.forEach((key, value) -> BlockRenderUtils.renderBeaconText(String.format("\247l%s\247r - %d %d %d", value, key.getX(), key.getY(), key.getZ()), key, event.partialTicks));
     }
 
     private void addStructure(BlockPos checkPos, String checkName){
         if (structures.contains(checkPos)) return;
         Set<String> nearStructures = new HashSet<>();
-        for (Map.Entry<BlockPos, String> structEntry : structures.entrySet()) {
-            if (CalculationUtils.blockEuclideanDistance(checkPos, structEntry.getKey()) < 16){
+        for (Map.Entry<BlockPos, String> structEntry : structures.entrySet())
+            if (CalculationUtils.blockEuclideanDistance(checkPos, structEntry.getKey()) < 16)
                 nearStructures.add(structEntry.getValue());
-            }
-        }
         if (!nearStructures.contains(checkName)) {
             structures.put(checkPos, checkName);
-            if (scanType == 3 || scanType == 1)
+            if (scanType % 2 == 1)
                 MessageUtils.sendMultilineClientMessage(
                     "* * * * * * * * * *",
                     "\247lFOUND STRUCTURE",
@@ -151,6 +141,9 @@ public class StructureScanner implements Module {
         }
     }
 
+    private int[] toCoordArray(Entity e){
+        return new int[]{(int) e.posX, (int) e.posY, (int) e.posZ};
+    }
 
     @SubscribeEvent
     public void onWorldChange(WorldEvent.Load event) {

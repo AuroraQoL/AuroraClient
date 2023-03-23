@@ -19,8 +19,7 @@ import static me.aurora.client.Aurora.mc;
 /**
  * @author Gabagooooooooooool
  * @version 1.0
- * NoDowntime.
- * Improving this is a downtime. Works? Works.
+ * @.
  * @wontfix
  */
 public class NoDowntime implements Module {
@@ -45,7 +44,7 @@ public class NoDowntime implements Module {
             }
             String type = null;
             int floor = 0;
-            if(message.matches(".*Defeated*.[Bonzo, Scarf, Professor, Thorn, Livid, Sadan, Necron]*.in.*")) {
+            if(message.matches(".*Defeated*.(Bonzo|Scarf|Professor|Thorn|Livid|Sadan|Necron)*.in.*")) {
                 assert messagesQueue.peek() != null;
                 if (messagesQueue.peek().contains("Master")) {
                     type = "master_catacombs";
