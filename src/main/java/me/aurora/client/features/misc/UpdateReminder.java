@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
 import java.io.IOException;
 
-import static me.aurora.client.Aurora.CURRENT_VERSION_BUILD;
+import static me.aurora.client.Aurora.CURRENT_BUILD;
 
 public class UpdateReminder implements Module {
     public String name() {
@@ -21,7 +21,7 @@ public class UpdateReminder implements Module {
 
     @SubscribeEvent
     public void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) throws IOException {
-        if ((RemoteUtils.isOutdated(CURRENT_VERSION_BUILD)))
+        if ((RemoteUtils.isOutdated(CURRENT_BUILD)))
             EssentialAPI.getNotifications().push("This Version of Aurora is Outdated", "Please Update!");
     }
 }

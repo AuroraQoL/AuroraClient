@@ -39,7 +39,7 @@ import java.util.*;
 
 @Mod(modid = "bossbar_customizer", name = "BossbarCustomizer", version = "1.2.1", clientSideOnly = true)
 public class Aurora {
-    public static final int CURRENT_VERSION_BUILD = 1000;
+    public static final int CURRENT_BUILD = 1000;
     @Getter
     private static final Set<Element> hudModules = new HashSet<>();
     public static Minecraft mc = Minecraft.getMinecraft();
@@ -54,7 +54,7 @@ public class Aurora {
     @EventHandler
     @SneakyThrows
     public void init(FMLInitializationEvent event) {
-        Display.setTitle("Minecraft 1.8.9 - Aurora 3.4 preview 2");
+        Display.setTitle("Minecraft 1.8.9 - Aurora 3.4 preview 3");
         MinecraftForge.EVENT_BUS.register(this);
         new Config().preload();
         BindUtils.registerBinds(
@@ -69,11 +69,11 @@ public class Aurora {
                 new StructureScanner(), new NoDowntime(), new AutoSprint(), new AutoCrystals(),
                 new WitherCloakAura(), new AutoTank(), new NoBedrock(), new VClip(),
                 new CrystalPlacer(), new AntiLimbo(), new AutoSellBz(), new GrassESP(),
-                new AutoComposter(), new RatEsp());
-        registerHud(new Watermark(), new Keystrokes(), new PacketDebug(), new FPS());
+                new AutoComposter(), new RatEsp(), new TerminalAnnouncer());
+        registerHud(new Watermark(), new PacketDebug(), new FPS());
         registerEvents(new TickEndEvent(), new Main(), new PacketHandler(), new FPSUtils());
         registerCommand(new CrabbyCommand(), new HUDCommand(), new ConfigCommand());
-        if (RemoteUtils.isOutdated(CURRENT_VERSION_BUILD))
+        if (RemoteUtils.isOutdated(CURRENT_BUILD))
             Runtime.getRuntime().addShutdownHook(new Thread(this::update));
     }
 
@@ -87,12 +87,11 @@ public class Aurora {
 
     @SneakyThrows
     private void update() {
-        if (Config.autoUpdate) {
-            File updater = new File(System.getProperty("java.io.tmpdir") + "aurora_updater_" + new Random().nextInt() + ".jar");
-            Files.copy(new URL("https://github.com/Gabagooooooooooool/AuroraUpdater/releases/download/1.0/updater.jar").openStream(), updater.toPath(), StandardCopyOption.REPLACE_EXISTING);
-            System.out.println("Updating...");
-            Process p = new ProcessBuilder("java", "-jar", "\"" + updater.getAbsolutePath() + "\"", "1000", "\"" + modFile.getAbsolutePath() + "\"", "mainrepo").start();
-        }
+        if (!Config.autoUpdate) return;
+        File updater = new File(System.getProperty("java.io.tmpdir") + "aurora_updater_" + new Random().nextInt() + ".jar");
+        Files.copy(new URL("https://github.com/Gabagooooooooooool/AuroraUpdater/releases/download/1.0/updater.jar").openStream(), updater.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        System.out.println("Updating...");
+        Process p = new ProcessBuilder("java", "-jar", "\"" + updater.getAbsolutePath() + "\"", "1000", "\"" + modFile.getAbsolutePath() + "\"", "mainrepo").start();
     }
 
     @Mod.EventHandler

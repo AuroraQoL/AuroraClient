@@ -3,9 +3,8 @@ package me.aurora.client.features.garden;
 import me.aurora.client.config.Config;
 import me.aurora.client.features.Module;
 import me.aurora.client.utils.BlockRenderUtils;
-import me.aurora.client.utils.conditions.ConditionUtils;
+import me.aurora.client.utils.Condition;
 import me.aurora.client.utils.iteration.LoopUtils;
-import me.gabagool.pico.collections.util.Conc;
 import net.minecraft.block.BlockTallGrass;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
@@ -13,14 +12,10 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import org.commonmark.ext.ins.Ins;
 
 import java.awt.*;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static me.aurora.client.Aurora.mc;
 
@@ -44,7 +39,7 @@ public class GrassESP  implements Module {
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
-        if (Config.grassEsp && readyToScan && ConditionUtils.inGame()) {
+        if (Config.grassEsp && readyToScan && Condition.inGame()) {
             readyToScan = false;
             new Thread(() -> scanBlocks((int) mc.thePlayer.posX, (int) mc.thePlayer.posY, (int) mc.thePlayer.posZ), "GrassScan").start();
         }

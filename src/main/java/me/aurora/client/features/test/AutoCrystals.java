@@ -5,7 +5,7 @@ import me.aurora.client.features.Module;
 import me.aurora.client.utils.MouseUtils;
 import me.aurora.client.utils.PacketUtils;
 import me.aurora.client.utils.RotationUtils;
-import me.aurora.client.utils.conditions.ConditionUtils;
+import me.aurora.client.utils.Condition;
 import net.minecraft.network.play.client.C0BPacketEntityAction;
 import net.minecraft.util.BlockPos;
 import net.minecraftforge.event.world.WorldEvent;
@@ -33,22 +33,17 @@ public class AutoCrystals implements Module {
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
-        if (toggled() && !teleported && ConditionUtils.inSkyblock()) {
-            if (mc.thePlayer.posX == 73.5 && mc.thePlayer.posZ == 14.5) {
-                RotationUtils.Rotation rotation = RotationUtils.getRotationToBlock(new BlockPos(66.5, 237.5, 49.5));
-                if (!sentSneak) {
-                    setSneak(true);
-                    PacketUtils.sendPacket(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.START_SNEAKING));
-                    RotationUtils.look(rotation);
-                }
-                teleported = true;
-            }
-        }
-        if (sentSneak) {
+        Condition.executeIf(
+                toggled(), !teleported, Condition.inSkyblock()
+        ).executeAtCoords(73.5, 14.5, () -> {
+            RotationUtils.Rotation rotation = RotationUtils.getRotationToBlock(new BlockPos(66.5, 237.5, 49.5));
+            PacketUtils.sendPacket(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.START_SNEAKING));
+            RotationUtils.look(rotation);
+            teleported = true;
             MouseUtils.click(MouseUtils.ClickType.RIGHT);
             setSneak(false);
             PacketUtils.sendPacket(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.STOP_SNEAKING));
-        }
+        });
     }
 
     @SubscribeEvent

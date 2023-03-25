@@ -3,7 +3,7 @@ package me.aurora.client.features.mining;
 import me.aurora.client.config.Config;
 import me.aurora.client.features.Module;
 import me.aurora.client.utils.BlockRenderUtils;
-import me.aurora.client.utils.conditions.ConditionUtils;
+import me.aurora.client.utils.Condition;
 import net.minecraft.block.BlockStainedGlass;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
@@ -42,7 +42,7 @@ public class GemstoneScanner  implements Module {
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
-        if (Config.gemstoneEsp && (Config.gemstoneEsp_ParameterAggressiveScan || ((mc.theWorld.getTotalWorldTime() % (2L * Config.gemstoneEsp_ParameterRange)) == 0)) && readyToScan && ConditionUtils.inGame()) {
+        if (Config.gemstoneEsp && (Config.gemstoneEsp_ParameterAggressiveScan || ((mc.theWorld.getTotalWorldTime() % (2L * Config.gemstoneEsp_ParameterRange)) == 0)) && readyToScan && Condition.inGame()) {
             readyToScan = false;
             new Thread(() -> scanBlocks((int) mc.thePlayer.posX, (int) mc.thePlayer.posY, (int) mc.thePlayer.posZ), "ScannerThread").start();
         }

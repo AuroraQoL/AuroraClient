@@ -8,7 +8,7 @@ import me.aurora.client.utils.CalculationUtils;
 import me.aurora.client.utils.MessageUtils;
 import me.aurora.client.utils.LookupBlockUtils;
 import me.aurora.client.utils.BlockRenderUtils;
-import me.aurora.client.utils.conditions.ConditionUtils;
+import me.aurora.client.utils.Condition;
 import me.aurora.client.utils.iteration.LoopUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStone;
@@ -90,7 +90,7 @@ public class StructureScanner implements Module {
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
         int range = Config.structureScanner_ParameterRange;
-        if ((((!Config.structureScanner_ParameterAggressiveScan) ? (((mc.theWorld.getTotalWorldTime()) % (4L * range)) == 0) : (((mc.theWorld.getTotalWorldTime()) % (range / 8)) == 0)) && Config.structureScanner && readyToScan && ConditionUtils.inGame()))
+        if ((((!Config.structureScanner_ParameterAggressiveScan) ? (((mc.theWorld.getTotalWorldTime()) % (4L * range)) == 0) : (((mc.theWorld.getTotalWorldTime()) % (range / 8)) == 0)) && Config.structureScanner && readyToScan && Condition.inGame()))
             CompletableFuture.runAsync(() -> scanBlocks(toCoordArray(Config.structureScanner_freecam ? mc.getRenderViewEntity() : mc.thePlayer)));
         if ((((mc.theWorld.getTotalWorldTime()) % (16L * range)) == 0) && !readyToScan) readyToScan = true;
     }

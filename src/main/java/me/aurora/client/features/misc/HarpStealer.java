@@ -8,7 +8,7 @@ import me.aurora.client.features.Module;
 import me.aurora.client.utils.MessageUtils;
 import me.aurora.client.events.TickEndEvent;
 import me.aurora.client.utils.InventoryUtils;
-import me.aurora.client.utils.conditions.ConditionUtils;
+import me.aurora.client.utils.Condition;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Slot;
@@ -31,7 +31,7 @@ public class HarpStealer  implements Module {
     boolean inHarp = false;
     @SubscribeEvent
     public void onGuiOpen(GuiOpenEvent event) {
-        if(event.gui instanceof GuiChest && ConditionUtils.inSkyblock() && Config.harpStealer) {
+        if(event.gui instanceof GuiChest && Condition.inSkyblock() && Config.harpStealer) {
             if(InventoryUtils.getGuiName(event.gui).startsWith("Harp -")) {
                 AbstractCommentedConfig lastInventory = null;
                 lastInventory.clear();
