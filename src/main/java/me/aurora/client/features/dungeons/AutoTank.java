@@ -5,7 +5,7 @@ import me.aurora.client.features.Module;
 import me.aurora.client.utils.MouseUtils;
 import me.aurora.client.utils.PacketUtils;
 import me.aurora.client.utils.RotationUtils;
-import me.aurora.client.utils.Condition;
+import me.aurora.client.utils.conditions.ConditionUtils;
 import net.minecraft.network.play.client.C0BPacketEntityAction;
 import net.minecraft.util.BlockPos;
 import net.minecraftforge.event.world.WorldEvent;
@@ -37,13 +37,13 @@ public class AutoTank implements Module {
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
-        Condition.executeIf(toggled(), !teleported, Condition.inSkyblock()).executeAtCoords(73.5, 14.5, () -> {
+        if (toggled() && !teleported && ConditionUtils.inSkyblock() && mc.thePlayer.posX == 73.5 && mc.thePlayer.posZ == 14.5) {
             setSneakStatus(true);
             RotationUtils.look(RotationUtils.getRotationToBlock(new BlockPos(73.5, 224, 70.5)));
             teleported = true;
             MouseUtils.click(RIGHT);
             setSneakStatus(false);
-        });
+        }
     }
 
     @SubscribeEvent

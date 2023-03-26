@@ -356,14 +356,6 @@ public class Config extends Vigilant {
     public static boolean gemstoneEsp = true;
     @Property(
             type = PropertyType.SWITCH,
-            name = "Terminal Announcer",
-            description = "Types the terminal type you're in on party chat (useful for pb running)",
-            category = "Dungeons",
-            subcategory = "Terminals"
-    )
-    public static boolean terminalAnnouncer = false;
-    @Property(
-            type = PropertyType.SWITCH,
             name = "kaotic is a furry",
             description = "furry",
             category = "kaotic",

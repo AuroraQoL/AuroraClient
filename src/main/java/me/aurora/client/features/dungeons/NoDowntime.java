@@ -3,7 +3,8 @@ package me.aurora.client.features.dungeons;
 import me.aurora.client.config.Config;
 import me.aurora.client.features.Module;
 import me.aurora.client.utils.MessageUtils;
-import me.aurora.client.utils.Condition;
+import me.aurora.client.utils.conditions.ConditionUtils;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -11,6 +12,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.IntStream;
 
 import static me.aurora.client.Aurora.mc;
 
@@ -33,7 +35,7 @@ public class NoDowntime implements Module {
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) throws InterruptedException {
-        if(Config.noDowntime && Condition.inSkyblock()) {
+        if(Config.noDowntime && ConditionUtils.inSkyblock()) {
             String message = event.message.getFormattedText().replaceAll("\u00a7.", "");
             messagesQueue.offer(message);
             if (messagesQueue.size() > 3) {
