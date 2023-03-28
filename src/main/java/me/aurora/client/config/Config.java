@@ -10,9 +10,11 @@ import me.aurora.client.features.misc.RatEsp;
 import java.io.File;
 
 public class Config extends Vigilant {
-    ////////////
-    ////////////
-    ////////////
+
+    /////////////////
+    // HUD MODULES //
+    /////////////////
+
     @Property(
             type = PropertyType.NUMBER, name = "WATERMARK_X", category = "pos", hidden = true)
     public static int WATERMARK_X = 5;
@@ -290,6 +292,14 @@ public class Config extends Vigilant {
     public static int autoSprintSettings = 0;
     @Property(
             type = PropertyType.SWITCH,
+            name = "\247c[UNTESTED] \247rInventory Walk",
+            description = "Walk in inventory lol",
+            category = "Movement",
+            subcategory = "InvWalk"
+    )
+    public static boolean invWalk = false;
+    @Property(
+            type = PropertyType.SWITCH,
             name = "Melody Throttle Spammer",
             description = "Spams party chat when you are being throttled",
             category = "QOL",
@@ -339,13 +349,20 @@ public class Config extends Vigilant {
             name = "Auto Crystals Sides",
             description = "Change What Crystal You Want To Do",
             options = {"Right", "Left"},
-
-
             category = "Dungeons",
             subcategory = "Crystals",
             hidden = true
     )
     public static int crystalSide = 1;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Terminal Announcer",
+            description = "Types the terminal type you're in on party chat (useful for pb running)",
+            category = "Dungeons",
+            subcategory = "Terminals"
+    )
+    public static boolean terminalAnnouncer = false;
     @Property(
             type = PropertyType.SWITCH,
             name = "\247c\247l[\u03B2]\247r Gemstone ESP",
@@ -353,7 +370,7 @@ public class Config extends Vigilant {
             category = "Mining",
             subcategory = "Scanner"
     )
-    public static boolean gemstoneEsp = true;
+    public static boolean gemstoneEsp = false;
     @Property(
             type = PropertyType.SWITCH,
             name = "kaotic is a furry",
@@ -400,7 +417,7 @@ public class Config extends Vigilant {
             category = "Mining",
             subcategory = "Scanner"
     )
-    public static boolean structureScanner = true;
+    public static boolean structureScanner = false;
     @Property(
             type = PropertyType.SELECTOR,
             name = "Scan Display Mode",
@@ -417,7 +434,7 @@ public class Config extends Vigilant {
             category = "Mining",
             subcategory = "Scanner"
     )
-    public static boolean structureScanner_freecam = true;
+    public static boolean structureScanner_freecam = false;
     @Property(
             type = PropertyType.CHECKBOX,
             name = "Only scan for Dillo spots",
@@ -425,7 +442,7 @@ public class Config extends Vigilant {
             category = "Mining",
             subcategory = "Scanner"
     )
-    public static boolean structureScanner_dillo = true;
+    public static boolean structureScanner_dillo = false;
 
 
     @Property(
@@ -504,7 +521,7 @@ public class Config extends Vigilant {
             category = "Garden",
             subcategory = "ESP"
     )
-    public static boolean grassEsp = true;
+    public static boolean grassEsp = false;
     @Property(
             type = PropertyType.SWITCH,
             name = "Auto-Composter",
@@ -512,7 +529,7 @@ public class Config extends Vigilant {
             category = "Garden",
             subcategory = "Auto-Composter"
     )
-    public static boolean autoComposter = true;
+    public static boolean autoComposter = false;
     @Property(
             type = PropertyType.SLIDER,
             name = "Auto-Composter delay",
@@ -539,7 +556,7 @@ public class Config extends Vigilant {
             category = "Garden",
             subcategory = "Auto-Composter"
     )
-    public static boolean composter_fuel = true;
+    public static boolean composter_fuel = false;
     @Property(
             type = PropertyType.CHECKBOX,
             name = "Collect compost",
@@ -547,7 +564,7 @@ public class Config extends Vigilant {
             category = "Garden",
             subcategory = "Auto-Composter"
     )
-    public static boolean composter_compost = true;
+    public static boolean composter_compost = false;
 
     public static Config INSTANCE = new Config();
 
