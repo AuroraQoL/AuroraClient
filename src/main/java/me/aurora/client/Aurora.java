@@ -9,6 +9,7 @@ import me.aurora.client.commands.*;
 import me.aurora.client.config.*;
 import me.aurora.client.events.*;
 import me.aurora.client.features.test.*;
+import me.aurora.client.mixin.MixinLoader;
 import me.aurora.client.utils.*;
 import me.aurora.client.features.*;
 import me.aurora.client.features.visual.*;
@@ -39,7 +40,7 @@ import java.util.*;
 
 @Mod(modid = "bossbar_customizer", name = "BossbarCustomizer", version = "1.2.1", clientSideOnly = true)
 public class Aurora {
-    public static final int CURRENT_VERSION_BUILD = 3400;
+    public static final int CURRENT_VERSION_BUILD = 3499;
     @Getter
     private static final Set<Element> hudModules = new HashSet<>();
     public static Minecraft mc = Minecraft.getMinecraft();
@@ -54,7 +55,7 @@ public class Aurora {
     @EventHandler
     @SneakyThrows
     public void init(FMLInitializationEvent event) {
-        Display.setTitle("Minecraft 1.8.9 - Aurora 3.4");
+        Display.setTitle("Minecraft 1.8.9 - Aurora 4.0 preview");
         MinecraftForge.EVENT_BUS.register(this);
         new Config().preload();
         BindUtils.registerBinds(

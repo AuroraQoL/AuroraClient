@@ -14,13 +14,15 @@ buildscript {
         maven { url "https://repo.sk1er.club/repository/maven-public" }
     }
     dependencies {
-        classpath "com.github.asbyth:ForgeGradle:6f53277"
+        classpath "com.github.Skytils:ForgeGradle:41dfce0a70"
         classpath "com.github.jengelman.gradle.plugins:shadow:6.1.0"
+        classpath "com.github.debuggingss:MixinGradle:0.6-SNAPSHOT"
     }
 }
 
-apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: "net.minecraftforge.gradle.forge"
 apply plugin: "com.github.johnrengelman.shadow"
+apply plugin: "org.spongepowered.mixin"
 
 version = "3.1.0"
 group= "me.aurora.client"
@@ -43,6 +45,7 @@ minecraft {
     mappings = "stable_22"
     makeObfSourceJar = false
     replace "@VERSION@": project.version
+    clientRunArgs += "--mixin mixins.aurora.json"
 }
 
 configurations {
@@ -65,19 +68,28 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.26'
     testCompileOnly 'org.projectlombok:lombok:1.18.26'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.26'
+    implementation('org.spongepowered:mixin:0.7.11-SNAPSHOT')
+    annotationProcessor('org.spongepowered:mixin:0.7.11-SNAPSHOT')
+}
+
+mixin {
+    add sourceSets.main, "mixins.aurora.refmap.json"
+    defaultObfuscationEnv searge
+
 }
 
 jar {
     manifest {
         attributes("TweakClass": "gg.essential.loader.stage0.EssentialSetupTweaker")
+        attributes("MixinConfigs": "mixins.aurora.json")
     }
 }
 
 shadowJar {
-
     dependencies {
         include(dependency("gg.essential:loader-launchwrapper:1.1.3"))
         include(dependency("net.objecthunter:exp4j:0.4.8"))
+        include(dependency("org.spongepowered:mixin:0.7.11-SNAPSHOT"))
     }
     archiveFileName = "bin.jar"
 }

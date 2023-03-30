@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "compatibilityLevel": "JAVA_8",
+  "package": "me.aurora.client.mixin",
+  "refmap": "mixins.aurora.refmap.json",
+  "mixins": [
+    "MixinNetworkManager"
+  ],
+  "client": [
+    "MixinMinecraft"
+  ]
+}
