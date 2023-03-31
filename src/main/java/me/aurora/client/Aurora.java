@@ -39,7 +39,7 @@ import java.util.*;
 
 @Mod(modid = "bossbar_customizer", name = "BossbarCustomizer", version = "1.2.1", clientSideOnly = true)
 public class Aurora {
-    public static final int CURRENT_VERSION_BUILD = 3400;
+    public static final int CURRENT_VERSION_BUILD = 3402;
     @Getter
     private static final Set<Element> hudModules = new HashSet<>();
     public static Minecraft mc = Minecraft.getMinecraft();
@@ -50,6 +50,8 @@ public class Aurora {
     private static File modFile = null;
     @Getter
     private static final ArrayList<Module> modules = new ArrayList<>();
+    @Getter
+    private static final boolean aprilFools = java.time.LocalDate.now().getDayOfMonth() == 1 && java.time.LocalDate.now().getMonth() == java.time.Month.APRIL;
 
     @EventHandler
     @SneakyThrows
@@ -69,7 +71,7 @@ public class Aurora {
                 new StructureScanner(), new NoDowntime(), new AutoSprint(), new AutoCrystals(),
                 new WitherCloakAura(), new AutoTank(), new NoBedrock(), new VClip(),
                 new CrystalPlacer(), new AntiLimbo(), new AutoSellBz(), new GrassESP(),
-                new AutoComposter(), new RatEsp(), new TerminalAnnouncer(), new InvWalk());
+                new AutoComposter(), new RatEsp(), new TerminalAnnouncer(), new AprilFools());
         registerHud(new Watermark(), new Keystrokes(), new PacketDebug(), new FPS());
         registerEvents(new TickEndEvent(), new Main(), new PacketHandler(), new FPSUtils());
         registerCommand(new CrabbyCommand(), new HUDCommand(), new ConfigCommand());

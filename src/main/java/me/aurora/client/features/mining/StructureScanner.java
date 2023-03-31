@@ -85,6 +85,9 @@ public class StructureScanner implements Module {
         add(new Check(new Block[]{Blocks.cobblestone, Blocks.cobblestone, Blocks.cobblestone, Blocks.cobblestone, Blocks.cobblestone, Blocks.cobblestone, Blocks.cobblestone, Blocks.cobblestone, Blocks.cobblestone, Blocks.cobblestone, Blocks.cobblestone_wall, Blocks.cobblestone_wall, Blocks.cobblestone_wall, Blocks.cobblestone_wall},
                 new BlockStone.EnumType[]{null, null, null, null, null, null, null, null, null, null, null, null, null, null},
                 false, "BAL-A"));
+        add(new Check(new Block[]{Blocks.stained_hardened_clay, Blocks.stained_hardened_clay, Blocks.wool, Blocks.air, Blocks.air, Blocks.stained_hardened_clay, Blocks.stained_hardened_clay, Blocks.stained_hardened_clay, Blocks.air, Blocks.stained_hardened_clay, Blocks.stained_hardened_clay},
+                new BlockStone.EnumType[]{null, null, null, null, null, null, null, null, null, null, null},
+                false, "GOLDEN_DRAGON-A"));
     }};
 
     @SubscribeEvent
@@ -125,7 +128,7 @@ public class StructureScanner implements Module {
     }
 
     private void addStructure(BlockPos checkPos, String checkName){
-        if (structures.contains(checkPos)) return;
+        if (structures.containsKey(checkPos)) return;
         Set<String> nearStructures = new HashSet<>();
         for (Map.Entry<BlockPos, String> structEntry : structures.entrySet())
             if (CalculationUtils.blockEuclideanDistance(checkPos, structEntry.getKey()) < 16)

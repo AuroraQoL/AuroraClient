@@ -292,14 +292,6 @@ public class Config extends Vigilant {
     public static int autoSprintSettings = 0;
     @Property(
             type = PropertyType.SWITCH,
-            name = "\247c[UNTESTED] \247rInventory Walk",
-            description = "Walk in inventory lol",
-            category = "Movement",
-            subcategory = "InvWalk"
-    )
-    public static boolean invWalk = false;
-    @Property(
-            type = PropertyType.SWITCH,
             name = "Melody Throttle Spammer",
             description = "Spams party chat when you are being throttled",
             category = "QOL",

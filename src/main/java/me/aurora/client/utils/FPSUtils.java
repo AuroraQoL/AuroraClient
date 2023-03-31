@@ -18,16 +18,11 @@ public class FPSUtils {
 
     @SubscribeEvent
     public void onRender(TickEvent.RenderTickEvent event){
-        if (half) lastFps.add(System.currentTimeMillis());
-        half =! half;
+        if (half =! half) lastFps.add(System.currentTimeMillis());
     }
 
     public static Integer getFPS(){
-        removeOutdated();
-        return lastFps.size();
-    }
-
-    private static void removeOutdated(){
         lastFps.removeIf(x -> System.currentTimeMillis() - x > 1000);
+        return lastFps.size();
     }
 }

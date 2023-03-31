@@ -16,6 +16,6 @@ public class ConditionUtils {
     public static boolean inSkyblock() {
         if (!inGame()) return false;
         ScoreObjective scoreboardObj = mc.theWorld.getScoreboard().getObjectiveInDisplaySlot(1);
-        return scoreboardObj != null && StringUtils.removeFormatting(scoreboardObj.getDisplayName()).contains("SKYBLOCK");
+        return scoreboardObj != null && (StringUtils.removeFormatting(scoreboardObj.getDisplayName()).contains("SKYBLOCK") || StringUtils.removeFormatting(scoreboardObj.getDisplayName()).contains("SKIBLOCK"));
     }
 }

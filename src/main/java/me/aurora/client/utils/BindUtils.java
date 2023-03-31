@@ -13,7 +13,7 @@ import java.util.HashMap;
  * @brief Binding Utils
  */
 public class BindUtils {
-    private static final HashMap<String, KeyBinding> bindingHashMap = new HashMap<>();
+    private static final HashMap<String, KeyBinding> bindMap = new HashMap<>();
     @AllArgsConstructor @Getter
     public static class Bind {
         private final int bindKey;
@@ -22,14 +22,14 @@ public class BindUtils {
     public static void registerBinds(Bind... binds){
         for (Bind bind : binds) {
             String bindName = bind.getBindName();
-            bindingHashMap.put(bindName, new KeyBinding(bindName, bind.getBindKey(), "Aurora"));
-            ClientRegistry.registerKeyBinding(bindingHashMap.get(bindName));
+            bindMap.put(bindName, new KeyBinding(bindName, bind.getBindKey(), "Aurora"));
+            ClientRegistry.registerKeyBinding(bindMap.get(bindName));
         }
     }
     public static boolean isBindPressed(String bindName){
-        return bindingHashMap.get(bindName).isPressed();
+        return bindMap.get(bindName).isPressed();
     }
     public static boolean isBindDown(String bindName){
-        return bindingHashMap.get(bindName).isKeyDown();
+        return bindMap.get(bindName).isKeyDown();
     }
 }
