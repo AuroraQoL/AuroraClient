@@ -71,7 +71,7 @@ public class Aurora {
                 new StructureScanner(), new NoDowntime(), new AutoSprint(), new AutoCrystals(),
                 new WitherCloakAura(), new AutoTank(), new NoBedrock(), new VClip(),
                 new CrystalPlacer(), new AntiLimbo(), new AutoSellBz(), new GrassESP(),
-                new AutoComposter(), new RatEsp(), new TerminalAnnouncer(), new AprilFools());
+                new AutoComposter(), new RatEsp(), new TerminalAnnouncer());
         registerHud(new Watermark(), new Keystrokes(), new PacketDebug(), new FPS());
         registerEvents(new TickEndEvent(), new Main(), new PacketHandler(), new FPSUtils());
         registerCommand(new CrabbyCommand(), new HUDCommand(), new ConfigCommand());
