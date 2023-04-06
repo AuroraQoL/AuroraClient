@@ -27,3 +27,8 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew build
+    - name: Collect build artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: binary
+        path: build/libs/bin.jar
