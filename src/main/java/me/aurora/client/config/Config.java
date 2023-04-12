@@ -294,8 +294,8 @@ public class Config extends Vigilant {
             type = PropertyType.SWITCH,
             name = "Melody Throttle Spammer",
             description = "Spams party chat when you are being throttled",
-            category = "QOL",
-            subcategory = "Melody"
+            category = "Dungeons",
+            subcategory = "Terminals"
     )
     public static boolean melodyThrottle = false;
     @Property(
