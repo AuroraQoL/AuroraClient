@@ -8,6 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import static me.aurora.client.Aurora.mc;
 
@@ -29,12 +30,17 @@ public class WitherCloakAura implements Module {
     }
 
     @SubscribeEvent
-    public void onInteract(PlayerInteractEvent event) {
-        if (toggled() && ConditionUtils.inSkyblock() && mc.thePlayer.isInLava() && mc.thePlayer.getHeldItem() != null) {
-            if (ItemUtils.getSkyBlockID(mc.thePlayer.getHeldItem()).equals("WITHER_CLOAK_SWORD")) {
-                event.setCanceled(true);
-                mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, mc.thePlayer.inventory.getCurrentItem());
-                mc.thePlayer.inventory.currentItem = 0;
+    public void onTick(TickEvent.PlayerTickEvent event) {
+        if (toggled() && ConditionUtils.inSkyblock() && mc.thePlayer.isInLava() && mc.thePlayer.inventory.currentItem == 0) {
+            for (int i = 0; i < 8; i++) {
+                ItemStack item = mc.thePlayer.inventory.getStackInSlot(i);
+                if (ItemUtils.getSkyBlockID(item).matches("WITHER_CLOAK_SWORD")) {
+                    event.setCanceled(true);
+                    mc.thePlayer.inventory.currentItem = i;
+                    mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, item);
+                    mc.thePlayer.inventory.currentItem = 0;
+                    break;
+                }
             }
         }
     }
