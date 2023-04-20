@@ -9,8 +9,10 @@
 [![discord](https://badges.aleen42.com/src/discord.svg)](https://discord.gg/9GJXNKfHkC)
 ![build](https://github.com/AuroraQoL/AuroraClient/actions/workflows/gradle.yml/badge.svg)
 
-# Join Aurora Discord community!
+> Test results here (soon)
+
+## Join Aurora Discord community!
 https://discord.gg/9GJXNKfHkC
 
-# Check our website!
+## Check our website!
 https://auroraclient.lol/
