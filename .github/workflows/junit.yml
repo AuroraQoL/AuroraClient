@@ -19,8 +19,6 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew build
-    - name: Checkout Code
-      uses: actions/checkout@v1
     - name: Execute test
       run: ./gradlew test
     - name: Publish Test Report
