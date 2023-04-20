@@ -11,6 +11,8 @@
 
 > We've implemented JUnit5-powered automatic tests for some Aurora features and core utils to ensure stability. To check the results, look bellow.
 
+[![Test using JUnit5](https://github.com/AuroraQoL/AuroraClient/actions/workflows/junit.yml/badge.svg)](https://github.com/AuroraQoL/AuroraClient/actions/workflows/junit.yml)
+
 ## Join Aurora Discord community!
 https://discord.gg/9GJXNKfHkC
 
