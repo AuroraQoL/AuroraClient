@@ -32,7 +32,7 @@ public class AutoSellBz  implements Module {
     public void onChat(ClientChatReceivedEvent event) {
         if(Config.autoSellBz && event.type == 0) {
             String message = event.message.getFormattedText().replaceAll("\u00a7.", "");
-            if (message.equals("Your inventory is full!") && Config.autoSellBzType == 1) {
+            if (message.equals("Your inventory is full!") | message.contains("Inventory full? Don't forget to check out your Storage inside the SkyBlock Menu!") && Config.autoSellBzType == 1) {
                 readyToSell = true;
                 mc.thePlayer.sendChatMessage("/bz");
                 MessageUtils.sendClientMessage("Selling Items on Bazaar...");
