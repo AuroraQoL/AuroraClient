@@ -35,6 +35,11 @@ sourceSets {
     main {
         output.resourcesDir = java.outputDir
     }
+    test {
+        java {
+            srcDirs = ["src/test"]
+        }
+    }
 }
 
 minecraft {
@@ -65,6 +70,8 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.26'
     testCompileOnly 'org.projectlombok:lombok:1.18.26'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.26'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 }
 
 jar {
@@ -109,3 +116,7 @@ reobf {
 }
 
 sourceSets { main { output.resourcesDir = java.classesDirectory } }
+
+test {
+    useJUnitPlatform()
+}

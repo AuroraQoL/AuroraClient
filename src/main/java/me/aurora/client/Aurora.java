@@ -39,7 +39,7 @@ import java.util.*;
 
 @Mod(modid = "bossbar_customizer", name = "BossbarCustomizer", version = "1.2.1", clientSideOnly = true)
 public class Aurora {
-    public static final int CURRENT_VERSION_BUILD = 3410;
+    public static final int CURRENT_VERSION_BUILD = 3420;
     @Getter
     private static final Set<Element> hudModules = new HashSet<>();
     public static Minecraft mc = Minecraft.getMinecraft();
