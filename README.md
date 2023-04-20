@@ -9,7 +9,7 @@
 [![discord](https://badges.aleen42.com/src/discord.svg)](https://discord.gg/9GJXNKfHkC)
 ![build](https://github.com/AuroraQoL/AuroraClient/actions/workflows/gradle.yml/badge.svg)
 
-> Test results here (soon)
+> We've implemented JUnit5-powered automatic tests for some Aurora features and core utils to ensure stability. To check the results, look bellow.
 
 ## Join Aurora Discord community!
 https://discord.gg/9GJXNKfHkC
