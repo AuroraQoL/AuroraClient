@@ -5,21 +5,34 @@ import gg.essential.api.commands.Command;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
-import me.aurora.client.commands.*;
-import me.aurora.client.config.*;
-import me.aurora.client.events.*;
-import me.aurora.client.features.test.*;
-import me.aurora.client.utils.*;
-import me.aurora.client.features.*;
-import me.aurora.client.features.visual.*;
+import me.aurora.client.commands.ConfigCommand;
+import me.aurora.client.commands.CrabbyCommand;
+import me.aurora.client.commands.HUDCommand;
+import me.aurora.client.config.Config;
+import me.aurora.client.config.HUDEdit;
+import me.aurora.client.events.TickEndEvent;
+import me.aurora.client.features.Module;
 import me.aurora.client.features.dungeons.*;
-import me.aurora.client.features.garden.*;
-import me.aurora.client.features.mining.*;
+import me.aurora.client.features.garden.AutoComposter;
+import me.aurora.client.features.garden.GrassESP;
+import me.aurora.client.features.mining.GemstoneScanner;
+import me.aurora.client.features.mining.StructureScanner;
 import me.aurora.client.features.misc.*;
 import me.aurora.client.features.movement.*;
-import me.aurora.client.krypton.*;
+import me.aurora.client.features.test.AutoCrystals;
+import me.aurora.client.features.test.AutoSecrets;
+import me.aurora.client.features.test.CrystalPlacer;
+import me.aurora.client.features.visual.*;
+import me.aurora.client.krypton.Main;
+import me.aurora.client.utils.BindUtils;
+import me.aurora.client.utils.FPSUtils;
+import me.aurora.client.utils.PacketHandler;
+import me.aurora.client.utils.RemoteUtils;
+import me.cephetir.communistscanner.CommunistScanners;
+import me.cephetir.communistscanner.StructureCallBack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.util.BlockPos;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -28,6 +41,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import org.jetbrains.annotations.NotNull;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 
@@ -59,6 +73,12 @@ public class Aurora {
         Display.setTitle("Aurora 3.4.1");
         MinecraftForge.EVENT_BUS.register(this);
         new Config().preload();
+        CommunistScanners.INSTANCE.init(new StructureCallBack() {
+            @Override
+            public void newStructure(@NotNull String server, @NotNull String name, @NotNull BlockPos blockPos) {
+                StructureScanner.addStructure(server, blockPos, name, true);
+            }
+        });
         BindUtils.registerBinds(
                 new BindUtils.Bind(Keyboard.KEY_NONE, "AutoSellBazaar"),
                 new BindUtils.Bind(Keyboard.KEY_G, "GhostBlocks"),
