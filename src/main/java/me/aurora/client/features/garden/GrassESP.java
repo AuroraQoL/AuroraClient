@@ -5,7 +5,6 @@ import me.aurora.client.features.Module;
 import me.aurora.client.utils.BlockRenderUtils;
 import me.aurora.client.utils.conditions.ConditionUtils;
 import me.aurora.client.utils.iteration.LoopUtils;
-import me.gabagool.pico.collections.util.Conc;
 import net.minecraft.block.BlockTallGrass;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
@@ -13,14 +12,10 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import org.commonmark.ext.ins.Ins;
 
 import java.awt.*;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static me.aurora.client.Aurora.mc;
 
@@ -30,7 +25,7 @@ import static me.aurora.client.Aurora.mc;
  * @brief Grass ESP
  * Back to the original state
  */
-public class GrassESP  implements Module {
+public class GrassESP implements Module {
     public String name() {
         return "GrassESP";
     }
@@ -38,6 +33,7 @@ public class GrassESP  implements Module {
     public boolean toggled() {
         return Config.grassEsp;
     }
+
     private Set<BlockPos> grassBlocks = ConcurrentHashMap.newKeySet();
     private Set<BlockPos> tempGrassBlocks = ConcurrentHashMap.newKeySet();
     boolean readyToScan = true;
@@ -54,7 +50,9 @@ public class GrassESP  implements Module {
     public void scanBlocks(int StartX, int StartY, int StartZ) {
         tempGrassBlocks.clear();
         grassBlocks.stream().filter(b -> !blockIsGrass(b)).forEach(tempGrassBlocks::add);
-        tempGrassBlocks.forEach(b->{grassBlocks.remove(b);});
+        tempGrassBlocks.forEach(b -> {
+            grassBlocks.remove(b);
+        });
         LoopUtils.brLoop(StartX, StartY, StartZ, 50, (x, y, z) -> {
             BlockPos block = new BlockPos(x, y, z);
             if (blockIsGrass(block)) grassBlocks.add(block);
@@ -74,7 +72,8 @@ public class GrassESP  implements Module {
         readyToScan = true;
         grassBlocks.clear();
     }
-    private boolean blockIsGrass(BlockPos b){
+
+    private boolean blockIsGrass(BlockPos b) {
         if (mc.theWorld.getBlockState(b).getBlock() == Blocks.tallgrass)
             return (mc.theWorld.getBlockState(b).getValue(BlockTallGrass.TYPE) == BlockTallGrass.EnumType.GRASS);
         return false;

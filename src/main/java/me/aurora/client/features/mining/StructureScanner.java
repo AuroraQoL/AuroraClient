@@ -4,28 +4,30 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import me.aurora.client.config.Config;
 import me.aurora.client.features.Module;
-import me.aurora.client.utils.CalculationUtils;
-import me.aurora.client.utils.MessageUtils;
-import me.aurora.client.utils.LookupBlockUtils;
 import me.aurora.client.utils.BlockRenderUtils;
+import me.aurora.client.utils.CalculationUtils;
+import me.aurora.client.utils.LookupBlockUtils;
+import me.aurora.client.utils.MessageUtils;
 import me.aurora.client.utils.conditions.ConditionUtils;
 import me.aurora.client.utils.iteration.LoopUtils;
+import me.cephetir.bladecore.core.listeners.SkyblockIsland;
+import me.cephetir.bladecore.core.listeners.SkyblockListener;
+import me.cephetir.communistscanner.CommunistScanners;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStone;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import static me.aurora.client.Aurora.mc;
 import static me.aurora.client.config.Config.scanType;
@@ -45,10 +47,11 @@ public class StructureScanner implements Module {
     public boolean toggled() {
         return Config.structureScanner;
     }
-    private final ConcurrentHashMap<BlockPos, String> structures = new ConcurrentHashMap<>();
+
+    private static final ConcurrentLinkedQueue<Structure> structures = new ConcurrentLinkedQueue<>();
     private final Set<BlockPos> checked = ConcurrentHashMap.newKeySet();
     volatile boolean readyToScan = true;
-    private final HashSet<Check> checks = new HashSet<Check>(){{
+    private final HashSet<Check> checks = new HashSet<Check>() {{
         add(new Check(new Block[]{Blocks.stone, Blocks.stone, Blocks.stone, Blocks.stone, Blocks.stone, Blocks.stone, Blocks.stone, Blocks.stone_brick_stairs},
                 new BlockStone.EnumType[]{BlockStone.EnumType.DIORITE_SMOOTH, BlockStone.EnumType.DIORITE, BlockStone.EnumType.DIORITE, BlockStone.EnumType.DIORITE, BlockStone.EnumType.DIORITE, BlockStone.EnumType.DIORITE_SMOOTH, BlockStone.EnumType.ANDESITE_SMOOTH, null},
                 true, "SPIRAL-Pillar-A"));
@@ -92,6 +95,7 @@ public class StructureScanner implements Module {
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
+        if (SkyblockListener.INSTANCE.getIsland() != SkyblockIsland.CrystalHollows) return;
         int range = Config.structureScanner_ParameterRange;
         if ((((!Config.structureScanner_ParameterAggressiveScan) ? (((mc.theWorld.getTotalWorldTime()) % (4L * range)) == 0) : (((mc.theWorld.getTotalWorldTime()) % (range / 8)) == 0)) && Config.structureScanner && readyToScan && ConditionUtils.inGame()))
             CompletableFuture.runAsync(() -> scanBlocks(toCoordArray(Config.structureScanner_freecam ? mc.getRenderViewEntity() : mc.thePlayer)));
@@ -100,12 +104,13 @@ public class StructureScanner implements Module {
 
     public void scanBlocks(int[] pos) {
         readyToScan = false;
+        String server = SkyblockListener.INSTANCE.getLocraw().getServer();
         LoopUtils.brLoopBoundChunk(pos[0], pos[1], pos[2], Config.structureScanner_ParameterRange, (x, y, z) -> {
             String structureCheckResult = checkForStructureOnBlock(x, y, z);
             if (!Objects.equals(structureCheckResult, "null")) {
                 BlockPos strPos = new BlockPos(x, y, z);
                 checked.add(strPos);
-                addStructure(strPos, structureCheckResult);
+                StructureScanner.addStructure(server, strPos, structureCheckResult, false);
             }
         }, 31, 180);
         readyToScan = true;
@@ -115,49 +120,54 @@ public class StructureScanner implements Module {
         BlockPos blockToCheck = new BlockPos(x, y, z);
         if (mc.theWorld.getBlockState(blockToCheck).getBlock().equals(Blocks.air)) return "null";
         for (Check check : checks) {
-            if(Config.structureScanner_dillo && !check.isDillo()) continue;
-            if(LookupBlockUtils.blocksAbove(blockToCheck, check.getBlocks(), check.getBlocks_stoneProp())) return check.getCheckname();
+            if (Config.structureScanner_dillo && !check.isDillo()) continue;
+            if (LookupBlockUtils.blocksAbove(blockToCheck, check.getBlocks(), check.getBlocks_stoneProp())) return check.getCheckname();
         }
         return "null";
     }
 
     @SubscribeEvent
     public void onRenderWorld(RenderWorldLastEvent event) {
-        if (Config.structureScanner && scanType >= 2)
-            structures.forEach((key, value) -> BlockRenderUtils.renderBeaconText(String.format("\247l%s\247r - %d %d %d", value, key.getX(), key.getY(), key.getZ()), key, event.partialTicks));
+        if (Config.structureScanner && SkyblockListener.INSTANCE.getIsland() == SkyblockIsland.CrystalHollows && scanType >= 2)
+            structures.forEach(structure -> {
+                if (SkyblockListener.INSTANCE.getLocraw().getServer().equals(structure.getServer()))
+                    BlockRenderUtils.renderBeaconText(String.format("\247l%s\247r - %d %d %d", structure.getName(), structure.getPos().getX(), structure.getPos().getY(), structure.getPos().getZ()), structure.getPos(), event.partialTicks);
+            });
     }
 
-    private void addStructure(BlockPos checkPos, String checkName){
-        if (structures.containsKey(checkPos)) return;
-        Set<String> nearStructures = new HashSet<>();
-        for (Map.Entry<BlockPos, String> structEntry : structures.entrySet())
-            if (CalculationUtils.blockEuclideanDistance(checkPos, structEntry.getKey()) < 16)
-                nearStructures.add(structEntry.getValue());
-        if (!nearStructures.contains(checkName)) {
-            structures.put(checkPos, checkName);
-            if (scanType % 2 == 1)
-                MessageUtils.sendMultilineClientMessage(
+    public static void addStructure(String server, BlockPos checkPos, String checkName, boolean remote) {
+        if (structures.stream().anyMatch(structure -> structure.getServer().equals(server) && structure.getName().equals(checkName))) return;
+        for (Structure structure : structures)
+            if (structure.getServer().equals(server) && structure.getName().equals(checkName) && CalculationUtils.blockEuclideanDistance(checkPos, structure.getPos()) < 16)
+                return;
+
+        if (!remote)
+            CommunistScanners.INSTANCE.addStructure(server, checkName, checkPos, mc.theWorld.getWorldTime());
+        structures.add(new Structure(server, checkName, checkPos));
+        if (mc.theWorld != null && scanType % 2 == 1 && SkyblockListener.INSTANCE.getLocraw().getServer().equals(server))
+            MessageUtils.sendMultilineClientMessage(
                     "* * * * * * * * * *",
                     "\247lFOUND STRUCTURE",
                     String.format("%s - %d %d %d", checkName, checkPos.getX(), checkPos.getY(), checkPos.getZ()),
                     "* * * * * * * * * *");
-        }
     }
 
-    private int[] toCoordArray(Entity e){
+    private int[] toCoordArray(Entity e) {
         return new int[]{(int) e.posX, (int) e.posY, (int) e.posZ};
     }
-
-    @SubscribeEvent
-    public void onWorldChange(WorldEvent.Load event) {
-        structures.clear();
-    }
-
 }
 
 @Getter
 @AllArgsConstructor
-class Check{
+class Structure {
+    private final String server;
+    private final String name;
+    private final BlockPos pos;
+}
+
+@Getter
+@AllArgsConstructor
+class Check {
     private final Block[] blocks;
     private final BlockStone.EnumType[] blocks_stoneProp;
     private final boolean dillo;
