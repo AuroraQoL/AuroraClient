@@ -14,7 +14,8 @@ buildscript {
         maven { url "https://repo.sk1er.club/repository/maven-public" }
     }
     dependencies {
-        classpath "com.github.hard2make1name:ForgeGradle:86b2392"
+      //  classpath "com.github.hard2make1name:ForgeGradle:86b2392" USE THIS
+        classpath "com.github.asbyth:ForgeGradle:6f53277" //for sake of compilation
         classpath "com.github.jengelman.gradle.plugins:shadow:6.1.0"
     }
 }
