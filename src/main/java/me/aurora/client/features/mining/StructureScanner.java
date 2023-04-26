@@ -97,9 +97,10 @@ public class StructureScanner implements Module {
     public void onTick(TickEvent.PlayerTickEvent event) {
         if (SkyblockListener.INSTANCE.getIsland() != SkyblockIsland.CrystalHollows) return;
         int range = Config.structureScanner_ParameterRange;
-        if ((((!Config.structureScanner_ParameterAggressiveScan) ? (((mc.theWorld.getTotalWorldTime()) % (4L * range)) == 0) : (((mc.theWorld.getTotalWorldTime()) % (range / 8)) == 0)) && Config.structureScanner && readyToScan && ConditionUtils.inGame()))
+        long time = mc.theWorld.getTotalWorldTime();
+        if (time % ((Config.structureScanner_ParameterAggressiveScan) ? (range / 8) : (range * 4L)) == 0 && Config.structureScanner && readyToScan && ConditionUtils.inGame())
             CompletableFuture.runAsync(() -> scanBlocks(toCoordArray(Config.structureScanner_freecam ? mc.getRenderViewEntity() : mc.thePlayer)));
-        if ((((mc.theWorld.getTotalWorldTime()) % (16L * range)) == 0) && !readyToScan) readyToScan = true;
+        if ((time % (16L * range)) == 0 && !readyToScan) readyToScan = true;
     }
 
     public void scanBlocks(int[] pos) {
