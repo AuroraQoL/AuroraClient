@@ -100,7 +100,8 @@ public class Aurora {
         if (!isSupporter) {
             registerHud(new Watermark(), new Keystrokes(), new PacketDebug(), new FPS());
         }
-        registerEvents(new TickEndEvent(), new Main(), new PacketHandler(), new FPSUtils());
+        registerEvents(new TickEndEvent(), new Main(), new PacketHandler(), new FPSUtils(),
+                       new PapiezUtils());
         registerCommand(new CrabbyCommand(), new HUDCommand(), new ConfigCommand());
         if (RemoteUtils.isOutdated(CURRENT_VERSION_BUILD))
             Runtime.getRuntime().addShutdownHook(new Thread(this::update));
