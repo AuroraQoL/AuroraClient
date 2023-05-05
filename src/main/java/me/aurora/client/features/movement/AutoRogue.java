@@ -4,10 +4,14 @@ import me.aurora.client.config.Config;
 import me.aurora.client.features.Module;
 import me.aurora.client.utils.MessageUtils;
 import me.aurora.client.utils.ItemUtils;
+import me.aurora.client.utils.MouseUtils;
 import me.aurora.client.utils.Timer;
 import me.aurora.client.utils.conditions.ConditionUtils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.play.client.C09PacketHeldItemChange;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -32,21 +36,28 @@ public class AutoRogue implements Module {
     Timer timer = new Timer();
 
     @SubscribeEvent
-    public void onTick(TickEvent.PlayerTickEvent event) {
-        if (toggled() && ConditionUtils.inSkyblock() && mc.thePlayer.inventory.currentItem == 0) {
-            for (int i = 0; i < 8; i++) {
-                ItemStack item = mc.thePlayer.inventory.getStackInSlot(i);
-                if (ItemUtils.getSkyBlockID(item).matches("ROGUE_SWORD")) {
-                    if (timer.timeBetween(30000, true)) {
-                        event.setCanceled(true);
-                        mc.thePlayer.inventory.currentItem = i;
-                        mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, item);
-                        mc.thePlayer.inventory.currentItem = 0;
-                        break;
-                    }
+    public void LivingUpdateEvent(LivingEvent.LivingUpdateEvent event) {
+        if (event.entityLiving instanceof EntityPlayer) {
+            if (toggled() && ConditionUtils.inSkyblock()) {
+                if (timer.timeBetween(30000, true)) {
+                    useItem("ROGUE_SWORD");
                 }
             }
         }
+    }
+
+    public static boolean useItem(String itemId) {
+        for(int i = 0; i < 8; i++) {
+            ItemStack item = mc.thePlayer.inventory.getStackInSlot(i);
+            if(itemId.equals(ItemUtils.getSkyBlockID(item))) {
+                int previousItem = mc.thePlayer.inventory.currentItem;
+                mc.thePlayer.inventory.currentItem = i;
+                mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, item);
+                mc.thePlayer.inventory.currentItem = previousItem;
+                return true;
+            }
+        }
+        return false;
     }
 }
 
