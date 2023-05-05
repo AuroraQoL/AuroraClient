@@ -42,6 +42,11 @@ public class AutoSellBz  implements Module {
                 mc.thePlayer.closeScreen();
                 MessageUtils.sendClientMessage("Sold Items on Bazaar");
             }
+            else if (message.equals("[Bazaar] You don't have anything to sell!")) {
+                readyToSell = false;
+                mc.thePlayer.closeScreen();
+                MessageUtils.sendClientMessage("No Items to Sell");
+            }
         }
     }
 
