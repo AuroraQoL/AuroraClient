@@ -92,7 +92,7 @@ public class Aurora {
         );
         registerModules(new LegacyModuleList(), new AutoSell(), new Ghostblock(), new WitherDoorRemover(),
                 new AotvAura(), new HarpStealer(), new NoSlow(), new GemstoneScanner(),
-                new AutoJoinSkyblock(), new AutoRogue(), new AutoSecrets(), new MelodyThrottle(),
+                new AutoJoinSkyblock(), new AutoRogue(), new AutoHarp(), new AutoSecrets(), new MelodyThrottle(),
                 new StructureScanner(), new NoDowntime(), new AutoSprint(), new AutoCrystals(),
                 new WitherCloakAura(), new AutoTank(), new NoBedrock(), new VClip(),
                 new CrystalPlacer(), new AntiLimbo(), new AutoSellBz(), new GrassESP(),
