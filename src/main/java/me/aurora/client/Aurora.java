@@ -53,7 +53,7 @@ import java.util.*;
 
 @Mod(modid = "bossbar_customizer", name = "BossbarCustomizer", version = "1.2.1", clientSideOnly = true)
 public class Aurora {
-    public static final int CURRENT_VERSION_BUILD = 3420;
+    public static final int CURRENT_VERSION_BUILD = 3499;
     @Getter
     private static final Set<Element> hudModules = new HashSet<>();
     public static Minecraft mc = Minecraft.getMinecraft();
@@ -66,6 +66,10 @@ public class Aurora {
     private static final ArrayList<Module> modules = new ArrayList<>();
     @Getter
     private static final boolean aprilFools = java.time.LocalDate.now().getDayOfMonth() == 1 && java.time.LocalDate.now().getMonth() == java.time.Month.APRIL;
+    @Getter
+    private static boolean isSupporter = false;
+    @Getter
+    private static String guiCmd = "aurorahud";
 
     @EventHandler
     @SneakyThrows
@@ -73,6 +77,7 @@ public class Aurora {
         Display.setTitle("Aurora 3.4.1");
         MinecraftForge.EVENT_BUS.register(this);
         new Config().preload();
+        isSupporter = supporterClassExist();
         CommunistScanners.INSTANCE.init(new StructureCallBack() {
             @Override
             public void newStructure(@NotNull String server, @NotNull String name, @NotNull BlockPos blockPos) {
@@ -92,7 +97,9 @@ public class Aurora {
                 new WitherCloakAura(), new AutoTank(), new NoBedrock(), new VClip(),
                 new CrystalPlacer(), new AntiLimbo(), new AutoSellBz(), new GrassESP(),
                 new AutoComposter(), new RatEsp(), new TerminalAnnouncer());
-        registerHud(new Watermark(), new Keystrokes(), new PacketDebug(), new FPS());
+        if (!isSupporter) {
+            registerHud(new Watermark(), new Keystrokes(), new PacketDebug(), new FPS());
+        }
         registerEvents(new TickEndEvent(), new Main(), new PacketHandler(), new FPSUtils());
         registerCommand(new CrabbyCommand(), new HUDCommand(), new ConfigCommand());
         if (RemoteUtils.isOutdated(CURRENT_VERSION_BUILD))
@@ -150,5 +157,15 @@ public class Aurora {
     private void registerCommand(Command... commands) {
         for (Command command : commands)
             EssentialAPI.getCommandRegistry().registerCommand(command);
+    }
+
+    private boolean supporterClassExist() {
+        try {
+            Class.forName("re.aurora.Sep");
+        }
+        catch (ClassNotFoundException e) {
+            return false;
+        }
+        return true;
     }
 }

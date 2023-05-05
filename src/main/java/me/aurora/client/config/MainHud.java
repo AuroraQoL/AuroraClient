@@ -11,6 +11,8 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.Arrays;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ForkJoinPool;
 
 public class MainHud extends GuiScreen {
 
@@ -21,8 +23,7 @@ public class MainHud extends GuiScreen {
                 buttonConstructor(1, -25, "Config"),
                 buttonConstructor(2, 0, "Edit HUD"),
                 buttonConstructor(3, 25, "Close")
-
-                ));
+        ));
     }
 
     @Override
@@ -32,7 +33,13 @@ public class MainHud extends GuiScreen {
                 EssentialAPI.getGuiUtil().openScreen(Config.INSTANCE.gui());
                 break;
             case 2:
-                Aurora.getHudEdit().display();
+                if (Aurora.isSupporter()) {
+                    CompletableFuture
+                            .runAsync(() -> mc.thePlayer.closeScreen())
+                            .thenRun(() -> mc.thePlayer.sendChatMessage("/aurora_hud_supporter"));
+                } else {
+                    Aurora.getHudEdit().display();
+                };
                 break;
             case 3:
                 mc.thePlayer.closeScreen();
