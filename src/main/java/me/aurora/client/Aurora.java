@@ -28,6 +28,7 @@ import me.aurora.client.utils.BindUtils;
 import me.aurora.client.utils.FPSUtils;
 import me.aurora.client.utils.PacketHandler;
 import me.aurora.client.utils.RemoteUtils;
+import me.aurora.client.utils.PapiezUtils;
 import me.cephetir.communistscanner.CommunistScanners;
 import me.cephetir.communistscanner.StructureCallBack;
 import net.minecraft.client.Minecraft;
