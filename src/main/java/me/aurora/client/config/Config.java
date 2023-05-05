@@ -317,6 +317,14 @@ public class Config extends Vigilant {
             max = 128
     )
     public static int noDowntime_ParameterDelay = 128;
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Auto Harp",
+            description = "Automatically completes Harp",
+            category = "QOL",
+            subcategory = "Harp"
+    )
+    public static boolean autoHarp = false;
 
     @Property(
             type = PropertyType.SWITCH,
