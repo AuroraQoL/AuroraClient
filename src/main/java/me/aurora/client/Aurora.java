@@ -29,6 +29,8 @@ import me.aurora.client.utils.FPSUtils;
 import me.aurora.client.utils.PacketHandler;
 import me.aurora.client.utils.RemoteUtils;
 import me.aurora.client.utils.PapiezUtils;
+import me.aurora.client.utils.capes.CapeDatabase;
+import me.aurora.client.utils.capes.CapeManager;
 import me.cephetir.communistscanner.CommunistScanners;
 import me.cephetir.communistscanner.StructureCallBack;
 import net.minecraft.client.Minecraft;
@@ -70,7 +72,7 @@ public class Aurora {
     @Getter
     private static boolean isSupporter = false;
     @Getter
-    private static String guiCmd = "aurorahud";
+    private static final String guiCmd = "aurorahud";
 
     @EventHandler
     @SneakyThrows
@@ -78,6 +80,7 @@ public class Aurora {
         Display.setTitle("Aurora 3.4.1");
         MinecraftForge.EVENT_BUS.register(this);
         new Config().preload();
+        CapeDatabase.getInstance().init();
         isSupporter = supporterClassExist();
         CommunistScanners.INSTANCE.init(new StructureCallBack() {
             @Override
@@ -102,7 +105,7 @@ public class Aurora {
             registerHud(new Watermark(), new Keystrokes(), new PacketDebug(), new FPS());
         }
         registerEvents(new TickEndEvent(), new Main(), new PacketHandler(), new FPSUtils(),
-                       new PapiezUtils());
+                       new PapiezUtils(), new CapeManager());
         registerCommand(new CrabbyCommand(), new HUDCommand(), new ConfigCommand());
         if (RemoteUtils.isOutdated(CURRENT_VERSION_BUILD))
             Runtime.getRuntime().addShutdownHook(new Thread(this::update));
