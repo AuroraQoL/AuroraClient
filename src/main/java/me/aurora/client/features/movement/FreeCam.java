@@ -31,35 +31,6 @@ import static me.aurora.client.Aurora.mc;
  * @version 1.0
  * @brief Freecam
  */
-public class FreeCam implements Module {
-    public String name() {
-        return "FreeCam";
-    }
-
-    public boolean toggled() {
-        return true;
-    }
-    private boolean enabled = false;
-    private EntityPlayer freeCamSubstitute;
-
-    @SneakyThrows
-    @SubscribeEvent
-    public void onKeyPress(InputEvent.KeyInputEvent event) {
-        if (!ConditionUtils.inGame()) return;
-        if (BindUtils.isBindDown("FreeCam")) {
-            enabled = !enabled;
-            MessageUtils.sendClientMessage((enabled) ? "FreeCam ON" : "FreeCam OFF");
-        }
-        if (enabled) {
-            freeCamSubstitute = ReflectionUtils.copy(mc.thePlayer);
-            ReflectionUtils.copyFields(mc.thePlayer, freeCamSubstitute, EntityPlayer.class);
-            freeCamSubstitute.setEntityId(42069);
-            mc.theWorld.addEntityToWorld(42069, freeCamSubstitute);
-
-        }
-    }
+public class FreeCam {
+    
 }
-
-
-
-
