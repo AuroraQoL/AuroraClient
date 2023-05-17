@@ -105,7 +105,13 @@ public class StructureScanner implements Module {
 
     public void scanBlocks(int[] pos) {
         readyToScan = false;
-        String server = SkyblockListener.INSTANCE.getLocraw().getServer();
+        String server;
+        if (SkyblockListener.INSTANCE.getLocraw() != null) {
+            server = SkyblockListener.INSTANCE.getLocraw().getServer();
+        }
+        else {
+            server = null;
+        }
         LoopUtils.brLoopBoundChunk(pos[0], pos[1], pos[2], Config.structureScanner_ParameterRange, (x, y, z) -> {
             String structureCheckResult = checkForStructureOnBlock(x, y, z);
             if (!Objects.equals(structureCheckResult, "null")) {
@@ -131,7 +137,7 @@ public class StructureScanner implements Module {
     public void onRenderWorld(RenderWorldLastEvent event) {
         if (Config.structureScanner && SkyblockListener.INSTANCE.getIsland() == SkyblockIsland.CrystalHollows && scanType >= 2)
             structures.forEach(structure -> {
-                if (SkyblockListener.INSTANCE.getLocraw().getServer().equals(structure.getServer()))
+                if (SkyblockListener.INSTANCE.getLocraw() != null && SkyblockListener.INSTANCE.getLocraw().getServer().equals(structure.getServer()))
                     BlockRenderUtils.renderBeaconText(String.format("\247l%s\247r - %d %d %d", structure.getName(), structure.getPos().getX(), structure.getPos().getY(), structure.getPos().getZ()), structure.getPos(), event.partialTicks);
             });
     }
@@ -143,9 +149,9 @@ public class StructureScanner implements Module {
                 return;
 
         if (!remote)
-            CommunistScanners.INSTANCE.addStructure(server, checkName, checkPos, mc.theWorld.getWorldTime());
+            CommunistScanners.addStructure(server, checkName, checkPos, mc.theWorld.getWorldTime());
         structures.add(new Structure(server, checkName, checkPos));
-        if (mc.theWorld != null && scanType % 2 == 1 && SkyblockListener.INSTANCE.getLocraw().getServer().equals(server))
+        if (SkyblockListener.INSTANCE.getLocraw() != null && mc.theWorld != null && scanType % 2 == 1 && SkyblockListener.INSTANCE.getLocraw().getServer().equals(server))
             MessageUtils.sendMultilineClientMessage(
                     "* * * * * * * * * *",
                     "\247lFOUND STRUCTURE",

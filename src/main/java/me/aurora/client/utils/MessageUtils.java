@@ -23,10 +23,8 @@ public class MessageUtils {
             for (String msg : msgs) {
                 try {
                     Thread.sleep(delay);
-                } catch (InterruptedException ignored) {
-                } finally {
-                    mc.thePlayer.sendChatMessage(msg);
-                }
+                } catch (InterruptedException ignored) {}
+                mc.thePlayer.sendChatMessage(msg);
             }
         });
     }

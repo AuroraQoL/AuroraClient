@@ -117,26 +117,20 @@ public class GemstoneScanner  implements Module {
     public void onRenderWorld(RenderWorldLastEvent event) {
         if (Config.gemstoneEsp) {
             if (Config.gemstoneEsp_ParameterVisualType == 0) {
-                if (espModeMap.entrySet().size() != 0) espModeTemportaryMap = espModeMap;
+                if (!espModeMap.entrySet().isEmpty()) espModeTemportaryMap = espModeMap;
                 espModeTemportaryMap.entrySet().stream().filter(b -> {
                     return (mc.theWorld.getBlockState(b.getKey()).getBlock() != Blocks.air);
-                }).forEach(b -> {
-                    BlockRenderUtils.drawOutlinedBoundingBox(b.getKey(), b.getValue(), Config.gemstoneEsp_thicc, event.partialTicks);
-                });
+                }).forEach(b -> BlockRenderUtils.drawOutlinedBoundingBox(b.getKey(), b.getValue(), Config.gemstoneEsp_thicc, event.partialTicks));
             } else if (Config.gemstoneEsp_ParameterVisualType == 1) {
-                if (espModeMap.entrySet().size() != 0) espModeTemportaryMap = espModeMap;
+                if (!espModeMap.entrySet().isEmpty()) espModeTemportaryMap = espModeMap;
                 espModeTemportaryMap.entrySet().stream().filter(b -> {
                     return (mc.theWorld.getBlockState(b.getKey()).getBlock() != Blocks.air);
-                }).forEach(b -> {
-                    BlockRenderUtils.highlightBlock(b.getKey(), b.getValue(), event.partialTicks);
-                });
+                }).forEach(b -> BlockRenderUtils.highlightBlock(b.getKey(), b.getValue(), event.partialTicks));
             } else {
-                if (textModeMap.entrySet().size() != 0) textModeTemportaryMap = textModeMap;
+                if (!textModeMap.entrySet().isEmpty()) textModeTemportaryMap = textModeMap;
                 textModeTemportaryMap.entrySet().stream().filter(b -> {
                     return (mc.theWorld.getBlockState(b.getKey()).getBlock() != Blocks.air);
-                }).forEach(b -> {
-                    BlockRenderUtils.renderBeaconText(b.getValue(), b.getKey(), event.partialTicks);
-                });
+                }).forEach(b -> BlockRenderUtils.renderBeaconText(b.getValue(), b.getKey(), event.partialTicks));
             }
         }
     }

@@ -34,7 +34,7 @@ public class RatEsp implements Module {
     @SubscribeEvent
     public void onRender(RenderWorldLastEvent event) {
         if(toggled()) {
-            mc.theWorld.getLoadedEntityList().stream().filter(e -> e instanceof EntityOtherPlayerMP).forEach(entity -> {
+            mc.theWorld.getLoadedEntityList().stream().filter(EntityOtherPlayerMP.class::isInstance).forEach(entity -> {
                 double x = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * event.partialTicks - mc.getRenderManager().viewerPosX;
                 double y = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * event.partialTicks - mc.getRenderManager().viewerPosY;
                 double z = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * event.partialTicks - mc.getRenderManager().viewerPosZ;

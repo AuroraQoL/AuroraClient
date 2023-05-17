@@ -13,40 +13,27 @@ import net.minecraft.util.ResourceLocation;
 
 /**
  * @author Revxrsal Gabagooooooooooool
+ * @version 1.1
  * Implemented from github.com/Revxrsal/SimpleCapes under Apache Commons 2.0 License
  */
 @AllArgsConstructor
 public class CapeLayer implements LayerRenderer<AbstractClientPlayer> {
     private final RenderPlayer playerRenderer;
-    private final static ResourceLocation CAPE_DEFAULT = new ResourceLocation("dailydungeons:res/_CapeDefault.png");
-    private final static ResourceLocation CAPE_OG = new ResourceLocation("dailydungeons:res/_CapeOg.png");
-    private final static ResourceLocation CAPE_RAINBOW = new ResourceLocation("dailydungeons:res/_CapeRainbow.png");
 
     @Override
     public void doRenderLayer(AbstractClientPlayer entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
-        if (!CapeDatabase.getInstance().cachedUserHasCape(entity.getName())) return;
+        ResourceLocation capeLoc = CapeDatabase.getInstance().getUserCape(entity.getName());
+        if (capeLoc == null) return;
         if (!entity.isInvisible() && entity.isWearing(EnumPlayerModelParts.CAPE)) {
             float f9 = entity.isSneaking() ? .1F : .14F;
             float f10 = entity.isSneaking() ? .09F : 0F;
             GlStateManager.color(1F, 1F, 1F, 1F);
-            ResourceLocation currentCape;
-            switch (CapeDatabase.getInstance().getUserCape(entity.getName())) {
-                case 1:
-                    currentCape = CAPE_OG;
-                    break;
-                case 2:
-                    currentCape = CAPE_RAINBOW;
-                    break;
-                default:
-                    currentCape = CAPE_DEFAULT;
-                    break;
-            }
-            this.playerRenderer.bindTexture(currentCape);
+            this.playerRenderer.bindTexture(capeLoc);
             GlStateManager.pushMatrix();
             GlStateManager.translate(0.0F, f10, f9);
-            double d0 = entity.prevChasingPosX + (entity.chasingPosX - entity.prevChasingPosX) * (double) partialTicks - (entity.prevPosX + (entity.posX - entity.prevPosX) * (double) partialTicks);
-            double d1 = entity.prevChasingPosY + (entity.chasingPosY - entity.prevChasingPosY) * (double) partialTicks - (entity.prevPosY + (entity.posY - entity.prevPosY) * (double) partialTicks);
-            double d2 = entity.prevChasingPosZ + (entity.chasingPosZ - entity.prevChasingPosZ) * (double) partialTicks - (entity.prevPosZ + (entity.posZ - entity.prevPosZ) * (double) partialTicks);
+            double d0 = entity.prevChasingPosX + (entity.chasingPosX - entity.prevChasingPosX) * partialTicks - (entity.prevPosX + (entity.posX - entity.prevPosX) * partialTicks);
+            double d1 = entity.prevChasingPosY + (entity.chasingPosY - entity.prevChasingPosY) * partialTicks - (entity.prevPosY + (entity.posY - entity.prevPosY) * partialTicks);
+            double d2 = entity.prevChasingPosZ + (entity.chasingPosZ - entity.prevChasingPosZ) * partialTicks - (entity.prevPosZ + (entity.posZ - entity.prevPosZ) * partialTicks);
             float f = entity.prevRenderYawOffset + (entity.renderYawOffset - entity.prevRenderYawOffset) * partialTicks;
             double d3 = MathHelper.sin(f * .017453292F);
             double d4 = -MathHelper.cos(f * .017453292F);

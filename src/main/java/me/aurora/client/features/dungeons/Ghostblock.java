@@ -19,7 +19,7 @@ import static me.aurora.client.Aurora.mc;
  * @brief Ghostblocks + Range etc
  */
 public class Ghostblock  implements Module {
-    private volatile static double lastUsed;
+    private double lastUsed;
 
     public String name() {
         return "Ghostblock";

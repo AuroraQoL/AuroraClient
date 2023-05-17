@@ -1,6 +1,7 @@
 package me.aurora.client.features.misc;
 
 import gg.essential.api.EssentialAPI;
+import lombok.SneakyThrows;
 import me.aurora.client.features.Module;
 import me.aurora.client.utils.RemoteUtils;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -20,8 +21,9 @@ public class UpdateReminder implements Module {
     }
 
     @SubscribeEvent
-    public void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) throws IOException {
-        if ((RemoteUtils.isOutdated(CURRENT_VERSION_BUILD)))
+    @SneakyThrows
+    public void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
+        if (RemoteUtils.isOutdated(CURRENT_VERSION_BUILD))
             EssentialAPI.getNotifications().push("This Version of Aurora is Outdated", "Please Update!");
     }
 }

@@ -36,6 +36,7 @@ import me.cephetir.communistscanner.StructureCallBack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.LoggingPrintStream;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -53,13 +54,14 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.*;
+import java.util.logging.Logger;
 
 @Mod(modid = "bossbar_customizer", name = "BossbarCustomizer", version = "1.2.1", clientSideOnly = true)
 public class Aurora {
     public static final int CURRENT_VERSION_BUILD = 3499;
     @Getter
     private static final Set<Element> hudModules = new HashSet<>();
-    public static Minecraft mc = Minecraft.getMinecraft();
+    public static final Minecraft mc = Minecraft.getMinecraft();
     @Getter
     private static final HUDEdit hudEdit = new HUDEdit();
     @Setter
@@ -68,21 +70,19 @@ public class Aurora {
     @Getter
     private static final ArrayList<Module> modules = new ArrayList<>();
     @Getter
-    private static final boolean aprilFools = java.time.LocalDate.now().getDayOfMonth() == 1 && java.time.LocalDate.now().getMonth() == java.time.Month.APRIL;
-    @Getter
     private static boolean isSupporter = false;
     @Getter
-    private static final String guiCmd = "aurorahud";
+    private static final String GUI_COMMAND = "aurorahud";
 
     @EventHandler
     @SneakyThrows
     public void init(FMLInitializationEvent event) {
-        Display.setTitle("Aurora 3.4.1");
+        Display.setTitle("Aurora 3.V Beta 2");
         MinecraftForge.EVENT_BUS.register(this);
         new Config().preload();
         CapeDatabase.getInstance().init();
         isSupporter = supporterClassExist();
-        CommunistScanners.INSTANCE.init(new StructureCallBack() {
+        CommunistScanners.init(new StructureCallBack() {
             @Override
             public void newStructure(@NotNull String server, @NotNull String name, @NotNull BlockPos blockPos) {
                 StructureScanner.addStructure(server, blockPos, name, true);
@@ -91,6 +91,7 @@ public class Aurora {
         BindUtils.registerBinds(
                 new BindUtils.Bind(Keyboard.KEY_NONE, "AutoSellBazaar"),
                 new BindUtils.Bind(Keyboard.KEY_G, "GhostBlocks"),
+                new BindUtils.Bind(Keyboard.KEY_L, "FreeCam"),
                 new BindUtils.Bind(Keyboard.KEY_NONE, "VClip"),
                 new BindUtils.Bind(Keyboard.KEY_K, "FastJoin")
         );
@@ -100,7 +101,7 @@ public class Aurora {
                 new StructureScanner(), new NoDowntime(), new AutoSprint(), new AutoCrystals(),
                 new WitherCloakAura(), new AutoTank(), new NoBedrock(), new VClip(),
                 new CrystalPlacer(), new AntiLimbo(), new AutoSellBz(), new GrassESP(),
-                new AutoComposter(), new RatEsp(), new TerminalAnnouncer());
+                new AutoComposter(), new RatEsp(), new TerminalAnnouncer()/*, new FreeCam()*/);
         if (!isSupporter) {
             registerHud(new Watermark(), new Keystrokes(), new PacketDebug(), new FPS());
         }
@@ -120,11 +121,13 @@ public class Aurora {
     }
 
     @SneakyThrows
+    @SuppressWarnings("unused")
     private void update() {
         if (Config.autoUpdate) {
-            File updater = new File(System.getProperty("java.io.tmpdir") + "aurora_updater_" + new Random().nextInt() + ".jar");
+            Random r = new Random();
+            File updater = new File(System.getProperty("java.io.tmpdir") + "aurora_updater_" + r.nextInt() + ".jar");
             Files.copy(new URL("https://github.com/Gabagooooooooooool/AuroraUpdater/releases/download/1.0/updater.jar").openStream(), updater.toPath(), StandardCopyOption.REPLACE_EXISTING);
-            System.out.println("Updating...");
+            System.err.println("Updating...");
             Process p = new ProcessBuilder("java", "-jar", "\"" + updater.getAbsolutePath() + "\"", "1000", "\"" + modFile.getAbsolutePath() + "\"", "mainrepo").start();
         }
     }
@@ -139,11 +142,11 @@ public class Aurora {
         hudModules.forEach(getHudEdit()::RenderGUI);
     }
 
-    private void registerModules(Module... modules_t) {
+    private void registerModules(Module... modules1) {
         Set<String> blacklisted = RemoteUtils.getBlacklistedModules();
-        System.out.println("Blacklisted Aurora modules:");
-        blacklisted.forEach(System.out::println);
-        for (Module module : modules_t) {
+        System.err.println("Blacklisted Aurora modules:");
+        blacklisted.forEach(System.err::println);
+        for (Module module : modules1) {
             if (blacklisted.contains(module.name())) continue;
             getModules().add(module);
             MinecraftForge.EVENT_BUS.register(module);

@@ -36,7 +36,7 @@ public class Watermark extends Element {
     }
     @Override
     public void guiDraw(){
-        drawForVersion(Aurora.CURRENT_VERSION_BUILD, "3.4");
+        drawForVersion(Aurora.CURRENT_VERSION_BUILD, "3.V Beta 2");
     }
     @Override
     public void editorDraw(){
@@ -47,6 +47,6 @@ public class Watermark extends Element {
         fontRenderer.drawStringWithShadow(String.format("\247lAurora QoL \247r[ %s ]", buildID), getX(), getY(), 0xA9A9A9);
         fontRenderer.drawStringWithShadow("\247lAurora QoL \247r", getX(), getY(), 0xFFFFFF);
         fontRenderer.drawStringWithShadow("\247lAurora", getX(), getY(), ThemeUtils.currentColorGet(0));
-        fontRenderer.drawStringWithShadow("Codename Lambda | Build " + build, getX(), getY()+10, 0x444444);
+        fontRenderer.drawStringWithShadow("Codename Waterloo | Build " + build, getX(), getY()+10, 0x444444);
     }
 }

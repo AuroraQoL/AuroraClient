@@ -1,55 +1,41 @@
 package me.aurora.client.utils.capes;
 
 import lombok.Getter;
-import lombok.SneakyThrows;
 import me.aurora.client.utils.RemoteUtils;
+import net.minecraft.client.renderer.texture.DynamicTexture;
+import net.minecraft.util.ResourceLocation;
 
-import java.security.MessageDigest;
+import javax.imageio.ImageIO;
+import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import static me.aurora.client.Aurora.mc;
+
 public class CapeDatabase {
     @Getter
-    private final static CapeDatabase instance = new CapeDatabase();
-    private Map<String, Integer> cachedCapes = new HashMap<>();
-    private final Map<String, Integer> cachedUserNameMapping = new HashMap<>();
+    private static final CapeDatabase instance = new CapeDatabase();
+    private final Map<String, ResourceLocation> cachedCapeTextures = new HashMap<>();
 
     public boolean userHasCape(String username) {
-        final String tUsername = username.toLowerCase();
-        for (Map.Entry<String, Integer> userEntry : cachedCapes.entrySet())
-            if (userEntry.getKey().equals(getMD5(tUsername))) {
-                cachedUserNameMapping.put(tUsername, userEntry.getValue());
-                return true;
-            }
-        return false;
+        return cachedCapeTextures.containsKey(username.toLowerCase());
     }
 
-    public int getUserCape(String username) {
-        final String tUsername = username.toLowerCase();
-        for (Map.Entry<String, Integer> userEntry : cachedUserNameMapping.entrySet())
-            if (userEntry.getKey().equals(tUsername))
-                return userEntry.getValue();
-        return 0;
-    }
-
-    public boolean cachedUserHasCape(String username) {
-        final String tUsername = username.toLowerCase();
-        return cachedUserNameMapping.containsKey(tUsername);
+    public ResourceLocation getUserCape(String username) {
+        return cachedCapeTextures.get(username.toLowerCase());
     }
 
     public void init() {
-        cachedCapes = RemoteUtils.getCapeUsers();
-    }
-
-    @SneakyThrows
-    private String getMD5(String input) {
-        byte[] messageDigest = MessageDigest.getInstance("MD5").digest(input.getBytes());
-        StringBuilder hexString = new StringBuilder();
-        for (byte b : messageDigest) {
-            String hex = Integer.toHexString(0xff & b);
-            if (hex.length() == 1) hexString.append('0');
-            hexString.append(hex);
-        }
-        return hexString.toString();
+        RemoteUtils.getCapeUsers().forEach(
+                (username, capeUrl) -> {
+                    try {
+                        cachedCapeTextures.put(
+                                username.toLowerCase(),
+                                mc.getTextureManager().getDynamicTextureLocation("auroraskull" + username, new DynamicTexture(ImageIO.read(new URL(capeUrl))))
+                        );
+                    } catch (IOException ignored) {}
+                }
+        );
     }
 }

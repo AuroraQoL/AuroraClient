@@ -33,7 +33,7 @@ public class AutoTank implements Module {
         return Config.autoTank;
     }
 
-    private static boolean teleported = false;
+    private boolean teleported = false;
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
