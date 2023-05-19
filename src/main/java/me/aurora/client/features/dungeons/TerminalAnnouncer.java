@@ -31,7 +31,7 @@ public class TerminalAnnouncer implements Module {
         put("Select all the", "Select Color Terminal");
         put("What starts with:", "Letter Terminal");
         put("Click in order!", "Numbers Terminal");
-        put("Click the button on time!", "Melody Termianl");
+        put("Click the button on time!", "Melody Terminal");
         put("Correct all the panes!", "Panes Terminal");
     }};
 
