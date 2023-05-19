@@ -46,7 +46,7 @@ public class NoSlow implements Module {
     public void onInteract(PlayerInteractEvent event) {
         if (toggled() && event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR && validItems.contains(ItemUtils.getSkyBlockID(mc.thePlayer.getHeldItem()))) {
             event.setCanceled(true);
-            if (!mc.gameSettings.keyBindUseItem.isKeyDown())
+            if (mc.gameSettings.keyBindUseItem.isKeyDown())
                 PacketUtils.sendPacket(new C08PacketPlayerBlockPlacement(new BlockPos(-1, -1, -1), 255, mc.thePlayer.getHeldItem(), 0, 0, 0));
         }
     }
