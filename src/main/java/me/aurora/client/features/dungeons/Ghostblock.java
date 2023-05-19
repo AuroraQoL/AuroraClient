@@ -3,8 +3,10 @@ package me.aurora.client.features.dungeons;
 import me.aurora.client.config.Config;
 import me.aurora.client.features.Module;
 import me.aurora.client.utils.BindUtils;
+import me.aurora.client.utils.Timer;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemPickaxe;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -14,12 +16,12 @@ import java.util.*;
 import static me.aurora.client.Aurora.mc;
 
 /**
- * @author  Gabagooooooooooool
+ * @author  Gabagooooooooooool OctoSplash01
  * @version 2.0
- * @brief Ghostblocks + Range etc
+ * @brief Ghostblocks + Range + Blacklisted Blocks + Legit Mode
  */
 public class Ghostblock  implements Module {
-    private double lastUsed;
+    private volatile static double lastUsed;
 
     public String name() {
         return "Ghostblock";
@@ -28,6 +30,8 @@ public class Ghostblock  implements Module {
     public boolean toggled() {
         return Config.ghostblocks;
     }
+
+    Timer timer = new Timer();
 
     private final ArrayList<Block> dontGhost = new ArrayList<>(Arrays.asList(
             Blocks.chest, //secret chests
@@ -42,9 +46,22 @@ public class Ghostblock  implements Module {
         if (BindUtils.isBindDown("GhostBlocks") && toggled() && ((System.currentTimeMillis() - lastUsed) > (Config.ghostblocks_delay * 1000))) {
             MovingObjectPosition blockPos = mc.thePlayer.rayTrace(Config.ghostblocks_range, 1);
             Block currentBlock = mc.theWorld.getBlockState(blockPos.getBlockPos()).getBlock();
-            if (!dontGhost.contains(currentBlock)) {
-                lastUsed = System.currentTimeMillis();
-                mc.theWorld.setBlockToAir(blockPos.getBlockPos());
+            switch (Config.ghostblocksMode) {
+                case 0:
+                    if (!dontGhost.contains(currentBlock)) {
+                        lastUsed = System.currentTimeMillis();
+                        mc.theWorld.setBlockToAir(blockPos.getBlockPos());
+                    }
+                    break;
+                case 1:
+                    if (!dontGhost.contains(currentBlock) && mc.thePlayer.getHeldItem().getItem() instanceof ItemPickaxe) {
+                        lastUsed = System.currentTimeMillis();
+                        mc.theWorld.setBlockToAir(blockPos.getBlockPos());
+                        if (timer.timeBetween(500, true)) {
+                            mc.thePlayer.swingItem();
+                        }
+                    }
+                    break;
             }
         }
     }
