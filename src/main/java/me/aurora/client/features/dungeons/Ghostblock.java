@@ -57,7 +57,7 @@ public class Ghostblock  implements Module {
                     if (!dontGhost.contains(currentBlock) && mc.thePlayer.getHeldItem().getItem() instanceof ItemPickaxe) {
                         lastUsed = System.currentTimeMillis();
                         mc.theWorld.setBlockToAir(blockPos.getBlockPos());
-                        if (timer.timeBetween(500, true)) {
+                        if (timer.timeBetween(200, true)) {
                             mc.thePlayer.swingItem();
                         }
                     }
