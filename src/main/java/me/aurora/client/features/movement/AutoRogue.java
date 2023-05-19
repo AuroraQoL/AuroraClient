@@ -31,16 +31,12 @@ public class AutoRogue implements Module {
 
     @SubscribeEvent
     public void LivingUpdateEvent(LivingEvent.LivingUpdateEvent event) {
-        if (event.entityLiving instanceof EntityPlayer) {
-            if (toggled() && ConditionUtils.inSkyblock()) {
-                if (timer.timeBetween(30000, true)) {
-                    useItem("ROGUE_SWORD");
-                }
-            }
+        if (event.entityLiving instanceof EntityPlayer && toggled() && ConditionUtils.inSkyblock() && (timer.timeBetween(30000, true))) {
+            useItem("ROGUE_SWORD");
         }
     }
 
-    public static boolean useItem(String itemId) {
+    public static void useItem(String itemId) {
         for(int i = 0; i < 8; i++) {
             ItemStack item = mc.thePlayer.inventory.getStackInSlot(i);
             if(itemId.equals(ItemUtils.getSkyBlockID(item))) {
@@ -48,10 +44,9 @@ public class AutoRogue implements Module {
                 mc.thePlayer.inventory.currentItem = i;
                 mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, item);
                 mc.thePlayer.inventory.currentItem = previousItem;
-                return true;
+                return;
             }
         }
-        return false;
     }
 }
 
