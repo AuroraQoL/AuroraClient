@@ -157,6 +157,15 @@ public class Config extends Vigilant {
             subcategory = "Ghostblocks"
     )
     public static boolean ghostblocks = false;
+        @Property(
+            type = PropertyType.SELECTOR,
+            name = "Ghostblocks Mode",
+            description = "Change which mode you'd like to use",
+            options = {"Basic", "Legit"},
+            category = "Dungeons",
+            subcategory = "Ghostblocks"
+    )
+    public static int ghostblocksMode = 0;
     @Property(
             type = PropertyType.SLIDER,
             name = "Ghostblocks Range",
