@@ -19,6 +19,7 @@ import me.aurora.client.features.mining.GemstoneScanner;
 import me.aurora.client.features.mining.StructureScanner;
 import me.aurora.client.features.misc.*;
 import me.aurora.client.features.movement.*;
+import me.aurora.client.features.macros.*;
 import me.aurora.client.features.test.AutoCrystals;
 import me.aurora.client.features.test.AutoSecrets;
 import me.aurora.client.features.test.CrystalPlacer;
