@@ -98,8 +98,8 @@ public class Aurora {
         registerModules(new LegacyModuleList(), new AutoSell(), new Ghostblock(), new WitherDoorRemover(),
                 new AotvAura(), new HarpStealer(), new NoSlow(), new GemstoneScanner(),
                 new AutoJoinSkyblock(), new AutoRogue(), new AutoHarp(), new AutoSecrets(), new MelodyThrottle(),
-                new StructureScanner(), new NoDowntime(), new AutoSprint(), new AutoCrystals(),
-                new WitherCloakAura(), new AutoTank(), new NoBedrock(), new VClip(),
+                new StructureScanner(), new NoDowntime(), new AutoSprint(), new AutoSex(), new AutoCrystals(),
+                new WitherCloakAura(), new AutoTank(), new NoBedrock(), new F11(), new VClip(),
                 new CrystalPlacer(), new AntiLimbo(), new AutoSellBz(), new GrassESP(),
                 new AutoComposter(), new RatEsp(), new TerminalAnnouncer()/*, new FreeCam()*/);
         if (!isSupporter) {
