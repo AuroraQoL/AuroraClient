@@ -67,6 +67,87 @@ public class Config extends Vigilant {
             subcategory = "Watermark"
     )
     public static boolean hudWatermark = true;
+        @Property(
+            type = PropertyType.SWITCH,
+            name = "Sex Aura",
+            description = "Automatically finds bitches nearby to have sex with",
+            category = "Memes",
+            subcategory = "Sex"
+    )
+    public static boolean sexAura = false;
+    @Property(
+            type = PropertyType.SELECTOR,
+            name = "Sex Aura Mode",
+            description = "KURWA WYBIERAJ",
+            options = {"Basic", "Custom"},
+            category = "Memes",
+            subcategory = "Sex"
+    )
+    public static int sexAuraMode = 0;
+    @Property(
+            type = PropertyType.PARAGRAPH,
+            name = "Sex Aura Ign",
+            description = "Enter an ign of a player you would like to have e-sex with",
+            category = "Memes",
+            subcategory = "Sex"
+    )
+    public static String sexAuraKurwa = "";
+        @Property(
+            type = PropertyType.SWITCH,
+            name = "F11 Macro",
+            description = "F11 Macro what do you want me to tell you",
+            category = "Macros",
+            subcategory = "F11"
+    )
+    public static boolean f11Macro = false;
+    @Property(
+            type = PropertyType.CHECKBOX,
+            name = "F11 Forward",
+            description = "",
+            category = "Macros",
+            subcategory = "F11"
+    )
+    public static boolean f11Forward = false;
+    @Property(
+            type = PropertyType.CHECKBOX,
+            name = "F11 Backward",
+            description = "",
+            category = "Macros",
+            subcategory = "F11"
+    )
+    public static boolean f11Back = false;
+    @Property(
+            type = PropertyType.CHECKBOX,
+            name = "F11 Left",
+            description = "",
+            category = "Macros",
+            subcategory = "F11"
+    )
+    public static boolean f11Left = false;
+    @Property(
+            type = PropertyType.CHECKBOX,
+            name = "F11 Right",
+            description = "",
+            category = "Macros",
+            subcategory = "F11"
+    )
+    public static boolean f11Right = false;
+    @Property(
+            type = PropertyType.CHECKBOX,
+            name = "F11 Left Click",
+            description = "",
+            category = "Macros",
+            subcategory = "F11"
+    )
+    public static boolean f11LeftClick = false;
+    @Property(
+            type = PropertyType.CHECKBOX,
+            name = "F11 Right Click",
+            description = "tak bardzo mi sie nie chce tego tlumaczyc kurwa mac",
+            category = "Macros",
+            subcategory = "F11"
+    )
+    public static boolean f11RightClick = false;
     @Property(
             type = PropertyType.SWITCH,
             name = "Auto Sell Items on Bazaar",
