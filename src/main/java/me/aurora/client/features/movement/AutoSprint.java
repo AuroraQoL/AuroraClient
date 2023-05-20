@@ -28,7 +28,7 @@ public class AutoSprint  implements Module {
     }
     @SubscribeEvent
     public void LivingUpdateEvent(LivingEvent.LivingUpdateEvent event) {
-        if (toggled() && event.entityLiving instanceof EntityPlayer && !(mc.currentScreen instanceof GuiChat) && !mc.thePlayer.isSneaking() && !mc.thePlayer.isUsingItem()) {
+        if (toggled() && event.entityLiving instanceof EntityPlayer && !(mc.currentScreen instanceof GuiChat) && !mc.thePlayer.isSneaking() && !mc.thePlayer.isUsingItem() && !mc.thePlayer.isCollidedHorizontally) {
             switch (Config.autoSprintSettings){
                 case 0: // Legit
                     if (mc.thePlayer.onGround && Key.FORWARD.keyDown())
