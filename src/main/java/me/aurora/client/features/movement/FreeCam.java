@@ -7,5 +7,5 @@ package me.aurora.client.features.movement;
  * @brief Freecam
  */
 public class FreeCam {
-
+//refresh
 }
