@@ -2,6 +2,7 @@ package me.aurora.client.features.dungeons;
 
 import me.aurora.client.config.Config;
 import me.aurora.client.features.Module;
+import me.aurora.client.utils.InventoryUtils;
 import me.aurora.client.utils.MessageUtils;
 import me.aurora.client.events.TickEndEvent;
 import me.aurora.client.utils.conditions.ConditionUtils;
@@ -47,7 +48,7 @@ public class AutoSell implements Module {
             "Enchanted Bone",
             "Defuse Kit",
             "Enchanted Ice",
-            "Optic Lense",
+            "Optic Lens",
             "Tripwire Hook",
             "Button",
             "Carpet",
@@ -63,7 +64,7 @@ public class AutoSell implements Module {
             ItemStack checkedStack = ((GuiChest) mc.currentScreen).inventorySlots.inventorySlots.get(49).getStack();
             if(checkedStack != null && checkedStack.getItem() != Item.getItemFromBlock(Blocks.barrier)) {
                 mc.thePlayer.inventoryContainer.inventorySlots.stream().filter(this::properItem).findFirst().ifPresent(slot -> {
-                    mc.playerController.windowClick(mc.thePlayer.openContainer.windowId, 45 + slot.slotNumber, 2, 3, mc.thePlayer);
+                    InventoryUtils.clickSlot(45 + slot.slotNumber,2, 3);
                     MessageUtils.sendClientMessage("Selling trash...");
                 });
             }

@@ -5,9 +5,11 @@ import gg.essential.vigilance.Vigilant;
 import gg.essential.vigilance.data.Property;
 import gg.essential.vigilance.data.PropertyType;
 import me.aurora.client.Aurora;
+import me.aurora.client.features.dungeons.AutoBuyArrows;
 import me.aurora.client.features.misc.RatEsp;
 
 import java.io.File;
+import java.util.Locale;
 
 public class Config extends Vigilant {
 
@@ -655,6 +657,74 @@ public class Config extends Vigilant {
             subcategory = "Auto-Composter"
     )
     public static boolean composter_compost = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Hilary",
+            description = "omg hilary i love it let me see it",
+            category = "Troll",
+            subcategory = "Hilary"
+    )
+    public static boolean hilary = true;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Secret April Fools Feature...",
+            description = "hmm..",
+            category = "Troll",
+            subcategory = "Secret"
+    )
+    public static boolean aprilLimbo = true;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Another Secret Slayer Feature...",
+            description = "CRAZY RARE DROP!",
+            category = "Troll",
+            subcategory = "Secret"
+    )
+    public static boolean FakeSlayer = true;
+
+    @Property(
+            type = PropertyType.SELECTOR,
+            name = "Arrow Type",
+            description = "Select Arrow Type Here",
+            options = {"Bouncy", "Armorshred", "Emerald tipped", "Icy", "Nanosorb", "Explosive", "Redstone Tipped", "Glue"},
+            category = "Dungeons",
+            subcategory = "Auto Arrows"
+    )
+    public static int arrowtype = 0;
+
+    @Property(
+            type = PropertyType.SLIDER,
+            name = "Inventories",
+            description = "How many full inventories of materials to buy off bz",
+            min = 1,
+            max = 15,
+            category = "Dungeons",
+            subcategory = "Auto Arrows"
+    )
+    public static int auto_arrow_inventories = 1;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Auto Wardrobe",
+            description = "Enable this for auto wardrobe then configure the bind in settings",
+            category = "QOL",
+            subcategory = "Auto Wardrobe"
+    )
+    public static boolean AutoWD = true;
+
+    @Property(
+            type = PropertyType.SLIDER,
+            name = "Auto Wardrobe Slot",
+            description = "Slot to switch to upon auto wardrobe keybind press",
+            min = 1,
+            max = 20,
+            category = "QOL",
+            subcategory = "Auto Wardrobe"
+    )
+    public static int wd_slot = 1;
 
     public static Config INSTANCE = new Config();
 
