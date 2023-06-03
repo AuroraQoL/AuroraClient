@@ -1,9 +1,9 @@
 package me.aurora.client.features.dungeons;
 
 import me.aurora.client.config.Config;
+import me.aurora.client.events.TickEndEvent;
 import me.aurora.client.features.Module;
 import me.aurora.client.utils.MessageUtils;
-import me.aurora.client.events.TickEndEvent;
 import me.aurora.client.utils.conditions.ConditionUtils;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.init.Blocks;
@@ -20,22 +20,13 @@ import java.util.Set;
 import static me.aurora.client.Aurora.mc;
 
 /**
- * @credit ShadyAddons (jxee)
  * @author jxee Gabagooooooooooool
  * @version 2.0
+ * @credit ShadyAddons (jxee)
  * @brief Auto Sell
  */
 public class AutoSell implements Module {
 
-    public String name() {
-        return "AutoSell";
-    }
-
-    public boolean toggled() {
-        return Config.autoSell;
-    }
-    private boolean inTradeGui = false;
-    private int tickCount = 0;
     private final Set<String> dungeonShit = new HashSet<>(Arrays.asList(
             "Training Weight",
             "Health Potion VIII Splash Potion",
@@ -55,13 +46,23 @@ public class AutoSell implements Module {
             "Rune",
             "Journal Entry",
             "Sign"));
+    private boolean inTradeGui = false;
+    private int tickCount = 0;
+
+    public String name() {
+        return "AutoSell";
+    }
+
+    public boolean toggled() {
+        return Config.autoSell;
+    }
 
     @SubscribeEvent
     public void onTick(TickEndEvent event) {
         tickCount++;
         if (tickCount % 4 == 0 && inTradeGui && toggled() && ConditionUtils.inSkyblock() && mc.currentScreen instanceof GuiChest) {
             ItemStack checkedStack = ((GuiChest) mc.currentScreen).inventorySlots.inventorySlots.get(49).getStack();
-            if(checkedStack != null && checkedStack.getItem() != Item.getItemFromBlock(Blocks.barrier)) {
+            if (checkedStack != null && checkedStack.getItem() != Item.getItemFromBlock(Blocks.barrier)) {
                 mc.thePlayer.inventoryContainer.inventorySlots.stream().filter(this::properItem).findFirst().ifPresent(slot -> {
                     mc.playerController.windowClick(mc.thePlayer.openContainer.windowId, 45 + slot.slotNumber, 2, 3, mc.thePlayer);
                     MessageUtils.sendClientMessage("Selling trash...");

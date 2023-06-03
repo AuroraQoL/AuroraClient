@@ -17,6 +17,10 @@ import static me.aurora.client.Aurora.mc;
 public class AutoWardrobe implements Module {
 
 
+    private boolean inWardrobe = false;
+    private boolean readyToSwitch = false;
+    private int ticks;
+
     @Override
     public boolean toggled() {
         return Config.AutoWD;
@@ -27,9 +31,6 @@ public class AutoWardrobe implements Module {
         return "Auto Wardrobe";
     }
 
-    private boolean inWardrobe = false;
-    private boolean readyToSwitch = false;
-    private int ticks;
     @SubscribeEvent
     public void onBackgroundRender(GuiScreenEvent.BackgroundDrawnEvent event) {
         String chestName = InventoryUtils.getGuiName(event.gui);
@@ -38,13 +39,13 @@ public class AutoWardrobe implements Module {
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
-            if (mc.currentScreen instanceof GuiChest && toggled()) {
-                if (inWardrobe && readyToSwitch) {
-                    if (++ticks < 100) return;
-                    ticks = 0;
-                    InventoryUtils.clickSlot(35 + Config.wd_slot, 1, 0);
-                }
+        if (mc.currentScreen instanceof GuiChest && toggled()) {
+            if (inWardrobe && readyToSwitch) {
+                if (++ticks < 100) return;
+                ticks = 0;
+                InventoryUtils.clickSlot(35 + Config.wd_slot, 1, 0);
             }
+        }
     }
 
     @SubscribeEvent
