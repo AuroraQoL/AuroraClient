@@ -2,6 +2,7 @@ package me.aurora.client.config;
 
 import gg.essential.api.EssentialAPI;
 import me.aurora.client.Aurora;
+import me.aurora.client.utils.BindUtils;
 import me.aurora.client.utils.ThemeUtils;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
@@ -12,7 +13,6 @@ import net.minecraft.util.ResourceLocation;
 
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ForkJoinPool;
 
 public class MainHud extends GuiScreen {
 

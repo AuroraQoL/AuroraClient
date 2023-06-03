@@ -2,11 +2,11 @@ package me.aurora.client.features.macros;
 
 import me.aurora.client.config.Config;
 import me.aurora.client.features.Module;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
 import static me.aurora.client.Aurora.mc;
 
 public class F11 implements Module {
@@ -22,6 +22,7 @@ public class F11 implements Module {
     @SubscribeEvent
     public void LivingUpdateEvent(LivingEvent.LivingUpdateEvent event) {
         if (toggled()) {
+            Minecraft.getMinecraft().gameSettings.pauseOnLostFocus = false;
             if (event.entityLiving instanceof EntityPlayer) {
                 if (mc.currentScreen == null) {
                     if (Config.f11Forward) {
@@ -43,7 +44,10 @@ public class F11 implements Module {
                         KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.getKeyCode(), true);
                     }
                 }
+                KeyBinding.setKeyBindState(Minecraft.getMinecraft().gameSettings.keyBindFullscreen.getKeyCode(), true);
             }
+        } else {
+            Minecraft.getMinecraft().gameSettings.pauseOnLostFocus = true;
         }
     }
 }

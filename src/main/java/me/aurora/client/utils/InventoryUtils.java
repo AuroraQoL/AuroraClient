@@ -23,4 +23,8 @@ public class InventoryUtils {
         if(!ConditionUtils.inGame()) return "null";
         return Aurora.mc.thePlayer.openContainer.inventorySlots.get(0).inventory.getName();
     }
+
+    public static void clickSlot(int slotId, int mouseButton, int mode) {
+        Aurora.mc.playerController.windowClick(Aurora.mc.thePlayer.openContainer.windowId, slotId, mouseButton, mode, Aurora.mc.thePlayer);
+    }
 }
