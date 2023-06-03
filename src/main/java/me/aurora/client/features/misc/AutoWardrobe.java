@@ -41,7 +41,7 @@ public class AutoWardrobe implements Module {
         if (delay % 20 == 0) {
             if (mc.currentScreen instanceof GuiChest && toggled()) {
                 if (inWardrobe && readyToSwitch) {
-                    InventoryUtils.clickSlot(35 + Config.wd_slot, 0, 1);
+                    InventoryUtils.clickSlot(35 + Config.wd_slot, 1, 0);
                 }
             }
         }

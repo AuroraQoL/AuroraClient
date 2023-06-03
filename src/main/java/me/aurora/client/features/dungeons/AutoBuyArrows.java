@@ -38,24 +38,25 @@ public class AutoBuyArrows {
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
-
+        System.out.println("In Bazaar: " + inBazaar);
+        System.out.println("In Slime Menu: " + inSlimeMenu);
+        System.out.println("In slIME buying menu: " + inSlimeBuyingMenu);
         if (buying && ConditionUtils.inSkyblock()) {
 
-            if (++ticks < 200) return;
+            if (++ticks < 100) return;
             ticks = 0;
 
             int[] shit = {18, 20, 10, 10, 14};
 
             if(inBazaar) {
-                InventoryUtils.clickSlot(shit[0], 0, 1);
-                InventoryUtils.clickSlot(shit[1], 0, 1);
+                InventoryUtils.clickSlot(shit[0], 1, 0);
+                InventoryUtils.clickSlot(shit[1], 1, 0);
             }
             if(inSlimeMenu) {
-                InventoryUtils.clickSlot(shit[2], 0, 1);
+                InventoryUtils.clickSlot(shit[2], 1, 0);
             }
             if(inSlimeBuyingMenu) {
-                InventoryUtils.clickSlot(shit[3], 0, 1);
-                InventoryUtils.clickSlot(shit[4], 0, 1);
+                InventoryUtils.clickSlot(shit[4], 1, 0);
             }
         }
     }
@@ -100,6 +101,7 @@ public class AutoBuyArrows {
                 }
     }
 
+    @SubscribeEvent
     public void onBackgroundRender(GuiScreenEvent.BackgroundDrawnEvent event) {
         String chestName = InventoryUtils.getGuiName(event.gui);
         inBazaar = chestName.contains("Bazaar");
