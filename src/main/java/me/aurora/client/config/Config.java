@@ -707,6 +707,17 @@ public class Config extends Vigilant {
     public static int auto_arrow_inventories = 1;
 
     @Property(
+            type = PropertyType.SLIDER,
+            name = "Stacks of Enchanted Sand (Armorshred arrows)",
+            description = "How many stacks of enchanted sand to buy if you have armorshred arrows selected",
+            min = 1,
+            max = 32,
+            category = "Dungeons",
+            subcategory = "Auto Arrows"
+    )
+    public static int enchanted_sand_stacks = 1;
+
+    @Property(
             type = PropertyType.SWITCH,
             name = "Auto Wardrobe",
             description = "Enable this for auto wardrobe then configure the bind in settings",

@@ -26,6 +26,8 @@ public class AutoBuyArrows {
     public static boolean inBazaar = false;
     public static boolean inSlimeMenu = false;
     public static boolean inSlimeBuyingMenu = false;
+    public static boolean inSandMenu = false;
+    public static boolean inSandBuyingMenu = false;
     private int ticks;
 
     @SubscribeEvent
@@ -42,21 +44,42 @@ public class AutoBuyArrows {
         System.out.println("In Slime Menu: " + inSlimeMenu);
         System.out.println("In slIME buying menu: " + inSlimeBuyingMenu);
         if (buying && ConditionUtils.inSkyblock()) {
-
             if (++ticks < 100) return;
             ticks = 0;
+            switch(Config.arrowtype) {
+                case 0:
+                    int[] slimeSlots = {18, 20, 10, 10, 14};
 
-            int[] shit = {18, 20, 10, 10, 14};
+                    if(inBazaar) {
+                        InventoryUtils.clickSlot(slimeSlots[0], 1, 0);
+                        InventoryUtils.clickSlot(slimeSlots[1], 1, 0);
+                    }
+                    if(inSlimeMenu) {
+                        InventoryUtils.clickSlot(slimeSlots[2], 1, 0);
+                    }
+                    if(inSlimeBuyingMenu) {
+                        InventoryUtils.clickSlot(slimeSlots[4], 1, 0);
+                    }
+                    break;
+                case 1:
+                    int[] armorShredSlots = {9, 33, 12, 10, 12};
 
-            if(inBazaar) {
-                InventoryUtils.clickSlot(shit[0], 1, 0);
-                InventoryUtils.clickSlot(shit[1], 1, 0);
-            }
-            if(inSlimeMenu) {
-                InventoryUtils.clickSlot(shit[2], 1, 0);
-            }
-            if(inSlimeBuyingMenu) {
-                InventoryUtils.clickSlot(shit[4], 1, 0);
+                    if(inBazaar) {
+                        InventoryUtils.clickSlot(armorShredSlots[0], 1, 0);
+                        InventoryUtils.clickSlot(armorShredSlots[1], 1, 0);
+                    }
+                    if(inSandMenu) {
+                        InventoryUtils.clickSlot(armorShredSlots[2], 1, 0);
+                    }
+                    if(inSandBuyingMenu) {
+                        for (int i = 0; i < Config.enchanted_sand_stacks; i++) {
+                            InventoryUtils.clickSlot(armorShredSlots[4], 1, 0);
+                        }
+                    }
+                    break;
+                default:
+                    MessageUtils.sendClientMessage("Error found! Report to defrost#7015 if you see this!");
+                    break;
             }
         }
     }
@@ -107,5 +130,6 @@ public class AutoBuyArrows {
         inBazaar = chestName.contains("Bazaar");
         inSlimeMenu = chestName.contains("Slime Drops");
         inSlimeBuyingMenu = chestName.contains("Slimeball");
+        inSandMenu = chestName.contains("Sand");
     }
 }
