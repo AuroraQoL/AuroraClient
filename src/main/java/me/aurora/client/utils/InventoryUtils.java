@@ -9,18 +9,20 @@ import net.minecraft.inventory.ContainerChest;
 
 /**
  * MODIFIED FROM SHADYADDONS
+ *
  * @author jxee
  */
 
 public class InventoryUtils {
     public static String getGuiName(GuiScreen gui) {
-        if(gui instanceof GuiChest) {
+        if (gui instanceof GuiChest) {
             return ((ContainerChest) ((GuiChest) gui).inventorySlots).getLowerChestInventory().getDisplayName().getUnformattedText();
         }
         return "";
     }
+
     public static String getInventoryName() {
-        if(!ConditionUtils.inGame()) return "null";
+        if (!ConditionUtils.inGame()) return "null";
         return Aurora.mc.thePlayer.openContainer.inventorySlots.get(0).inventory.getName();
     }
 

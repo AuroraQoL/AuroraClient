@@ -3,9 +3,9 @@ package me.aurora.client.utils.rotation;
 import net.minecraft.client.Minecraft;
 
 /**
- * @credit Lilaise (night0721)
  * @author night0721 Gabagooooooooooool
  * @version 1.1
+ * @credit Lilaise (night0721)
  * @brief Angle Utilities
  */
 public class AngleUtils {

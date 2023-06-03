@@ -4,12 +4,8 @@ import gg.essential.universal.UMinecraft;
 import gg.essential.vigilance.Vigilant;
 import gg.essential.vigilance.data.Property;
 import gg.essential.vigilance.data.PropertyType;
-import me.aurora.client.Aurora;
-import me.aurora.client.features.dungeons.AutoBuyArrows;
-import me.aurora.client.features.misc.RatEsp;
 
 import java.io.File;
-import java.util.Locale;
 
 public class Config extends Vigilant {
 
@@ -69,7 +65,7 @@ public class Config extends Vigilant {
             subcategory = "Watermark"
     )
     public static boolean hudWatermark = true;
-        @Property(
+    @Property(
             type = PropertyType.SWITCH,
             name = "Sex Aura",
             description = "Automatically finds bitches nearby to have sex with",
@@ -94,7 +90,7 @@ public class Config extends Vigilant {
             subcategory = "Sex"
     )
     public static String sexAuraKurwa = "";
-        @Property(
+    @Property(
             type = PropertyType.SWITCH,
             name = "F11 Macro",
             description = "F11 Macro what do you want me to tell you",
@@ -240,7 +236,7 @@ public class Config extends Vigilant {
             subcategory = "Ghostblocks"
     )
     public static boolean ghostblocks = false;
-        @Property(
+    @Property(
             type = PropertyType.SELECTOR,
             name = "Ghostblocks Mode",
             description = "Change which mode you'd like to use",
@@ -628,8 +624,8 @@ public class Config extends Vigilant {
             description = "Delay between actions (in ticks).",
             category = "Garden",
             subcategory = "Auto-Composter",
-            min=3,
-            max=20
+            min = 3,
+            max = 20
     )
     public static int composter_delay = 8;
     @Property(
@@ -707,6 +703,17 @@ public class Config extends Vigilant {
     public static int auto_arrow_inventories = 1;
 
     @Property(
+            type = PropertyType.SLIDER,
+            name = "Stacks of Enchanted Sand (Armorshred arrows)",
+            description = "How many stacks of enchanted sand to buy if you have armorshred arrows selected",
+            min = 1,
+            max = 32,
+            category = "Dungeons",
+            subcategory = "Auto Arrows"
+    )
+    public static int enchanted_sand_stacks = 1;
+
+    @Property(
             type = PropertyType.SWITCH,
             name = "Auto Wardrobe",
             description = "Enable this for auto wardrobe then configure the bind in settings",
@@ -735,7 +742,6 @@ public class Config extends Vigilant {
         );
         initialize();
     }
-
 
 
 }

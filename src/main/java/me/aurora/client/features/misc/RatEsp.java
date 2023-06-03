@@ -5,17 +5,10 @@ import me.aurora.client.features.Module;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
-
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 import static me.aurora.client.Aurora.mc;
 
@@ -33,7 +26,7 @@ public class RatEsp implements Module {
      */
     @SubscribeEvent
     public void onRender(RenderWorldLastEvent event) {
-        if(toggled()) {
+        if (toggled()) {
             mc.theWorld.getLoadedEntityList().stream().filter(EntityOtherPlayerMP.class::isInstance).forEach(entity -> {
                 double x = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * event.partialTicks - mc.getRenderManager().viewerPosX;
                 double y = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * event.partialTicks - mc.getRenderManager().viewerPosY;

@@ -5,7 +5,6 @@ import me.aurora.client.config.Config;
 import me.aurora.client.features.Module;
 import me.aurora.client.utils.ItemUtils;
 import me.aurora.client.utils.conditions.ConditionUtils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -14,9 +13,9 @@ import static me.aurora.client.Aurora.mc;
 
 
 /**
- * @credit ShadyAddons (jxee)
  * @author jxee OctoSplash01 Gabagooooooooooool
  * @version 1.1
+ * @credit ShadyAddons (jxee)
  * @brief AOTV/E Aura
  */
 public class AotvAura implements Module {

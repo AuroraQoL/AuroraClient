@@ -40,17 +40,8 @@ import static me.aurora.client.config.Config.scanType;
 
 public class StructureScanner implements Module {
 
-    public String name() {
-        return "StructureScanner";
-    }
-
-    public boolean toggled() {
-        return Config.structureScanner;
-    }
-
     private static final ConcurrentLinkedQueue<Structure> structures = new ConcurrentLinkedQueue<>();
     private final Set<BlockPos> checked = ConcurrentHashMap.newKeySet();
-    volatile boolean readyToScan = true;
     private final HashSet<Check> checks = new HashSet<Check>() {{
         add(new Check(new Block[]{Blocks.stone, Blocks.stone, Blocks.stone, Blocks.stone, Blocks.stone, Blocks.stone, Blocks.stone, Blocks.stone_brick_stairs},
                 new BlockStone.EnumType[]{BlockStone.EnumType.DIORITE_SMOOTH, BlockStone.EnumType.DIORITE, BlockStone.EnumType.DIORITE, BlockStone.EnumType.DIORITE, BlockStone.EnumType.DIORITE, BlockStone.EnumType.DIORITE_SMOOTH, BlockStone.EnumType.ANDESITE_SMOOTH, null},
@@ -92,6 +83,33 @@ public class StructureScanner implements Module {
                 new BlockStone.EnumType[]{null, null, null, null, null, null, null, null, null, null, null},
                 false, "GOLDEN_DRAGON-A"));
     }};
+    volatile boolean readyToScan = true;
+
+    public static void addStructure(String server, BlockPos checkPos, String checkName, boolean remote) {
+        if (structures.stream().anyMatch(structure -> structure.getServer().equals(server) && structure.getName().equals(checkName)))
+            return;
+        for (Structure structure : structures)
+            if (structure.getServer().equals(server) && structure.getName().equals(checkName) && CalculationUtils.blockEuclideanDistance(checkPos, structure.getPos()) < 16)
+                return;
+
+        if (!remote)
+            CommunistScanners.addStructure(server, checkName, checkPos, mc.theWorld.getWorldTime());
+        structures.add(new Structure(server, checkName, checkPos));
+        if (SkyblockListener.INSTANCE.getLocraw() != null && mc.theWorld != null && scanType % 2 == 1 && SkyblockListener.INSTANCE.getLocraw().getServer().equals(server))
+            MessageUtils.sendMultilineClientMessage(
+                    "* * * * * * * * * *",
+                    "\247lFOUND STRUCTURE",
+                    String.format("%s - %d %d %d", checkName, checkPos.getX(), checkPos.getY(), checkPos.getZ()),
+                    "* * * * * * * * * *");
+    }
+
+    public String name() {
+        return "StructureScanner";
+    }
+
+    public boolean toggled() {
+        return Config.structureScanner;
+    }
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
@@ -108,8 +126,7 @@ public class StructureScanner implements Module {
         String server;
         if (SkyblockListener.INSTANCE.getLocraw() != null) {
             server = SkyblockListener.INSTANCE.getLocraw().getServer();
-        }
-        else {
+        } else {
             server = null;
         }
         LoopUtils.brLoopBoundChunk(pos[0], pos[1], pos[2], Config.structureScanner_ParameterRange, (x, y, z) -> {
@@ -128,7 +145,8 @@ public class StructureScanner implements Module {
         if (mc.theWorld.getBlockState(blockToCheck).getBlock().equals(Blocks.air)) return "null";
         for (Check check : checks) {
             if (Config.structureScanner_dillo && !check.isDillo()) continue;
-            if (LookupBlockUtils.blocksAbove(blockToCheck, check.getBlocks(), check.getBlocks_stoneProp())) return check.getCheckname();
+            if (LookupBlockUtils.blocksAbove(blockToCheck, check.getBlocks(), check.getBlocks_stoneProp()))
+                return check.getCheckname();
         }
         return "null";
     }
@@ -140,23 +158,6 @@ public class StructureScanner implements Module {
                 if (SkyblockListener.INSTANCE.getLocraw() != null && SkyblockListener.INSTANCE.getLocraw().getServer().equals(structure.getServer()))
                     BlockRenderUtils.renderBeaconText(String.format("\247l%s\247r - %d %d %d", structure.getName(), structure.getPos().getX(), structure.getPos().getY(), structure.getPos().getZ()), structure.getPos(), event.partialTicks);
             });
-    }
-
-    public static void addStructure(String server, BlockPos checkPos, String checkName, boolean remote) {
-        if (structures.stream().anyMatch(structure -> structure.getServer().equals(server) && structure.getName().equals(checkName))) return;
-        for (Structure structure : structures)
-            if (structure.getServer().equals(server) && structure.getName().equals(checkName) && CalculationUtils.blockEuclideanDistance(checkPos, structure.getPos()) < 16)
-                return;
-
-        if (!remote)
-            CommunistScanners.addStructure(server, checkName, checkPos, mc.theWorld.getWorldTime());
-        structures.add(new Structure(server, checkName, checkPos));
-        if (SkyblockListener.INSTANCE.getLocraw() != null && mc.theWorld != null && scanType % 2 == 1 && SkyblockListener.INSTANCE.getLocraw().getServer().equals(server))
-            MessageUtils.sendMultilineClientMessage(
-                    "* * * * * * * * * *",
-                    "\247lFOUND STRUCTURE",
-                    String.format("%s - %d %d %d", checkName, checkPos.getX(), checkPos.getY(), checkPos.getZ()),
-                    "* * * * * * * * * *");
     }
 
     private int[] toCoordArray(Entity e) {

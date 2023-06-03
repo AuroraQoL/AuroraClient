@@ -14,7 +14,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.awt.*;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 import static me.aurora.client.Aurora.mc;
 
@@ -26,6 +25,8 @@ import static me.aurora.client.Aurora.mc;
 
 public class LegacyModuleList implements Module {
 
+    private static final FontRender fontRenderer = FontDefiner.getFontRenderer();
+
     public String name() {
         return "ModuleList";
     }
@@ -33,8 +34,6 @@ public class LegacyModuleList implements Module {
     public boolean toggled() {
         return Config.hudArraylist;
     }
-
-    private static final FontRender fontRenderer = FontDefiner.getFontRenderer();
 
     @SubscribeEvent
     @SneakyThrows

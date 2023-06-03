@@ -6,11 +6,12 @@ import me.aurora.client.utils.Timer;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-import java.util.Locale;
-
 import static me.aurora.client.Aurora.mc;
 
 public class AutoSex implements Module {
+    String ign = Config.sexAuraKurwa;
+    Timer timer = new Timer();
+
     public String name() {
         return "SexAura";
     }
@@ -18,10 +19,6 @@ public class AutoSex implements Module {
     public boolean toggled() {
         return Config.sexAura;
     }
-
-    String ign = Config.sexAuraKurwa;
-
-    Timer timer = new Timer();
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent e) {

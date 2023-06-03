@@ -9,16 +9,16 @@ import java.awt.image.BufferedImage;
 
 /**
  * Implemented from some russian minecraft forum idk
- * */
+ */
 public class FontCore {
-    float imgSize = 512;
     protected CharData[] charData = new CharData[256];
     protected Font font;
     protected boolean antiAlias;
-    boolean fractionalMetrics;
     protected int fontHeight = -1;
     protected int charOffset = 0;
     protected DynamicTexture tex;
+    float imgSize = 512;
+    boolean fractionalMetrics;
 
     public FontCore(Font font, boolean antiAlias, boolean fractionalMetrics) {
         this.font = font;

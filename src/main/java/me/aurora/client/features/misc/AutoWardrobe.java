@@ -29,7 +29,7 @@ public class AutoWardrobe implements Module {
 
     private boolean inWardrobe = false;
     private boolean readyToSwitch = false;
-    public int delay = 0;
+    private int ticks;
     @SubscribeEvent
     public void onBackgroundRender(GuiScreenEvent.BackgroundDrawnEvent event) {
         String chestName = InventoryUtils.getGuiName(event.gui);
@@ -38,14 +38,13 @@ public class AutoWardrobe implements Module {
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
-        if (delay % 20 == 0) {
             if (mc.currentScreen instanceof GuiChest && toggled()) {
                 if (inWardrobe && readyToSwitch) {
-                    InventoryUtils.clickSlot(35 + Config.wd_slot, 0, 1);
+                    if (++ticks < 100) return;
+                    ticks = 0;
+                    InventoryUtils.clickSlot(35 + Config.wd_slot, 1, 0);
                 }
             }
-        }
-        delay++;
     }
 
     @SubscribeEvent

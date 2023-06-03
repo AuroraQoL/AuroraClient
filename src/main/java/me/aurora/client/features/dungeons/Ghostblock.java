@@ -6,22 +6,30 @@ import me.aurora.client.utils.BindUtils;
 import me.aurora.client.utils.Timer;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemPickaxe;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import static me.aurora.client.Aurora.mc;
 
 /**
- * @author  Gabagooooooooooool OctoSplash01
+ * @author Gabagooooooooooool OctoSplash01
  * @version 2.0
  * @brief Ghostblocks + Range + Blacklisted Blocks + Legit Mode
  */
-public class Ghostblock  implements Module {
+public class Ghostblock implements Module {
     private volatile static double lastUsed;
+    private final ArrayList<Block> dontGhost = new ArrayList<>(Arrays.asList(
+            Blocks.chest, //secret chests
+            Blocks.lever, //secret levers
+            Blocks.command_block, //terminals
+            Blocks.skull, //wither essence
+            Blocks.bed, //if someone plays bedwars with aurora for whatever reason XD
+            Blocks.trapped_chest)); //mimic (mimic is a mob that is hidden in a trapped chest)
+    Timer timer = new Timer();
 
     public String name() {
         return "Ghostblock";
@@ -30,16 +38,6 @@ public class Ghostblock  implements Module {
     public boolean toggled() {
         return Config.ghostblocks;
     }
-
-    Timer timer = new Timer();
-
-    private final ArrayList<Block> dontGhost = new ArrayList<>(Arrays.asList(
-            Blocks.chest, //secret chests
-            Blocks.lever, //secret levers
-            Blocks.command_block, //terminals
-            Blocks.skull, //wither essence
-            Blocks.bed, //if someone plays bedwars with aurora for whatever reason XD
-            Blocks.trapped_chest)); //mimic (mimic is a mob that is hidden in a trapped chest)
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {

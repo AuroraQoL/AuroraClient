@@ -8,6 +8,7 @@ public class HarpStealer implements Module {
     public String name() {
         return "HarpStealer";
     }
+
     public boolean toggled() {
         return Config.harpStealer;
     }

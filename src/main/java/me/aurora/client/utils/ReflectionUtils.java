@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 
 /**
  * IMPLEMENTED FROM SHADYADDONS
+ *
  * @author jxee
  */
 public class ReflectionUtils {
@@ -15,7 +16,8 @@ public class ReflectionUtils {
             method.setAccessible(true);
             method.invoke(object);
             return true;
-        } catch(Exception ignored) {}
+        } catch (Exception ignored) {
+        }
         return false;
     }
 
@@ -24,7 +26,8 @@ public class ReflectionUtils {
             Field field = object.getClass().getDeclaredField(name);
             field.setAccessible(true);
             return field.get(object);
-        } catch(Exception ignored) {}
+        } catch (Exception ignored) {
+        }
         return null;
     }
 

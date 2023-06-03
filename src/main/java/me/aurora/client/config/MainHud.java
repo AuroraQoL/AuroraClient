@@ -39,7 +39,8 @@ public class MainHud extends GuiScreen {
                             .thenRun(() -> mc.thePlayer.sendChatMessage("/aurora_hud_supporter"));
                 } else {
                     Aurora.getHudEdit().display();
-                };
+                }
+                ;
                 break;
             case 3:
                 mc.thePlayer.closeScreen();
@@ -67,8 +68,8 @@ public class MainHud extends GuiScreen {
     private GuiButton buttonConstructor(int id, int heightOffset, String text) {
         final int buttonHeight = 20;
         final int buttonWidth = 128;
-        final int centerPos = this.width / 2 - buttonWidth/2;
-        final int baseHeight = this.height/2;
+        final int centerPos = this.width / 2 - buttonWidth / 2;
+        final int baseHeight = this.height / 2;
         return new GuiButton(id, centerPos, baseHeight + heightOffset, buttonWidth, buttonHeight, text);
     }
 }

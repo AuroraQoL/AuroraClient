@@ -1,6 +1,8 @@
 package me.aurora.client.utils.conditions;
 
 import me.aurora.client.utils.string.StringUtils;
+import me.cephetir.bladecore.core.listeners.SkyblockIsland;
+import me.cephetir.bladecore.core.listeners.SkyblockListener;
 import net.minecraft.scoreboard.ScoreObjective;
 
 import static me.aurora.client.Aurora.mc;
@@ -11,7 +13,9 @@ import static me.aurora.client.Aurora.mc;
  * @brief Condition Utilities
  */
 public class ConditionUtils {
-    public static boolean inGame() { return (mc.thePlayer != null && mc.theWorld != null); }
+    public static boolean inGame() {
+        return (mc.thePlayer != null && mc.theWorld != null);
+    }
 
     public static boolean inSkyblock() {
         if (!inGame()) return false;
@@ -21,19 +25,16 @@ public class ConditionUtils {
 
     public static boolean inCoalMine() {
         if (!inGame()) return false;
-        ScoreObjective scoreboardObj = mc.theWorld.getScoreboard().getObjectiveInDisplaySlot(5);
-        return scoreboardObj != null && (StringUtils.removeFormatting(scoreboardObj.getDisplayName()).contains("Coal Mine") || StringUtils.removeFormatting(scoreboardObj.getDisplayName()).contains("Coal Mine"));
+        return SkyblockListener.INSTANCE.getLocation().equals("Coal Mine");
     }
 
-    public static boolean inVoidSepulture() {
+    public static boolean inEnd() {
         if (!inGame()) return false;
-        ScoreObjective scoreboardObj = mc.theWorld.getScoreboard().getObjectiveInDisplaySlot(5);
-        return scoreboardObj != null && (StringUtils.removeFormatting(scoreboardObj.getDisplayName()).contains("Void Sepulture") || StringUtils.removeFormatting(scoreboardObj.getDisplayName()).contains("Void Sepulture"));
+        return SkyblockListener.INSTANCE.getIsland() == SkyblockIsland.TheEnd;
     }
 
     public static boolean inDragonsNest() {
         if (!inGame()) return false;
-        ScoreObjective scoreboardObj = mc.theWorld.getScoreboard().getObjectiveInDisplaySlot(5);
-        return scoreboardObj != null && (StringUtils.removeFormatting(scoreboardObj.getDisplayName()).contains("Dragon's Nest") || StringUtils.removeFormatting(scoreboardObj.getDisplayName()).contains("Dragon's Nest"));
+        return SkyblockListener.INSTANCE.getLocation().equals("Dragon's Nest");
     }
 }

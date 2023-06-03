@@ -1,24 +1,22 @@
 package me.aurora.client.utils.rotation;
-import net.minecraft.client.Minecraft;
 
 import static me.aurora.client.Aurora.mc;
 
 /**
- * @credit Lilaise (night0721)
  * @author night0721 Gabagooooooooooool
  * @version 1.1
+ * @credit Lilaise (night0721)
  * @brief Rotation Utilities
  * I decided to use primitive array instead of pair to improve performance
  */
 public class Rotation {
+    private final float[] start = new float[2];
+    private final float[] target = new float[2];
+    private final float[] difference = new float[2];
     public boolean rotating;
     public boolean completed;
     private long startTime;
     private long endTime;
-
-    private final float[] start = new float[2];
-    private final float[] target = new float[2];
-    private final float[] difference = new float[2];
 
     public void easeTo(float yaw, float pitch, long time) {
         completed = false;
