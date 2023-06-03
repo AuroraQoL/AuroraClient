@@ -109,7 +109,7 @@ public class AutoBuyArrows {
             buying = false;
         }
     }
-    
+
     public void buyInventory(int slotId1, int slotId2, int slotId3, int mouseButtonClicked, int mode) {
 
                 for(int i = 0; i < Config.auto_arrow_inventories; i++) {
