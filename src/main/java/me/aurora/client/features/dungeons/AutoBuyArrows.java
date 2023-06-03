@@ -117,11 +117,6 @@ public class AutoBuyArrows {
                     InventoryUtils.clickSlot(slotId2, mouseButtonClicked, mode);
                     InventoryUtils.clickSlot(slotId3, mouseButtonClicked, mode);
                 }
-                if(Config.auto_arrow_inventories == 1) {
-                    InventoryUtils.clickSlot(slotId1, mouseButtonClicked, mode);
-                    InventoryUtils.clickSlot(slotId2, mouseButtonClicked, mode);
-                    InventoryUtils.clickSlot(slotId3, mouseButtonClicked, mode);
-                }
     }
 
     @SubscribeEvent
