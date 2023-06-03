@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
  * @version 1.1
  * @brief AntiLimbo
  */
-public class AntiLimbo  implements Module {
+public class AntiLimbo implements Module {
     public String name() {
         return "AntiLimbo";
     }
@@ -24,7 +24,7 @@ public class AntiLimbo  implements Module {
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
-        if(toggled() && event.type == 0 && StringUtils.removeFormatting(event.message.getFormattedText()).contains("You are playing on profile")) {
+        if (toggled() && event.type == 0 && StringUtils.removeFormatting(event.message.getFormattedText()).contains("You are playing on profile")) {
             Aurora.mc.thePlayer.sendChatMessage("/is");
             MessageUtils.sendClientMessage("Warping back to island");
         }

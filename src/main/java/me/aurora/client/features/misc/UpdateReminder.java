@@ -7,8 +7,6 @@ import me.aurora.client.utils.RemoteUtils;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
-import java.io.IOException;
-
 import static me.aurora.client.Aurora.CURRENT_VERSION_BUILD;
 
 public class UpdateReminder implements Module {

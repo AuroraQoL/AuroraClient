@@ -21,6 +21,8 @@ import static me.aurora.client.Aurora.mc;
  */
 public class NoDowntime implements Module {
 
+    private static final Queue<String> messagesQueue = new LinkedList<>();
+
     public String name() {
         return "NoDowntime";
     }
@@ -28,8 +30,6 @@ public class NoDowntime implements Module {
     public boolean toggled() {
         return Config.noDowntime;
     }
-
-    private static final Queue<String> messagesQueue = new LinkedList<>();
 
     @SubscribeEvent
     @SneakyThrows
@@ -56,23 +56,17 @@ public class NoDowntime implements Module {
     private int getFloor(String message) {
         if (message.contains("Bonzo")) {
             return 1;
-        }
-        else if (message.contains("Scarf")) {
+        } else if (message.contains("Scarf")) {
             return 2;
-        }
-        else if (message.contains("Professor")) {
+        } else if (message.contains("Professor")) {
             return 3;
-        }
-        else if (message.contains("Thorn")) {
+        } else if (message.contains("Thorn")) {
             return 4;
-        }
-        else if (message.contains("Livid")) {
+        } else if (message.contains("Livid")) {
             return 5;
-        }
-        else if (message.contains("Sadan")) {
+        } else if (message.contains("Sadan")) {
             return 6;
-        }
-        else if (message.contains("Necron")) {
+        } else if (message.contains("Necron")) {
             return 7;
         }
         return 0;
@@ -81,9 +75,11 @@ public class NoDowntime implements Module {
     @RequiredArgsConstructor
     protected enum CatacombType {
         CATACOMBS("catacombs"), MASTER_CATACOMBS("master_catacombs");
-        @NonNull @Getter
+        @NonNull
+        @Getter
         private final String naming;
-        @Getter @Setter
+        @Getter
+        @Setter
         private int floor;
     }
 }

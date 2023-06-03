@@ -1,13 +1,10 @@
 package me.aurora.client.features.troll;
 
-import me.aurora.client.config.Config;
-import me.aurora.client.features.Module;
 import me.aurora.client.utils.conditions.ConditionUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Random;
 

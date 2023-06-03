@@ -14,7 +14,7 @@ import static me.aurora.client.Aurora.mc;
  * @version 1.1
  * @brief Melody throttle notifier
  */
-public class MelodyThrottle  implements Module {
+public class MelodyThrottle implements Module {
     public String name() {
         return "MelodyThrottle";
     }
@@ -22,9 +22,10 @@ public class MelodyThrottle  implements Module {
     public boolean toggled() {
         return Config.melodyThrottle;
     }
+
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
-        if(Config.melodyThrottle && event.type == 0 && StringUtils.removeFormatting(event.message.getFormattedText()).contains("This menu has been throttled!")) {
+        if (Config.melodyThrottle && event.type == 0 && StringUtils.removeFormatting(event.message.getFormattedText()).contains("This menu has been throttled!")) {
             mc.thePlayer.sendChatMessage("/pc i am being throttled");
             MessageUtils.sendClientMessage("Melody Is Being Throttled");
         }

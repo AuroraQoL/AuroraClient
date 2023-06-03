@@ -7,43 +7,49 @@ import me.aurora.client.utils.font.FontDefiner;
 import me.aurora.client.utils.font.FontRender;
 
 public class FPS extends Element {
+    private static final FontRender fontRenderer = FontDefiner.getFontRenderer(30f);
     private static int fpsCache = 0;
     private static boolean fpsDoUpdate;
-    private static final FontRender fontRenderer = FontDefiner.getFontRenderer(30f);
+
     public FPS() {
         width = 65;
         height = 15;
     }
 
     @Override
-    public int getX(){
+    public int getX() {
         return Config.FPS_X;
     }
+
     @Override
-    public int getY(){
-        return Config.FPS_Y;
-    }
-    @Override
-    public void setX(int val){
+    public void setX(int val) {
         Config.FPS_X = val;
     }
 
     @Override
-    public void setY(int val){
+    public int getY() {
+        return Config.FPS_Y;
+    }
+
+    @Override
+    public void setY(int val) {
         Config.FPS_Y = val;
     }
+
     @Override
-    public boolean enabled(){
+    public boolean enabled() {
         return Config.hudFPS;
     }
+
     @Override
-    public void guiDraw(){
+    public void guiDraw() {
         if (fpsDoUpdate) fpsCache = FPSUtils.getFPS();
         fpsDoUpdate = !fpsDoUpdate;
         renderFps(fpsCache);
     }
+
     @Override
-    public void editorDraw(){
+    public void editorDraw() {
         renderFps(1337);
     }
 

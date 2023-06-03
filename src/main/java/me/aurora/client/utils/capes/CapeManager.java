@@ -6,6 +6,7 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import static me.aurora.client.Aurora.mc;
+
 public class CapeManager {
     @SubscribeEvent
     public void onJoin(EntityJoinWorldEvent event) {

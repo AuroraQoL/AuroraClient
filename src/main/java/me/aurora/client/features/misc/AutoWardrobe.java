@@ -17,6 +17,10 @@ import static me.aurora.client.Aurora.mc;
 public class AutoWardrobe implements Module {
 
 
+    public int delay = 0;
+    private boolean inWardrobe = false;
+    private boolean readyToSwitch = false;
+
     @Override
     public boolean toggled() {
         return Config.AutoWD;
@@ -27,9 +31,6 @@ public class AutoWardrobe implements Module {
         return "Auto Wardrobe";
     }
 
-    private boolean inWardrobe = false;
-    private boolean readyToSwitch = false;
-    public int delay = 0;
     @SubscribeEvent
     public void onBackgroundRender(GuiScreenEvent.BackgroundDrawnEvent event) {
         String chestName = InventoryUtils.getGuiName(event.gui);

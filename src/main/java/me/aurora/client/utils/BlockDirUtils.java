@@ -8,14 +8,14 @@ public class BlockDirUtils {
     public static int PlayerY = Minecraft.getMinecraft().thePlayer.getPosition().getY();
     public static int PlayerZ = Minecraft.getMinecraft().thePlayer.getPosition().getZ();
 
+    public EnumFacing getDirection() {
+        return Minecraft.getMinecraft().thePlayer.getHorizontalFacing();
+    }
+
     public static enum BLOCK_DIRECTION {
         LEFT,
         RIGHT,
         FORWARD,
         BACK
-    }
-
-    public EnumFacing getDirection() {
-        return Minecraft.getMinecraft().thePlayer.getHorizontalFacing();
     }
 }

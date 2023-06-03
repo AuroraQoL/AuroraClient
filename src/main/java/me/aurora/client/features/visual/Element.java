@@ -5,18 +5,18 @@ public class Element {
     public int width = 0;
     public int height = 0;
 
-    public void setX(int pos) {
-    }
-
-    public void setY(int pos) {
-    }
-
     public int getX() {
         return 0;
     }
 
+    public void setX(int pos) {
+    }
+
     public int getY() {
         return 0;
+    }
+
+    public void setY(int pos) {
     }
 
     public void editorDraw() {

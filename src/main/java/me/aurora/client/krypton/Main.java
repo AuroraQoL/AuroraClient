@@ -24,7 +24,7 @@ public class Main {
                         return;
                     if (Config.script.length() <= 1)
                         return;
-                    if (keyCode == KeyBindHandler.getKeyCode(splitLines(Config.script))){
+                    if (keyCode == KeyBindHandler.getKeyCode(splitLines(Config.script))) {
                         CompletableFuture.runAsync(() -> {
                             Parser.execute(splitLines(Config.script));
                         });

@@ -18,6 +18,7 @@ public class CrystalPlacer implements Module {
     public boolean toggled() {
         return Config.crystalPlacer;
     }
+
     @SubscribeEvent
     public void onKeyPress(InputEvent.KeyInputEvent event) {
         if (Config.crystalPlacer && Keyboard.isKeyDown(Keyboard.KEY_G))

@@ -26,6 +26,10 @@ import static me.aurora.client.Aurora.mc;
  * Back to the original state
  */
 public class GrassESP implements Module {
+    boolean readyToScan = true;
+    private Set<BlockPos> grassBlocks = ConcurrentHashMap.newKeySet();
+    private Set<BlockPos> tempGrassBlocks = ConcurrentHashMap.newKeySet();
+
     public String name() {
         return "GrassESP";
     }
@@ -33,10 +37,6 @@ public class GrassESP implements Module {
     public boolean toggled() {
         return Config.grassEsp;
     }
-
-    private Set<BlockPos> grassBlocks = ConcurrentHashMap.newKeySet();
-    private Set<BlockPos> tempGrassBlocks = ConcurrentHashMap.newKeySet();
-    boolean readyToScan = true;
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {

@@ -3,7 +3,6 @@ package me.aurora.client.features.dungeons;
 import me.aurora.client.config.Config;
 import me.aurora.client.features.Module;
 import me.aurora.client.utils.InventoryUtils;
-import me.aurora.client.utils.MessageUtils;
 import me.aurora.client.utils.Timer;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraftforge.client.event.GuiScreenEvent;
@@ -16,15 +15,6 @@ import static me.aurora.client.Aurora.mc;
 
 public class TerminalAnnouncer implements Module {
 
-    public String name() {
-        return "TerminalAnnouncer";
-    }
-
-    public boolean toggled() {
-        return Config.terminalAnnouncer;
-    }
-
-    private String currentTerminal;
     private final Timer timer = new Timer();
     private final HashMap<String, String> terminalDefinition = new HashMap<String, String>() {{
         put("Change all to same color!", "Color Terminal");
@@ -34,6 +24,15 @@ public class TerminalAnnouncer implements Module {
         put("Click the button on time!", "Melody Terminal");
         put("Correct all the panes!", "Panes Terminal");
     }};
+    private String currentTerminal;
+
+    public String name() {
+        return "TerminalAnnouncer";
+    }
+
+    public boolean toggled() {
+        return Config.terminalAnnouncer;
+    }
 
     @SubscribeEvent
     public void onBackgroundRender(GuiScreenEvent.BackgroundDrawnEvent event) {

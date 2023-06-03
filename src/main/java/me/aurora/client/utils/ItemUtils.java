@@ -4,9 +4,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 /**
- * @credit ShadyAddons (jxee)
  * @author jxee Gabagooooooooooool
  * @version 1.1
+ * @credit ShadyAddons (jxee)
  * @brief Item ID Utils
  */
 public class ItemUtils {

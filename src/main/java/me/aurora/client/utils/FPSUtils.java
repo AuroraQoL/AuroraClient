@@ -16,13 +16,13 @@ public class FPSUtils {
     private static final Set<Long> lastFps = ConcurrentHashMap.newKeySet();
     private static boolean half = true;
 
-    @SubscribeEvent
-    public void onRender(TickEvent.RenderTickEvent event){
-        if (half =! half) lastFps.add(System.currentTimeMillis());
-    }
-
-    public static Integer getFPS(){
+    public static Integer getFPS() {
         lastFps.removeIf(x -> System.currentTimeMillis() - x > 1000);
         return lastFps.size();
+    }
+
+    @SubscribeEvent
+    public void onRender(TickEvent.RenderTickEvent event) {
+        if (half = !half) lastFps.add(System.currentTimeMillis());
     }
 }

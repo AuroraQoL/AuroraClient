@@ -3,18 +3,14 @@ package me.aurora.client.utils;
 import static me.aurora.client.Aurora.mc;
 
 /**
- * @credit ShadyAddons (jxee)
  * @author jxee Gabagooooooooooool
  * @version 2.0
+ * @credit ShadyAddons (jxee)
  * @brief Mouse Utils
  */
 public class MouseUtils {
 
-    public enum ClickType {
-        LEFT, MIDDLE, RIGHT
-    }
-
-    public static void click(ClickType click){
+    public static void click(ClickType click) {
         switch (click) {
             case LEFT:
                 tryInvoke("func_147116_af", "clickMouse");
@@ -43,9 +39,13 @@ public class MouseUtils {
         tryInvoke("func_147112_ai", "middleClickMouse");
     }
 
-    private static void tryInvoke(String obfName, String normalName){
-        if(!ReflectionUtils.invoke(mc, obfName))
+    private static void tryInvoke(String obfName, String normalName) {
+        if (!ReflectionUtils.invoke(mc, obfName))
             ReflectionUtils.invoke(mc, normalName);
+    }
+
+    public enum ClickType {
+        LEFT, MIDDLE, RIGHT
     }
 
 }

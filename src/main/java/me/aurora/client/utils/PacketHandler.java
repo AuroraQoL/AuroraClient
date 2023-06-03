@@ -18,7 +18,7 @@ public class PacketHandler extends SimpleChannelInboundHandler {
     public static boolean firstConnection = true;
     public static long lastPacket = 0;
 
-    public PacketHandler(){
+    public PacketHandler() {
         super(false);
     }
 
@@ -29,8 +29,8 @@ public class PacketHandler extends SimpleChannelInboundHandler {
     }
 
     @SubscribeEvent
-    public void join(FMLNetworkEvent.ClientConnectedToServerEvent e){
-        if(firstConnection) {
+    public void join(FMLNetworkEvent.ClientConnectedToServerEvent e) {
+        if (firstConnection) {
             firstConnection = false;
             ChannelPipeline pipeline = e.manager.channel().pipeline();
             pipeline.addBefore("packet_handler", this.getClass().getName(), this);
@@ -38,7 +38,7 @@ public class PacketHandler extends SimpleChannelInboundHandler {
     }
 
     @SubscribeEvent
-    public void leave(FMLNetworkEvent.ClientDisconnectionFromServerEvent e){
+    public void leave(FMLNetworkEvent.ClientDisconnectionFromServerEvent e) {
         firstConnection = true;
     }
 }

@@ -10,7 +10,7 @@ public class PapiezUtils {
     private boolean sent = false;
 
     @SubscribeEvent
-    public void onTick(TickEvent event){
+    public void onTick(TickEvent event) {
         if (!ConditionUtils.inGame()) return;
         LocalTime localTime = LocalTime.now();
         if (localTime.getHour() == 21 && localTime.getMinute() == 37) {
@@ -18,8 +18,7 @@ public class PapiezUtils {
                 MessageUtils.sendClientMessage("PAPIEŻOWA");
                 sent = true;
             }
-        }
-        else {
+        } else {
             sent = false;
         }
     }

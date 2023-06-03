@@ -14,9 +14,10 @@ import static me.aurora.client.Aurora.mc;
 
 public class Keystrokes extends Element {
 
+    private static final FontRender fontRenderer = FontDefiner.getFontRenderer();
     final int standby = new Color(0, 0, 0, 50).getRGB();
     final int pressed = new Color(255, 255, 255, 200).getRGB();
-    private static final FontRender fontRenderer = FontDefiner.getFontRenderer();
+
     public Keystrokes() {
         width = 200;
         height = 200;
@@ -28,13 +29,13 @@ public class Keystrokes extends Element {
     }
 
     @Override
-    public int getY() {
-        return Config.KEYSTROKES_Y;
+    public void setX(int val) {
+        Config.KEYSTROKES_X = val;
     }
 
     @Override
-    public void setX(int val) {
-        Config.KEYSTROKES_X = val;
+    public int getY() {
+        return Config.KEYSTROKES_Y;
     }
 
     @Override
@@ -57,7 +58,7 @@ public class Keystrokes extends Element {
         renderKeystrokes();
     }
 
-    private void renderKeystrokes(){
+    private void renderKeystrokes() {
         int rbw = ThemeUtils.currentColorGet(0);
         GlStateManager.pushMatrix();
         GlStateManager.enableBlend();

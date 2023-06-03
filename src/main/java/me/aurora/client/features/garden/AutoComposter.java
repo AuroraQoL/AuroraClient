@@ -19,14 +19,7 @@ import static me.aurora.client.Aurora.mc;
  * @todo Rewrite States Using Enums
  * @todo Move inventory name to dedicated utility & integrate
  */
-public class AutoComposter  implements Module {
-    public String name() {
-        return "AutoComposter";
-    }
-
-    public boolean toggled() {
-        return Config.autoComposter;
-    }
+public class AutoComposter implements Module {
     private int delay = 0;
     private boolean inComposter = false;
     private boolean prevComposter = false;
@@ -35,11 +28,19 @@ public class AutoComposter  implements Module {
     private boolean cropsAdded = false;
     private boolean compostCollected = false;
 
+    public String name() {
+        return "AutoComposter";
+    }
+
+    public boolean toggled() {
+        return Config.autoComposter;
+    }
+
     @SubscribeEvent
     public void onGui(GuiScreenEvent.InitGuiEvent.Post event) {
-            fuelAdded = false;
-            cropsAdded = false;
-            compostCollected = false;
+        fuelAdded = false;
+        cropsAdded = false;
+        compostCollected = false;
     }
 
     @SubscribeEvent
@@ -48,7 +49,7 @@ public class AutoComposter  implements Module {
         if (chestName.contains("Confirm") && prevName.contains("Composter")) prevComposter = true;
         prevName = chestName;
         inComposter = chestName.contains("Composter");
-        if (!chestName.contains("Confirm") && !chestName.contains("Composter")){
+        if (!chestName.contains("Confirm") && !chestName.contains("Composter")) {
             prevComposter = false;
             fuelAdded = false;
             cropsAdded = false;
@@ -62,8 +63,8 @@ public class AutoComposter  implements Module {
         if (delay % Config.composter_delay == 0 && Config.autoComposter) {
             if (mc.currentScreen instanceof GuiChest && inComposter) {
                 boolean actionDone = false;
-                if(!cropsAdded){
-                    switch(Config.composter_crop){
+                if (!cropsAdded) {
+                    switch (Config.composter_crop) {
                         case 0:
                             mc.playerController.windowClick(mc.thePlayer.openContainer.windowId, 48, 1, 0, mc.thePlayer);
                             actionDone = true;
@@ -79,16 +80,16 @@ public class AutoComposter  implements Module {
                             break;
                     }
                 }
-                if(!fuelAdded && !actionDone){
-                    if (Config.composter_fuel){
+                if (!fuelAdded && !actionDone) {
+                    if (Config.composter_fuel) {
                         mc.playerController.windowClick(mc.thePlayer.openContainer.windowId, 50, 0, 0, mc.thePlayer);
                         actionDone = true;
                     }
                     fuelAdded = true;
                 }
-                if(!compostCollected && !actionDone){
-                    if (mc.thePlayer.openContainer.inventorySlots.get(22).getStack().getItem() == Items.skull){
-                        if(Config.composter_compost) {
+                if (!compostCollected && !actionDone) {
+                    if (mc.thePlayer.openContainer.inventorySlots.get(22).getStack().getItem() == Items.skull) {
+                        if (Config.composter_compost) {
                             mc.playerController.windowClick(mc.thePlayer.openContainer.windowId, 22, 0, 0, mc.thePlayer);
                         }
                         compostCollected = true;
@@ -99,7 +100,7 @@ public class AutoComposter  implements Module {
             }
         }
         delay++;
-        if (delay>10000) delay=0;
+        if (delay > 10000) delay = 0;
     }
 
     @SubscribeEvent

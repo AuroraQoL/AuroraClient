@@ -30,7 +30,7 @@ public class ThemeUtils {
                 return getGradientOffset(new Color(250, 250, 250), new Color(5, 5, 5), colorOffset);
             case 7:
                 return getGradientOffset(new Color(231, 239, 239), new Color(16, 16, 24), colorOffset);
-            }
+        }
         return Color.WHITE;
     }
 
@@ -38,10 +38,10 @@ public class ThemeUtils {
         return getThemeColor(offset).getRGB();
     }
 
-    public static float getFloatValue(float offset, int color){
+    public static float getFloatValue(float offset, int color) {
         Color tempC = new Color(ThemeUtils.currentColorGet(offset));
         int tempC_ = 0;
-        switch (color){
+        switch (color) {
             case 0:
                 tempC_ = tempC.getRed();
                 break;
@@ -55,19 +55,20 @@ public class ThemeUtils {
         }
         return (((float) tempC_) / 255F);
     }
+
     /**
      * Following method has been circulating in Minecraft Hacking Community for a while, making it impossible to trace original author.
      */
     protected static Color getGradientOffset(final Color color1, final Color color2, double offset) {
         if (offset > 1.0) {
             final double left = offset % 1.0;
-            final int off = (int)offset;
+            final int off = (int) offset;
             offset = ((off % 2 == 0) ? left : (1.0 - left));
         }
         final double inverse_percent = 1.0 - offset;
-        final int redPart = (int)(color1.getRed() * inverse_percent + color2.getRed() * offset);
-        final int greenPart = (int)(color1.getGreen() * inverse_percent + color2.getGreen() * offset);
-        final int bluePart = (int)(color1.getBlue() * inverse_percent + color2.getBlue() * offset);
+        final int redPart = (int) (color1.getRed() * inverse_percent + color2.getRed() * offset);
+        final int greenPart = (int) (color1.getGreen() * inverse_percent + color2.getGreen() * offset);
+        final int bluePart = (int) (color1.getBlue() * inverse_percent + color2.getBlue() * offset);
         return new Color(redPart, greenPart, bluePart);
     }
 
