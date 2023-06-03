@@ -5,7 +5,6 @@ import me.aurora.client.features.Module;
 import me.aurora.client.utils.MouseUtils;
 import me.aurora.client.utils.PacketUtils;
 import me.aurora.client.utils.RotationUtils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.play.client.C0BPacketEntityAction;
 import net.minecraft.util.BlockPos;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -19,6 +18,8 @@ import static me.aurora.client.utils.MouseUtils.ClickType.RIGHT;
  */
 public class AutoSecrets implements Module {
 
+    private static boolean sentSneak = false;
+
     public String name() {
         return "AutoSecrets";
     }
@@ -26,7 +27,6 @@ public class AutoSecrets implements Module {
     public boolean toggled() {
         return Config.autoSecrets;
     }
-    private static boolean sentSneak = false;
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {

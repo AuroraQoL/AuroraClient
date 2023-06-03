@@ -16,32 +16,37 @@ public class PacketDebug extends Element {
     }
 
     @Override
-    public int getX(){
+    public int getX() {
         return Config.PACKET_X;
     }
+
     @Override
-    public int getY(){
-        return Config.PACKET_Y;
-    }
-    @Override
-    public void setX(int val){
+    public void setX(int val) {
         Config.PACKET_X = val;
     }
 
     @Override
-    public void setY(int val){
+    public int getY() {
+        return Config.PACKET_Y;
+    }
+
+    @Override
+    public void setY(int val) {
         Config.PACKET_Y = val;
     }
+
     @Override
-    public boolean enabled(){
+    public boolean enabled() {
         return Config.hudPacket;
     }
+
     @Override
-    public void guiDraw(){
+    public void guiDraw() {
         fontRenderer.drawStringWithShadow("Time since last packet: " + new DecimalFormat("#.#").format((double) (System.currentTimeMillis() - PacketHandler.lastPacket) / 1000d) + "s", getX(), getY(), 0xFF0000);
     }
+
     @Override
-    public void editorDraw(){
+    public void editorDraw() {
         fontRenderer.drawStringWithShadow("Time since last packet: 6.9s", getX(), getY(), 0xFF0000);
     }
 }

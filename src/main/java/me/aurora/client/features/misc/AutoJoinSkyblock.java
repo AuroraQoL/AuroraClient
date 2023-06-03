@@ -7,14 +7,13 @@ import me.aurora.client.utils.BindUtils;
 import me.aurora.client.utils.MessageUtils;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
-import org.lwjgl.input.Keyboard;
 
 /**
  * @author OctoSplash01 Gabagooooooooooool
  * @version 2.0
  * @brief Automaticly Joins Skyblock
  */
-public class AutoJoinSkyblock  implements Module {
+public class AutoJoinSkyblock implements Module {
     public String name() {
         return "AutoJoinSkyblock";
     }

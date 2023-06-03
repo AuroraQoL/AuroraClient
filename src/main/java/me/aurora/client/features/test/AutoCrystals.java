@@ -15,11 +15,14 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import static me.aurora.client.Aurora.mc;
 
 /**
- * @credit ShadyAddons (jxee)
  * @author jxee OctoSplash01 Gabagooooooooooool
+ * @credit ShadyAddons (jxee)
  * @brief Auto F7 Crystal Pickup
  */
 public class AutoCrystals implements Module {
+
+    private static boolean teleported = false;
+    private static boolean sentSneak = false;
 
     public String name() {
         return "AutoCrystal";
@@ -28,8 +31,6 @@ public class AutoCrystals implements Module {
     public boolean toggled() {
         return Config.autoCrystals;
     }
-    private static boolean teleported = false;
-    private static boolean sentSneak = false;
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
@@ -56,7 +57,7 @@ public class AutoCrystals implements Module {
         teleported = false;
     }
 
-    private void setSneak(boolean status){
+    private void setSneak(boolean status) {
         sentSneak = status;
         mc.thePlayer.movementInput.sneak = status;
     }

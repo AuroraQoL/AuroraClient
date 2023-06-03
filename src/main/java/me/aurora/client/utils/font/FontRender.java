@@ -10,7 +10,7 @@ import java.util.Comparator;
 
 /**
  * Implemented from some russian minecraft forum idk
- * */
+ */
 public class FontRender extends FontCore implements Comparator<String> {
     FontCore.CharData[] boldChars = new FontCore.CharData[256],
             italicChars = new FontCore.CharData[256],
@@ -461,9 +461,10 @@ public class FontRender extends FontCore implements Comparator<String> {
         return width / 2;
     }
 
-    private int getScaledIntWidth(String text){
+    private int getScaledIntWidth(String text) {
         return (int) getStringWidth(text) * 100;
     }
+
     public double getStringWidth(String text, float kerning) {
         if (text == null) {
             return 0;

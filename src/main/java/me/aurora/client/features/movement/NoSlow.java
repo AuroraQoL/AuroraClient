@@ -2,16 +2,13 @@ package me.aurora.client.features.movement;
 
 import me.aurora.client.config.Config;
 import me.aurora.client.features.Module;
-import me.aurora.client.utils.PacketUtils;
-import me.aurora.client.events.TickEndEvent;
 import me.aurora.client.utils.ItemUtils;
-import net.minecraft.client.Minecraft;
+import me.aurora.client.utils.PacketUtils;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 import net.minecraft.util.BlockPos;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -24,14 +21,6 @@ import static me.aurora.client.Aurora.mc;
  * @brief No Slowdown
  */
 public class NoSlow implements Module {
-    public String name() {
-        return "NoSlow";
-    }
-
-    public boolean toggled() {
-        return Config.noSlowdown;
-    }
-
     // Since set access is O(n) it's better to use it instead of list which access time is higher.
     // Using String[] would also be a good choice but would make a lot of mess.
     private final Set<String> validItems = new HashSet<>(Arrays.asList(
@@ -41,6 +30,14 @@ public class NoSlow implements Module {
             "ASTRAEA",
             "ASPECT_OF_THE_END",
             "ROGUE_SWORD"));
+
+    public String name() {
+        return "NoSlow";
+    }
+
+    public boolean toggled() {
+        return Config.noSlowdown;
+    }
 
     @SubscribeEvent
     public void onInteract(PlayerInteractEvent event) {

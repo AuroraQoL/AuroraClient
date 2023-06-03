@@ -13,17 +13,20 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import static me.aurora.client.Aurora.mc;
-import static me.aurora.client.utils.MouseUtils.ClickType.*;
-import static net.minecraft.network.play.client.C0BPacketEntityAction.Action.*;
+import static me.aurora.client.utils.MouseUtils.ClickType.RIGHT;
+import static net.minecraft.network.play.client.C0BPacketEntityAction.Action.START_SNEAKING;
+import static net.minecraft.network.play.client.C0BPacketEntityAction.Action.STOP_SNEAKING;
 
 /**
- * @credit ShadyAddons (jxee)
  * @author jxee OctoSplash01 Gabagooooooooooool
  * @version 2.0
+ * @credit ShadyAddons (jxee)
  * @brief Auto Maxor Platform TP
  * @todo Check code
  */
 public class AutoTank implements Module {
+
+    private boolean teleported = false;
 
     public String name() {
         return "AutoTank";
@@ -32,8 +35,6 @@ public class AutoTank implements Module {
     public boolean toggled() {
         return Config.autoTank;
     }
-
-    private boolean teleported = false;
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {

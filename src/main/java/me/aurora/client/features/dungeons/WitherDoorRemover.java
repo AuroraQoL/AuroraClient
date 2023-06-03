@@ -3,7 +3,6 @@ package me.aurora.client.features.dungeons;
 import me.aurora.client.config.Config;
 import me.aurora.client.features.Module;
 import me.aurora.client.utils.iteration.LoopUtils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
@@ -30,13 +29,14 @@ public class WitherDoorRemover implements Module {
 
     @SubscribeEvent
     public void onKeyPress(InputEvent.KeyInputEvent event) {
-        if(Keyboard.isKeyDown(Keyboard.KEY_H) && toggled()) {
+        if (Keyboard.isKeyDown(Keyboard.KEY_H) && toggled()) {
             MovingObjectPosition keyBlock = mc.thePlayer.rayTrace(mc.playerController.getBlockReachDistance(), 1);
             LoopUtils.brLoop(keyBlock.getBlockPos().getX(), keyBlock.getBlockPos().getY(), keyBlock.getBlockPos().getZ(), 5,
                     (x, y, z) -> {
-                BlockPos tempBlockPos = new BlockPos(x,y,z);
-                if (mc.theWorld.getBlockState(tempBlockPos).getBlock() == Blocks.coal_block) mc.theWorld.setBlockToAir(tempBlockPos);
-            });
+                        BlockPos tempBlockPos = new BlockPos(x, y, z);
+                        if (mc.theWorld.getBlockState(tempBlockPos).getBlock() == Blocks.coal_block)
+                            mc.theWorld.setBlockToAir(tempBlockPos);
+                    });
         }
     }
 }

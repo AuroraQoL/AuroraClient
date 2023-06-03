@@ -34,7 +34,8 @@ public class CapeDatabase {
                                 username.toLowerCase(),
                                 mc.getTextureManager().getDynamicTextureLocation("auroraskull" + username, new DynamicTexture(ImageIO.read(new URL(capeUrl))))
                         );
-                    } catch (IOException ignored) {}
+                    } catch (IOException ignored) {
+                    }
                 }
         );
     }

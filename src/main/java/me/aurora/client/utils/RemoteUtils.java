@@ -29,6 +29,6 @@ public class RemoteUtils {
 
     @SneakyThrows
     public static Map<String, String> getCapeUsers() {
-        return new BufferedReader(new InputStreamReader(new URL("https://raw.githubusercontent.com/AuroraQoL/AuroraCapesFreeServerXD/main/Capes.aurf").openConnection().getInputStream())).lines().filter(b -> !b.startsWith(";")).map(s -> s.split("\\|")).filter(e -> e.length > 2).collect(Collectors.toMap(k -> k[1], v-> v[2]));
+        return new BufferedReader(new InputStreamReader(new URL("https://raw.githubusercontent.com/AuroraQoL/AuroraCapesFreeServerXD/main/Capes.aurf").openConnection().getInputStream())).lines().filter(b -> !b.startsWith(";")).map(s -> s.split("\\|")).filter(e -> e.length > 2).collect(Collectors.toMap(k -> k[1], v -> v[2]));
     }
 }

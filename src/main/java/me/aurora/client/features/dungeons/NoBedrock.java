@@ -9,8 +9,6 @@ import net.minecraft.util.BlockPos;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-import java.util.stream.IntStream;
-
 import static me.aurora.client.Aurora.mc;
 
 /**
@@ -21,6 +19,8 @@ import static me.aurora.client.Aurora.mc;
 
 public class NoBedrock implements Module {
 
+    private boolean readyToScan = true;
+
     public String name() {
         return "SecretsUnblock";
     }
@@ -28,7 +28,6 @@ public class NoBedrock implements Module {
     public boolean toggled() {
         return Config.ghost_secretsUnblock;
     }
-    private boolean readyToScan = true;
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {

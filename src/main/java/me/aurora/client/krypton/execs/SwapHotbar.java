@@ -4,7 +4,6 @@ import me.aurora.client.krypton.management.MathVariableParser;
 import net.minecraft.network.play.client.C09PacketHeldItemChange;
 
 import static me.aurora.client.Aurora.mc;
-import static me.aurora.client.utils.PacketUtils.sendPacket;
 
 //implemented from https://github.com/ShadyAddons/ShadyAddons/blob/main/src/main/java/cheaters/get/banned/features/routines/actions/SwapHotbarAction.java
 public class SwapHotbar implements IExec {

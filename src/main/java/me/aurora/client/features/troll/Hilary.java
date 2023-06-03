@@ -1,7 +1,6 @@
 package me.aurora.client.features.troll;
 
 import me.aurora.client.config.Config;
-import me.aurora.client.features.Module;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -48,6 +47,7 @@ public class Hilary {
 
     public static List<String> messagesList = Arrays.asList(messages);
     public static List<String> sendersList = Arrays.asList(senders);
+
     @SubscribeEvent
     public void sendHilaryChat(TickEvent.PlayerTickEvent event) {
         Random random = new Random();

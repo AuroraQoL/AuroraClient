@@ -3,8 +3,8 @@ package me.aurora.client.features.misc;
 import me.aurora.client.config.Config;
 import me.aurora.client.features.Module;
 import me.aurora.client.utils.BindUtils;
-import me.aurora.client.utils.MessageUtils;
 import me.aurora.client.utils.InventoryUtils;
+import me.aurora.client.utils.MessageUtils;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
@@ -15,7 +15,12 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import static me.aurora.client.Aurora.mc;
 
-public class AutoSellBz  implements Module {
+public class AutoSellBz implements Module {
+    private int delay = 0;
+    private boolean inBazaar = false;
+    private boolean areYouSure = false;
+    private boolean readyToSell = false;
+
     public String name() {
         return "AutoSellBZ";
     }
@@ -23,26 +28,20 @@ public class AutoSellBz  implements Module {
     public boolean toggled() {
         return Config.autoSellBz;
     }
-    private int delay = 0;
-    private boolean inBazaar = false;
-    private boolean areYouSure = false;
-    private boolean readyToSell = false;
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
-        if(Config.autoSellBz && event.type == 0) {
+        if (Config.autoSellBz && event.type == 0) {
             String message = event.message.getFormattedText().replaceAll("\u00a7.", "");
             if (message.equals("Your inventory is full!") | message.contains("Inventory full? Don't forget to check out your Storage inside the SkyBlock Menu!") && Config.autoSellBzType == 1) {
                 readyToSell = true;
                 mc.thePlayer.sendChatMessage("/bz");
                 MessageUtils.sendClientMessage("Selling Items on Bazaar...");
-            }
-            else if (message.equals("[Bazaar] Executing instant sell...")) {
+            } else if (message.equals("[Bazaar] Executing instant sell...")) {
                 readyToSell = false;
                 mc.thePlayer.closeScreen();
                 MessageUtils.sendClientMessage("Sold Items on Bazaar");
-            }
-            else if (message.equals("[Bazaar] You don't have anything to sell!")) {
+            } else if (message.equals("[Bazaar] You don't have anything to sell!")) {
                 readyToSell = false;
                 mc.thePlayer.closeScreen();
                 MessageUtils.sendClientMessage("No Items to Sell");
@@ -72,8 +71,7 @@ public class AutoSellBz  implements Module {
             if (mc.currentScreen instanceof GuiChest) {
                 if (inBazaar && Config.autoSellBz && readyToSell) {
                     mc.playerController.windowClick(mc.thePlayer.openContainer.windowId, 47, 1, 0, mc.thePlayer);
-                }
-                else if (areYouSure && Config.autoSellBz && readyToSell) {
+                } else if (areYouSure && Config.autoSellBz && readyToSell) {
                     mc.playerController.windowClick(mc.thePlayer.openContainer.windowId, 11, 1, 0, mc.thePlayer);
                 }
             }

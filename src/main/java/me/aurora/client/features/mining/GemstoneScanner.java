@@ -24,7 +24,14 @@ import java.util.stream.IntStream;
  * Gemstone Scanner (ESP)
  */
 
-public class GemstoneScanner  implements Module {
+public class GemstoneScanner implements Module {
+    private final ConcurrentHashMap<BlockPos, Color> espModeMap = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<BlockPos, String> textModeMap = new ConcurrentHashMap<>();
+    boolean readyToScan = true;
+    Minecraft mc = Minecraft.getMinecraft();
+    private ConcurrentHashMap<BlockPos, Color> espModeTemportaryMap = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<BlockPos, String> textModeTemportaryMap = new ConcurrentHashMap<>();
+
     public String name() {
         return "GemstoneScanner";
     }
@@ -32,13 +39,6 @@ public class GemstoneScanner  implements Module {
     public boolean toggled() {
         return Config.gemstoneEsp;
     }
-
-    private final ConcurrentHashMap<BlockPos, Color> espModeMap = new ConcurrentHashMap<>();
-    private final ConcurrentHashMap<BlockPos, String> textModeMap = new ConcurrentHashMap<>();
-    boolean readyToScan = true;
-    Minecraft mc = Minecraft.getMinecraft();
-    private ConcurrentHashMap<BlockPos, Color> espModeTemportaryMap = new ConcurrentHashMap<>();
-    private ConcurrentHashMap<BlockPos, String> textModeTemportaryMap = new ConcurrentHashMap<>();
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
@@ -53,7 +53,7 @@ public class GemstoneScanner  implements Module {
         if (!Config.gemstoneEsp_ParameterKeep) {
             removeMissing(espModeMap, textModeMap);
         }
-     //   LoopUtils.brLoopBound(StartX, StartY, StartZ, Config.gemstoneEsp_ParameterRange, lambda, 0, 255);
+        //   LoopUtils.brLoopBound(StartX, StartY, StartZ, Config.gemstoneEsp_ParameterRange, lambda, 0, 255);
         IntStream.range(StartX - Config.gemstoneEsp_ParameterRange, StartX + Config.gemstoneEsp_ParameterRange).forEach(x -> {
             IntStream.range(StartY - Config.gemstoneEsp_ParameterRange, StartY + Config.gemstoneEsp_ParameterRange).forEach(y -> {
                 IntStream.range(StartZ - Config.gemstoneEsp_ParameterRange, StartZ + Config.gemstoneEsp_ParameterRange).filter(z -> (mc.theWorld.getBlockState(new BlockPos(x, y, z)).getBlock() == Blocks.stained_glass_pane || mc.theWorld.getBlockState(new BlockPos(x, y, z)).getBlock() == Blocks.stained_glass)).forEach(z -> {
@@ -142,11 +142,11 @@ public class GemstoneScanner  implements Module {
     }
 
     @SafeVarargs
-    private final void removeMissing(ConcurrentHashMap<BlockPos, ?>... hashmaps){
+    private final void removeMissing(ConcurrentHashMap<BlockPos, ?>... hashmaps) {
         for (ConcurrentHashMap<BlockPos, ?> hashmap : hashmaps) {
             hashmap.entrySet().removeIf(x -> mc.theWorld.getBlockState(x.getKey()).getBlock() == Blocks.stained_glass_pane || mc.theWorld.getBlockState(x.getKey()).getBlock() == Blocks.stained_glass);
         }
     }
-    
+
 }
 

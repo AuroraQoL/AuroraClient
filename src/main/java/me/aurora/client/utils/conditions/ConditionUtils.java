@@ -13,7 +13,9 @@ import static me.aurora.client.Aurora.mc;
  * @brief Condition Utilities
  */
 public class ConditionUtils {
-    public static boolean inGame() { return (mc.thePlayer != null && mc.theWorld != null); }
+    public static boolean inGame() {
+        return (mc.thePlayer != null && mc.theWorld != null);
+    }
 
     public static boolean inSkyblock() {
         if (!inGame()) return false;
