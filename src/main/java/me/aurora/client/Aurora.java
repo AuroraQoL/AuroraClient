@@ -15,14 +15,21 @@ import me.aurora.client.features.Module;
 import me.aurora.client.features.dungeons.*;
 import me.aurora.client.features.garden.AutoComposter;
 import me.aurora.client.features.garden.GrassESP;
-import me.aurora.client.features.macros.F11;
 import me.aurora.client.features.mining.GemstoneScanner;
 import me.aurora.client.features.mining.StructureScanner;
 import me.aurora.client.features.misc.*;
 import me.aurora.client.features.movement.*;
+import me.aurora.client.features.macros.*;
+import me.aurora.client.features.test.AutoCrystals;
+import me.aurora.client.features.test.AutoSecrets;
+import me.aurora.client.features.test.CrystalPlacer;
 import me.aurora.client.features.visual.*;
 import me.aurora.client.krypton.Main;
-import me.aurora.client.utils.*;
+import me.aurora.client.utils.BindUtils;
+import me.aurora.client.utils.FPSUtils;
+import me.aurora.client.utils.PacketHandler;
+import me.aurora.client.utils.RemoteUtils;
+import me.aurora.client.utils.PapiezUtils;
 import me.aurora.client.utils.capes.CapeDatabase;
 import me.aurora.client.utils.capes.CapeManager;
 import me.cephetir.communistscanner.CommunistScanners;
@@ -30,6 +37,7 @@ import me.cephetir.communistscanner.StructureCallBack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.LoggingPrintStream;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -47,24 +55,25 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.*;
+import java.util.logging.Logger;
 
 @Mod(modid = "bossbar_customizer", name = "BossbarCustomizer", version = "1.2.1", clientSideOnly = true)
 public class Aurora {
     public static final int CURRENT_VERSION_BUILD = 3499;
-    public static final Minecraft mc = Minecraft.getMinecraft();
     @Getter
     private static final Set<Element> hudModules = new HashSet<>();
+    public static final Minecraft mc = Minecraft.getMinecraft();
     @Getter
     private static final HUDEdit hudEdit = new HUDEdit();
-    @Getter
-    private static final ArrayList<Module> modules = new ArrayList<>();
-    @Getter
-    private static final String GUI_COMMAND = "aurorahud";
     @Setter
     private static GuiScreen guiToOpen = null;
     private static File modFile = null;
     @Getter
+    private static final ArrayList<Module> modules = new ArrayList<>();
+    @Getter
     private static boolean isSupporter = false;
+    @Getter
+    private static final String GUI_COMMAND = "aurorahud";
 
     @EventHandler
     @SneakyThrows
@@ -85,20 +94,21 @@ public class Aurora {
                 new BindUtils.Bind(Keyboard.KEY_G, "GhostBlocks"),
                 new BindUtils.Bind(Keyboard.KEY_L, "FreeCam"),
                 new BindUtils.Bind(Keyboard.KEY_NONE, "VClip"),
-                new BindUtils.Bind(Keyboard.KEY_K, "FastJoin")
+                new BindUtils.Bind(Keyboard.KEY_K, "FastJoin"),
+                new BindUtils.Bind(Keyboard.KEY_J, "AutoArrows")
         );
         registerModules(new LegacyModuleList(), new AutoSell(), new Ghostblock(), new WitherDoorRemover(),
                 new AotvAura(), new HarpStealer(), new NoSlow(), new GemstoneScanner(),
-                new AutoJoinSkyblock(), new AutoRogue(), new AutoHarp(), new MelodyThrottle(),
-                new StructureScanner(), new NoDowntime(), new AutoSprint(), new AutoSex(),
+                new AutoJoinSkyblock(), new AutoRogue(), new AutoHarp(), new AutoSecrets(), new MelodyThrottle(),
+                new StructureScanner(), new NoDowntime(), new AutoSprint(), new AutoSex(), new AutoCrystals(),
                 new WitherCloakAura(), new AutoTank(), new NoBedrock(), new F11(), new VClip(),
-                new AntiLimbo(), new AutoSellBz(), new GrassESP(),
+                new CrystalPlacer(), new AntiLimbo(), new AutoSellBz(), new GrassESP(),
                 new AutoComposter(), new RatEsp(), new TerminalAnnouncer()/*, new FreeCam()*/);
         if (!isSupporter) {
             registerHud(new Watermark(), new Keystrokes(), new PacketDebug(), new FPS());
         }
         registerEvents(new TickEndEvent(), new Main(), new PacketHandler(), new FPSUtils(),
-                new PapiezUtils(), new CapeManager());
+                       new PapiezUtils(), new CapeManager(), new AutoBuyArrows());
         registerCommand(new CrabbyCommand(), new HUDCommand(), new ConfigCommand());
         if (RemoteUtils.isOutdated(CURRENT_VERSION_BUILD))
             Runtime.getRuntime().addShutdownHook(new Thread(this::update));
@@ -162,7 +172,8 @@ public class Aurora {
     private boolean supporterClassExist() {
         try {
             Class.forName("re.aurora.Sep");
-        } catch (ClassNotFoundException e) {
+        }
+        catch (ClassNotFoundException e) {
             return false;
         }
         return true;
