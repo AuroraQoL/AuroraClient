@@ -20,9 +20,6 @@ import me.aurora.client.features.mining.StructureScanner;
 import me.aurora.client.features.misc.*;
 import me.aurora.client.features.movement.*;
 import me.aurora.client.features.macros.*;
-import me.aurora.client.features.test.AutoCrystals;
-import me.aurora.client.features.test.AutoSecrets;
-import me.aurora.client.features.test.CrystalPlacer;
 import me.aurora.client.features.visual.*;
 import me.aurora.client.krypton.Main;
 import me.aurora.client.utils.BindUtils;
@@ -37,7 +34,6 @@ import me.cephetir.communistscanner.StructureCallBack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.BlockPos;
-import net.minecraft.util.LoggingPrintStream;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -55,7 +51,6 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.*;
-import java.util.logging.Logger;
 
 @Mod(modid = "bossbar_customizer", name = "BossbarCustomizer", version = "1.2.1", clientSideOnly = true)
 public class Aurora {
@@ -99,10 +94,10 @@ public class Aurora {
         );
         registerModules(new LegacyModuleList(), new AutoSell(), new Ghostblock(), new WitherDoorRemover(),
                 new AotvAura(), new HarpStealer(), new NoSlow(), new GemstoneScanner(),
-                new AutoJoinSkyblock(), new AutoRogue(), new AutoHarp(), new AutoSecrets(), new MelodyThrottle(),
-                new StructureScanner(), new NoDowntime(), new AutoSprint(), new AutoSex(), new AutoCrystals(),
+                new AutoJoinSkyblock(), new AutoRogue(), new AutoHarp(), new MelodyThrottle(),
+                new StructureScanner(), new NoDowntime(), new AutoSprint(), new AutoSex(),
                 new WitherCloakAura(), new AutoTank(), new NoBedrock(), new F11(), new VClip(),
-                new CrystalPlacer(), new AntiLimbo(), new AutoSellBz(), new GrassESP(),
+                new AntiLimbo(), new AutoSellBz(), new GrassESP(),
                 new AutoComposter(), new RatEsp(), new TerminalAnnouncer()/*, new FreeCam()*/);
         if (!isSupporter) {
             registerHud(new Watermark(), new Keystrokes(), new PacketDebug(), new FPS());
