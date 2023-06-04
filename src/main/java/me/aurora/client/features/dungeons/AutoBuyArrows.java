@@ -27,12 +27,16 @@ public class AutoBuyArrows {
     public static boolean inSlimeMenu = false;
     public static boolean inSlimeBuyingMenu = false;
     public static boolean inSandMenu = false;
-    public static boolean inSandBuyingMenu = false;
+    public static boolean inIceMenu = false;
+    public static boolean inIceBuyingMenu = false;
+    int[] slimeSlots = {18, 20, 10, 10, 14};
+    int[] armorShredSlots = {9, 33, 12, 10, 12};
+    int[] icySlots = {9, 31, 12, 10, 14};
     private int ticks;
 
     @SubscribeEvent
     public void onKeyPress(InputEvent.KeyInputEvent event) {
-        if(BindUtils.isBindPressed("AutoBuyArrows")) {
+        if(BindUtils.isBindPressed("AutoArrows")) {
             buying = true;
             mc.thePlayer.sendChatMessage("/bz");
         }
@@ -40,16 +44,11 @@ public class AutoBuyArrows {
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
-        System.out.println("In Bazaar: " + inBazaar);
-        System.out.println("In Slime Menu: " + inSlimeMenu);
-        System.out.println("In slIME buying menu: " + inSlimeBuyingMenu);
         if (buying && ConditionUtils.inSkyblock()) {
-            if (++ticks < 100) return;
+            if (++ticks < Config.auto_arrow_window_click_delay) return;
             ticks = 0;
             switch(Config.arrowtype) {
                 case 0:
-                    int[] slimeSlots = {18, 20, 10, 10, 14};
-
                     if(inBazaar) {
                         InventoryUtils.clickSlot(slimeSlots[0], 1, 0);
                         InventoryUtils.clickSlot(slimeSlots[1], 1, 0);
@@ -62,23 +61,36 @@ public class AutoBuyArrows {
                     }
                     break;
                 case 1:
-                    int[] armorShredSlots = {9, 33, 12, 10, 12};
-
                     if(inBazaar) {
                         InventoryUtils.clickSlot(armorShredSlots[0], 1, 0);
                         InventoryUtils.clickSlot(armorShredSlots[1], 1, 0);
                     }
                     if(inSandMenu) {
                         InventoryUtils.clickSlot(armorShredSlots[2], 1, 0);
-                    }
-                    if(inSandBuyingMenu) {
-                        for (int i = 0; i < Config.enchanted_sand_stacks; i++) {
+                        InventoryUtils.clickSlot(armorShredSlots[3], 1, 0);
+                        if(Config.enchanted_sand_stacks == 1) {
                             InventoryUtils.clickSlot(armorShredSlots[4], 1, 0);
+                        } else {
+                            for (int i = 0; i < Config.enchanted_sand_stacks; i++) {
+                                InventoryUtils.clickSlot(armorShredSlots[4], 1, 0);
+                            }
                         }
                     }
                     break;
+                case 2: // ICY
+                    if(inBazaar) {
+                        InventoryUtils.clickSlot(icySlots[0], 1, 0);
+                        InventoryUtils.clickSlot(icySlots[1], 1, 0);
+                    }
+                    if(inIceMenu) {
+                        InventoryUtils.clickSlot(icySlots[2], 1, 0);
+                        InventoryUtils.clickSlot(icySlots[3], 1, 0);
+                    }
+                    if(inIceBuyingMenu) {
+                        InventoryUtils.clickSlot(icySlots[4], 1, 0);
+                    }
+                    break;
                 default:
-                    MessageUtils.sendClientMessage("Error found! Report to defrost#7015 if you see this!");
                     break;
             }
         }
@@ -101,23 +113,24 @@ public class AutoBuyArrows {
                     e.printStackTrace();
                 }
             }).start();
-
         }
         if(message.contains("afford this!") || message.contains("occurred in your connection")) {
             MessageUtils.sendClientMessage("Ran out of money! Stopping..");
             mc.thePlayer.closeScreen();
             buying = false;
         }
+        if(message.contains("Bought 64x Enchanted Sand") && Config.enchanted_sand_stacks == 1) {
+            MessageUtils.sendClientMessage("Detected 1 enchanted sand in config, stopping buy.");
+            buying = false;
+            mc.thePlayer.closeScreen();
+        }
+        if(message.contains("Bought ") && message.contains("Slimeball") && Config.auto_arrow_inventories == 1) {
+            MessageUtils.sendClientMessage("Detected 1 arrow inventory in config, stopping buy.");
+            buying = false;
+            mc.thePlayer.closeScreen();
+        }
     }
 
-    public void buyInventory(int slotId1, int slotId2, int slotId3, int mouseButtonClicked, int mode) {
-
-                for(int i = 0; i < Config.auto_arrow_inventories; i++) {
-                    InventoryUtils.clickSlot(slotId1, mouseButtonClicked, mode);
-                    InventoryUtils.clickSlot(slotId2, mouseButtonClicked, mode);
-                    InventoryUtils.clickSlot(slotId3, mouseButtonClicked, mode);
-                }
-    }
 
     @SubscribeEvent
     public void onBackgroundRender(GuiScreenEvent.BackgroundDrawnEvent event) {
@@ -126,5 +139,7 @@ public class AutoBuyArrows {
         inSlimeMenu = chestName.contains("Slime Drops");
         inSlimeBuyingMenu = chestName.contains("Slimeball");
         inSandMenu = chestName.contains("Sand");
+        inIceMenu = chestName.contains("Ice");
+        inIceBuyingMenu = chestName.contains("Packed Ice");
     }
 }

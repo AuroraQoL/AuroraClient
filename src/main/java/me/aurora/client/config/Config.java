@@ -6,6 +6,7 @@ import gg.essential.vigilance.data.Property;
 import gg.essential.vigilance.data.PropertyType;
 
 import java.io.File;
+import java.util.Locale;
 
 public class Config extends Vigilant {
 
@@ -685,7 +686,7 @@ public class Config extends Vigilant {
             type = PropertyType.SELECTOR,
             name = "Arrow Type",
             description = "Select Arrow Type Here",
-            options = {"Bouncy", "Armorshred", "Emerald tipped", "Icy", "Nanosorb", "Explosive", "Redstone Tipped", "Glue"},
+            options = {"Bouncy", "Armorshred", "Icy", "Nanosorb", "Explosive", "Redstone Tipped", "Glue"},
             category = "Dungeons",
             subcategory = "Auto Arrows"
     )
@@ -712,6 +713,17 @@ public class Config extends Vigilant {
             subcategory = "Auto Arrows"
     )
     public static int enchanted_sand_stacks = 1;
+
+    @Property(
+            type = PropertyType.SLIDER,
+            name = "Window Click Delay",
+            description = "",
+            min = 25,
+            max = 1000,
+            category = "Dungeons",
+            subcategory = "Auto Arrows"
+    )
+    public static int auto_arrow_window_click_delay = 100;
 
     @Property(
             type = PropertyType.SWITCH,

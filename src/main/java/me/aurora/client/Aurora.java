@@ -94,7 +94,8 @@ public class Aurora {
                 new BindUtils.Bind(Keyboard.KEY_G, "GhostBlocks"),
                 new BindUtils.Bind(Keyboard.KEY_L, "FreeCam"),
                 new BindUtils.Bind(Keyboard.KEY_NONE, "VClip"),
-                new BindUtils.Bind(Keyboard.KEY_K, "FastJoin")
+                new BindUtils.Bind(Keyboard.KEY_K, "FastJoin"),
+                new BindUtils.Bind(Keyboard.KEY_J, "AutoArrows")
         );
         registerModules(new LegacyModuleList(), new AutoSell(), new Ghostblock(), new WitherDoorRemover(),
                 new AotvAura(), new HarpStealer(), new NoSlow(), new GemstoneScanner(),
@@ -107,7 +108,7 @@ public class Aurora {
             registerHud(new Watermark(), new Keystrokes(), new PacketDebug(), new FPS());
         }
         registerEvents(new TickEndEvent(), new Main(), new PacketHandler(), new FPSUtils(),
-                       new PapiezUtils(), new CapeManager());
+                       new PapiezUtils(), new CapeManager(), new AutoBuyArrows());
         registerCommand(new CrabbyCommand(), new HUDCommand(), new ConfigCommand());
         if (RemoteUtils.isOutdated(CURRENT_VERSION_BUILD))
             Runtime.getRuntime().addShutdownHook(new Thread(this::update));

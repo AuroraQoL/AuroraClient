@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Random;
 
 public class Hilary {
+
+    public boolean hasSentInLast15Minutes = false;
     public static String[] messages = {
             "Just checked your skills, ain't looking too good..",
             "Send me furry porn GumTune#9663",
@@ -50,19 +52,33 @@ public class Hilary {
 
     @SubscribeEvent
     public void sendHilaryChat(TickEvent.PlayerTickEvent event) {
-        Random random = new Random();
-        int decide = random.nextInt(100000);
+        new Thread(()-> {
+            try {
+                if(!hasSentInLast15Minutes) {
+                    Random randomSender = new Random();
+                    int randomSenderNumber = randomSender.nextInt(senders.length);
 
-        Random randomSender = new Random();
-        int randomSenderNumber = randomSender.nextInt(senders.length);
+                    Random randomMessage = new Random();
+                    int randomMessageNumber = randomMessage.nextInt(messages.length);
 
-        Random randomMessage = new Random();
-        int randomMessageNumber = randomMessage.nextInt(messages.length);
-
-        if (event.player != null) {
-            if (decide == 1 && Config.hilary) {
-                Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("§dFrom " + sendersList.get(randomSenderNumber) + "§7: " + "§7" + messagesList.get(randomMessageNumber)));
+                    if (event.player != null) {
+                        if (Config.hilary) {
+                            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("§dFrom " + sendersList.get(randomSenderNumber) + "§7: " + "§7" + messagesList.get(randomMessageNumber)));
+                        }
+                    }
+                }
+                hasSentInLast15Minutes = true;
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
-        }
+        }).start();
+        new Thread(()->{
+            try {
+                Thread.sleep(900000);
+                hasSentInLast15Minutes = false;
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
     }
 }
