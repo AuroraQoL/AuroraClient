@@ -48,7 +48,6 @@ public class AutoSell implements Module {
             "Journal Entry",
             "Sign"));
     private boolean inTradeGui = false;
-    private boolean inCookieGui = false;
     private int tickCount = 0;
 
     public String name() {
@@ -77,8 +76,7 @@ public class AutoSell implements Module {
     public void onRenderGuiBackground(GuiScreenEvent.DrawScreenEvent.Pre event) {
         if (ConditionUtils.inSkyblock() && toggled() && event.gui instanceof GuiChest) {
            String guiName = InventoryUtils.getGuiName(event.gui);
-           inTradeGui = guiName.contains("Trades");
-           inCookieGui = guiName.contains("Booster Cookie");
+           inTradeGui = guiName.contains("Trades") || guiName.contains("Booster Cookie");
         }
     }
 
