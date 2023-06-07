@@ -5,6 +5,7 @@ import me.aurora.client.events.TickEndEvent;
 import me.aurora.client.features.Module;
 import me.aurora.client.utils.MessageUtils;
 import me.aurora.client.utils.conditions.ConditionUtils;
+import me.aurora.client.utils.InventoryUtils;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Slot;
