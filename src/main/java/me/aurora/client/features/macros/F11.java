@@ -2,11 +2,17 @@ package me.aurora.client.features.macros;
 
 import me.aurora.client.config.Config;
 import me.aurora.client.features.Module;
+import me.aurora.client.utils.BindUtils;
+import me.aurora.client.utils.MessageUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.InputEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
+
+import java.util.Arrays;
 
 import static me.aurora.client.Aurora.mc;
 
@@ -20,9 +26,27 @@ public class F11 implements Module {
         return Config.f11Macro;
     }
 
+
+    public static KeyBinding[] bindArray = {
+        mc.gameSettings.keyBindAttack,
+        mc.gameSettings.keyBindBack,
+        mc.gameSettings.keyBindLeft,
+        mc.gameSettings.keyBindRight,
+        mc.gameSettings.keyBindUseItem,
+        mc.gameSettings.keyBindForward
+    };
+
+
+    public static void stopAllMovement() {
+        for(KeyBinding bind : bindArray) {
+            KeyBinding.setKeyBindState(bind.getKeyCode(), false);
+        }
+    }
+
     @SubscribeEvent
     public void LivingUpdateEvent(LivingEvent.LivingUpdateEvent event) {
-        if (toggled()) {
+        if (BindUtils.isBindPressed("F11Macro") && toggled()) {
+            MessageUtils.sendClientMessage("Toggled F11 Macro, press the keys you set to come back.");
             Minecraft.getMinecraft().gameSettings.pauseOnLostFocus = false;
             if (event.entityLiving instanceof EntityPlayer) {
                 if (mc.currentScreen == null) {
@@ -51,4 +75,5 @@ public class F11 implements Module {
             Minecraft.getMinecraft().gameSettings.pauseOnLostFocus = true;
         }
     }
+
 }

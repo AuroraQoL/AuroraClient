@@ -20,6 +20,7 @@ import me.aurora.client.features.mining.StructureScanner;
 import me.aurora.client.features.misc.*;
 import me.aurora.client.features.movement.*;
 import me.aurora.client.features.macros.*;
+import me.aurora.client.features.troll.Hilary;
 import me.aurora.client.features.visual.*;
 import me.aurora.client.krypton.Main;
 import me.aurora.client.utils.BindUtils;
@@ -90,7 +91,9 @@ public class Aurora {
                 new BindUtils.Bind(Keyboard.KEY_L, "FreeCam"),
                 new BindUtils.Bind(Keyboard.KEY_NONE, "VClip"),
                 new BindUtils.Bind(Keyboard.KEY_K, "FastJoin"),
-                new BindUtils.Bind(Keyboard.KEY_J, "AutoArrows")
+                new BindUtils.Bind(Keyboard.KEY_J, "AutoArrows"),
+                new BindUtils.Bind(Keyboard.KEY_U, "F11Macro"),
+                new BindUtils.Bind(Keyboard.KEY_F, "AutoWardrobe")
         );
         registerModules(new LegacyModuleList(), new AutoSell(), new Ghostblock(), new WitherDoorRemover(),
                 new AotvAura(), new HarpStealer(), new NoSlow(), new GemstoneScanner(),
@@ -103,7 +106,8 @@ public class Aurora {
             registerHud(new Watermark(), new Keystrokes(), new PacketDebug(), new FPS());
         }
         registerEvents(new TickEndEvent(), new Main(), new PacketHandler(), new FPSUtils(),
-                       new PapiezUtils(), new CapeManager(), new AutoBuyArrows());
+                       new PapiezUtils(), new CapeManager(), new AutoBuyArrows(), new BedrockFailsafe(), new HotbarFailsafe(),
+                new WorldChangeFailsafe(), new PathFailsafe(), new Hilary(), new AutoWardrobe());
         registerCommand(new CrabbyCommand(), new HUDCommand(), new ConfigCommand());
         if (RemoteUtils.isOutdated(CURRENT_VERSION_BUILD))
             Runtime.getRuntime().addShutdownHook(new Thread(this::update));

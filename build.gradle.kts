@@ -20,7 +20,7 @@ loom {
     silentMojangMappingsLicense()
     launchConfigs {
         getByName("client") {
-            arg("--tweakClass", "me.cephetir.bladecore.loader.BladeCoreTweaker")
+            arg("--tweakClass", "gg.essential.loader.stage0.EssentialSetupTweaker")
         }
     }
     runConfigs {
@@ -54,7 +54,7 @@ dependencies {
     include("net.objecthunter:exp4j:0.4.8")
 
     include("me.cephetir:bladecore-loader-1.8.9-forge:1.2")
-    implementation("me.cephetir:bladecore-1.8.9-forge:0.0.2-c")
+    implementation("me.cephetir:bladecore-1.8.9-forge:0.0.2-d")
 
     include("me.cephetir:communist-scanner:1.1.5")
 

@@ -684,35 +684,14 @@ public class Config extends Vigilant {
 
     @Property(
             type = PropertyType.SELECTOR,
-            name = "Arrow Type",
+            name = "\247b[HEAVILY WIP]\247r Auto Arrows (TYPE)",
             description = "Select Arrow Type Here",
-            options = {"Bouncy", "Armorshred", "Icy", "Nanosorb", "Explosive", "Redstone Tipped", "Glue"},
+            options = {"Bouncy", "Armorshred", "Icy"},
             category = "Dungeons",
             subcategory = "Auto Arrows"
     )
     public static int arrowtype = 0;
 
-    @Property(
-            type = PropertyType.SLIDER,
-            name = "Inventories",
-            description = "How many full inventories of materials to buy off bz",
-            min = 1,
-            max = 15,
-            category = "Dungeons",
-            subcategory = "Auto Arrows"
-    )
-    public static int auto_arrow_inventories = 1;
-
-    @Property(
-            type = PropertyType.SLIDER,
-            name = "Stacks of Enchanted Sand (Armorshred arrows)",
-            description = "How many stacks of enchanted sand to buy if you have armorshred arrows selected",
-            min = 1,
-            max = 32,
-            category = "Dungeons",
-            subcategory = "Auto Arrows"
-    )
-    public static int enchanted_sand_stacks = 1;
 
     @Property(
             type = PropertyType.SLIDER,
@@ -744,6 +723,99 @@ public class Config extends Vigilant {
             subcategory = "Auto Wardrobe"
     )
     public static int wd_slot = 1;
+
+    @Property(
+            type = PropertyType.SELECTOR,
+            name = "Crop Type",
+            description = "Type of crop you are farming (used for failsafes)",
+            options = {"Wheat", "Nether-wart", "Mushroom", "Cactus (wtf)", "Carrot", "Potato"},
+            category = "Macros",
+            subcategory = "Failsafes"
+    )
+    public static int cropType = 0;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Rotation check Failsafe",
+            description = "Checks if rotation gets changed while f11 macroing",
+            category = "Macros",
+            subcategory = "Failsafes"
+
+    )
+    public static boolean rotation_check = false;
+
+    @Property(
+            type = PropertyType.SLIDER,
+            name = "Rotation check sensitivity (deg)",
+            description = "Mess with this if you have rotation check failsafe enabled. If your rotation is more or less than this number it will trigger the failsafe",
+            min = 1,
+            max = 35,
+            category = "Macros",
+            subcategory = "Failsafes"
+    )
+    public static int rotation_sensitivity = 1;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Bedrock Box Failsafe",
+            description = "Classic bedrock box failsafe that checks whether there is bedrock in a 5 block radius of the player. Do not recommend using this if you are on a bedrock plot",
+            category = "Macros",
+            subcategory = "Failsafes"
+    )
+    public static boolean BedrockFailsafe = false;
+
+    @Property(
+            type = PropertyType.SLIDER,
+            name = "Farming tool slot",
+            description = "Farming tool slot (used for hotbar failsafe)",
+            min = 1,
+            max = 8,
+            category = "Macros",
+            subcategory = "Failsafes"
+    )
+    public static int farming_tool_slot = 1;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Hotbar Failsafe",
+            description = "Hotbar Failsafe",
+            min = 1,
+            max = 8,
+            category = "Macros",
+            subcategory = "Failsafes"
+    )
+    public static boolean hotbar_failsafe = false;
+
+    @Property(
+            type = PropertyType.SWITCH,
+            name = "Path Block Failsafe",
+            description = "Failsafe for when the admins block your path with dirt blocks",
+            category = "Macros",
+            subcategory = "Failsafes"
+    )
+    public static boolean path_failsafe = false;
+
+    @Property(
+            type = PropertyType.NUMBER,
+            name = "Pitch",
+            description = "Pitch to set to (and for rotation failsafe)",
+            category = "Macros",
+            subcategory = "F11",
+            min = 0,
+            max = 180
+    )
+    public static int f11pitch = 90;
+
+    @Property(
+            type = PropertyType.NUMBER,
+            name = "Yaw",
+            description = "Yaw to set to (and for rotation failsafe)",
+            category = "Macros",
+            subcategory = "F11",
+            min = 0,
+            max = 180
+    )
+    public static int f11yaw = 0;
 
     public static Config INSTANCE = new Config();
 
