@@ -48,8 +48,8 @@ public class Hilary {
             "§r§c[OWNER] hypixel",
             "§r§c[OWNER] GumTune",
             "§r§6[MVP§r§0++§r§6] kDarko",
-            "&r&c[ADMIN] Dctr",
-            "&r&b[MVP&5+&b] egom"
+            "§r§c[ADMIN] Dctr",
+            "§r§b[MV§r§5+§r§b] egom"
     };
 
     public static List<String> messagesList = Arrays.asList(messages);
