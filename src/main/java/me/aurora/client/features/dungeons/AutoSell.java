@@ -5,6 +5,7 @@ import me.aurora.client.events.TickEndEvent;
 import me.aurora.client.features.Module;
 import me.aurora.client.utils.MessageUtils;
 import me.aurora.client.utils.conditions.ConditionUtils;
+import me.aurora.client.utils.InventoryUtils;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Slot;
@@ -73,8 +74,10 @@ public class AutoSell implements Module {
 
     @SubscribeEvent
     public void onRenderGuiBackground(GuiScreenEvent.DrawScreenEvent.Pre event) {
-        if (ConditionUtils.inSkyblock() && toggled() && event.gui instanceof GuiChest)
-            inTradeGui = ((GuiChest) event.gui).inventorySlots.getSlot(0).inventory.getName().contains("Trades");
+        if (ConditionUtils.inSkyblock() && toggled() && event.gui instanceof GuiChest) {
+           String guiName = InventoryUtils.getGuiName(event.gui);
+           inTradeGui = guiName.contains("Trades") || guiName.contains("Booster Cookie");
+        }
     }
 
     public boolean properItem(Slot checkedSlot) {
