@@ -2,7 +2,9 @@ package me.aurora.client.utils;
 
 import me.aurora.client.Aurora;
 import net.minecraft.util.ChatComponentText;
+import scala.actors.threadpool.Arrays;
 
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 import static me.aurora.client.Aurora.mc;
@@ -30,4 +32,15 @@ public class MessageUtils {
             }
         });
     }
+
+    public static Random random = new Random();
+    public static String[] fakeMacroMessages = {
+            "wtf",
+            "what?",
+            "hi admins",
+            "first time getting checked",
+            "wow",
+            "lol",
+            "???"
+    };
 }

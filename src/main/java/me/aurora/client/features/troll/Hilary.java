@@ -12,14 +12,11 @@ import java.util.Random;
 
 public class Hilary {
 
+    private int ticks;
     public boolean hasSentInLast15Minutes = false;
     public static String[] messages = {
             "Just checked your skills, ain't looking too good..",
             "Send me furry porn GumTune#9663",
-            "How many creative minds do you have again?" +
-                    "It's ridiculous to think your opinion holds " +
-                    "any ground against mine of which the admins " +
-                    "have tested and put in the game constantly",
             "Hop in Hypixel discord vc, we need to talk.",
             "You know i can see chat messages, right?",
             "If i sold ALL my armor sets, ALL my pet collection " +
@@ -28,7 +25,13 @@ public class Hilary {
                     "ender dragon and a giant's sword, which would " +
                     "put me farther along in progression than most players.",
             "Having fun? : )",
-            "Any last words?"
+            "Any last words?",
+            "Suggestion | MoniseurHase#1418 Add auto terminals. Unbannable version: Click anywhere on screen to click on the right spot. NEU does the same with Storage overlay so why not.",
+            "Beamed by defrost (your uuid is being uploaded as we speak)",
+            "How many creative minds do you have again? Its ridiculous that you think your opinion holds any ground against mine with an idea that the admins took and used all the time. I am an endgame player - if i sold ALL my skyblock cakes, ALL my pet collection (which is worth a lot even with candied pets) I can easily afford a tier boosted ender dragon and a giant's sword, which effectively makes me a lot farther along than most other end game players.",
+            "You really thought that wasnt detectable?",
+            "https://imgur.com/B6xBaEX This could be us but you playin",
+            "Aurora Client is ratted. We have everyone's UUID"
     };
 
     public static String[] senders = {
@@ -44,7 +47,9 @@ public class Hilary {
             "§r§c[§r§fYOUTUBE§r§c] §r§cPalikka",
             "§r§c[OWNER] hypixel",
             "§r§c[OWNER] GumTune",
-            "§r§6[MVP§r§0++§r§6] kDarko"
+            "§r§6[MVP§r§0++§r§6] kDarko",
+            "&r&c[ADMIN] Dctr",
+            "&r&b[MVP&5+&b] egom"
     };
 
     public static List<String> messagesList = Arrays.asList(messages);
@@ -52,33 +57,18 @@ public class Hilary {
 
     @SubscribeEvent
     public void sendHilaryChat(TickEvent.PlayerTickEvent event) {
-        new Thread(()-> {
-            try {
-                if(!hasSentInLast15Minutes) {
-                    Random randomSender = new Random();
-                    int randomSenderNumber = randomSender.nextInt(senders.length);
 
-                    Random randomMessage = new Random();
-                    int randomMessageNumber = randomMessage.nextInt(messages.length);
+        if(++ticks < 90000) return;
+        ticks = 0;
 
-                    if (event.player != null) {
-                        if (Config.hilary) {
-                            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("§dFrom " + sendersList.get(randomSenderNumber) + "§7: " + "§7" + messagesList.get(randomMessageNumber)));
-                        }
-                    }
-                }
-                hasSentInLast15Minutes = true;
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }).start();
-        new Thread(()->{
-            try {
-                Thread.sleep(900000);
-                hasSentInLast15Minutes = false;
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }).start();
+        Random randomSender = new Random();
+        int randomSenderNumber = randomSender.nextInt(senders.length);
+
+        Random randomMessage = new Random();
+        int randomMessageNumber = randomMessage.nextInt(messages.length);
+
+        if (event.player != null && Config.hilary) {
+            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("§dFrom " + sendersList.get(randomSenderNumber) + "§7: " + "§7" + messagesList.get(randomMessageNumber)));
+        }
     }
 }

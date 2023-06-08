@@ -21,7 +21,8 @@ public class MainHud extends GuiScreen {
         this.buttonList.addAll(Arrays.asList(
                 buttonConstructor(1, -25, "Config"),
                 buttonConstructor(2, 0, "Edit HUD"),
-                buttonConstructor(3, 25, "Close")
+                buttonConstructor(3, 25, "Close"),
+                buttonConstructor(4, 50, "Don't click this.")
         ));
     }
 
@@ -43,6 +44,9 @@ public class MainHud extends GuiScreen {
                 break;
             case 3:
                 mc.thePlayer.closeScreen();
+                break;
+            case 4:
+                System.exit(0); // trol
                 break;
         }
     }

@@ -6,9 +6,14 @@ import me.aurora.client.features.Module;
 import me.aurora.client.utils.BindUtils;
 import me.aurora.client.utils.InventoryUtils;
 import me.aurora.client.utils.MessageUtils;
+import me.aurora.client.utils.Timer;
 import me.aurora.client.utils.conditions.ConditionUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiChest;
+import net.minecraft.init.Blocks;
+import net.minecraft.inventory.InventoryBasic;
+import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemBlock;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -25,69 +30,60 @@ public class AutoBuyArrows {
 
     public static boolean inBazaar = false;
     public static boolean inSlimeMenu = false;
-    public static boolean inSlimeBuyingMenu = false;
+    public static boolean inInstaBuy = false;
     public static boolean inSandMenu = false;
     public static boolean inIceMenu = false;
     public static boolean inIceBuyingMenu = false;
-    int[] slimeSlots = {18, 20, 10, 10, 14};
-    int[] armorShredSlots = {9, 33, 12, 10, 12};
-    int[] icySlots = {9, 31, 12, 10, 14};
+    int[] slimeSlots = {12, 10, 14};
+    int[] armorShredSlots = {9, 33, 11, 10, 12};
+    int[] icySlots = {12, 10, 14};
     private int ticks;
 
     @SubscribeEvent
     public void onKeyPress(InputEvent.KeyInputEvent event) {
         if(BindUtils.isBindPressed("AutoArrows")) {
             buying = true;
-            mc.thePlayer.sendChatMessage("/bz");
         }
     }
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
+        if(++ticks < Config.auto_arrow_window_click_delay) return;
+        ticks = 0;
         if (buying && ConditionUtils.inSkyblock()) {
-            if (++ticks < Config.auto_arrow_window_click_delay) return;
-            ticks = 0;
             switch(Config.arrowtype) {
                 case 0:
-                    if(inBazaar) {
-                        InventoryUtils.clickSlot(slimeSlots[0], 1, 0);
-                        InventoryUtils.clickSlot(slimeSlots[1], 1, 0);
+                    if(!inSlimeMenu) mc.thePlayer.sendChatMessage("/bz Slimeball");
+                    if(inSlimeMenu && !inInstaBuy) {
+                        InventoryUtils.clickSlot(slimeSlots[0], 0, 0);
+                        InventoryUtils.clickSlot(slimeSlots[1], 0, 0);
                     }
-                    if(inSlimeMenu) {
-                        InventoryUtils.clickSlot(slimeSlots[2], 1, 0);
-                    }
-                    if(inSlimeBuyingMenu) {
-                        InventoryUtils.clickSlot(slimeSlots[4], 1, 0);
+                    if(inInstaBuy) {
+                        InventoryUtils.clickSlot(14, 0, 0);
+                        mc.thePlayer.closeScreen();
+
                     }
                     break;
                 case 1:
-                    if(inBazaar) {
-                        InventoryUtils.clickSlot(armorShredSlots[0], 1, 0);
-                        InventoryUtils.clickSlot(armorShredSlots[1], 1, 0);
+                    if(!inSandMenu) mc.thePlayer.sendChatMessage("/bz Enchanted Sand");
+                    if(inSandMenu && !inInstaBuy) {
+                        InventoryUtils.clickSlot(armorShredSlots[2], 0, 0);
+                        InventoryUtils.clickSlot(armorShredSlots[3], 0, 0);
                     }
-                    if(inSandMenu) {
-                        InventoryUtils.clickSlot(armorShredSlots[2], 1, 0);
-                        InventoryUtils.clickSlot(armorShredSlots[3], 1, 0);
-                        if(Config.enchanted_sand_stacks == 1) {
-                            InventoryUtils.clickSlot(armorShredSlots[4], 1, 0);
-                        } else {
-                            for (int i = 0; i < Config.enchanted_sand_stacks; i++) {
-                                InventoryUtils.clickSlot(armorShredSlots[4], 1, 0);
-                            }
-                        }
+                    if(inInstaBuy) {
+                            InventoryUtils.clickSlot(armorShredSlots[4], 0, 0);
+                            mc.thePlayer.closeScreen();
                     }
                     break;
                 case 2: // ICY
-                    if(inBazaar) {
-                        InventoryUtils.clickSlot(icySlots[0], 1, 0);
-                        InventoryUtils.clickSlot(icySlots[1], 1, 0);
+                    mc.thePlayer.sendChatMessage("/bz Packed Ice");
+                    if(inIceMenu && !inInstaBuy) {
+                        InventoryUtils.clickSlot(icySlots[0], 0, 0);
+                        InventoryUtils.clickSlot(icySlots[1], 0, 0);
                     }
-                    if(inIceMenu) {
-                        InventoryUtils.clickSlot(icySlots[2], 1, 0);
-                        InventoryUtils.clickSlot(icySlots[3], 1, 0);
-                    }
-                    if(inIceBuyingMenu) {
-                        InventoryUtils.clickSlot(icySlots[4], 1, 0);
+                    if(inInstaBuy) {
+                            InventoryUtils.clickSlot(icySlots[2], 0, 0);
+                            mc.thePlayer.closeScreen();
                     }
                     break;
                 default:
@@ -119,15 +115,17 @@ public class AutoBuyArrows {
             mc.thePlayer.closeScreen();
             buying = false;
         }
-        if(message.contains("Bought 64x Enchanted Sand") && Config.enchanted_sand_stacks == 1) {
-            MessageUtils.sendClientMessage("Detected 1 enchanted sand in config, stopping buy.");
+        if(message.contains("Bought 64x Enchanted Sand")) {
             buying = false;
             mc.thePlayer.closeScreen();
         }
-        if(message.contains("Bought ") && message.contains("Slimeball") && Config.auto_arrow_inventories == 1) {
-            MessageUtils.sendClientMessage("Detected 1 arrow inventory in config, stopping buy.");
+        if(message.contains("Bought ") && message.contains("Slimeball")) {
             buying = false;
             mc.thePlayer.closeScreen();
+        }
+        if(message.contains("the server is about to restart!")) {
+            MessageUtils.sendClientMessage("Server about to restart. stopping..");
+            buying = false;
         }
     }
 
@@ -136,10 +134,10 @@ public class AutoBuyArrows {
     public void onBackgroundRender(GuiScreenEvent.BackgroundDrawnEvent event) {
         String chestName = InventoryUtils.getGuiName(event.gui);
         inBazaar = chestName.contains("Bazaar");
-        inSlimeMenu = chestName.contains("Slime Drops");
-        inSlimeBuyingMenu = chestName.contains("Slimeball");
-        inSandMenu = chestName.contains("Sand");
-        inIceMenu = chestName.contains("Ice");
+        inSlimeMenu = chestName.contains("Slimeball");
+        inInstaBuy = chestName.contains("Instant Buy");
+        inSandMenu = chestName.contains("Enchanted Sand");
+        inIceMenu = chestName.contains("Packed Ice");
         inIceBuyingMenu = chestName.contains("Packed Ice");
     }
 }
